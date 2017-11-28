@@ -2,9 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const package = require('./package.json');
 
 //import from config file
 const {PORT, DATABASE_URL} = require('./config');
+const {Restaurant} = require('./models/restaurantsModel');
 
 //use ES6 promises
 mongoose.Promise = global.Promise;
@@ -14,6 +16,17 @@ const app = express();
 //for logging
 app.use(morgan('common'));
 app.use(bodyParser.json());
+
+app.get('/', (req, res)=>{
+	res.json({name: package.name, version: package.version});
+});
+
+app.get('/restaurants', (req,res)=>{
+	Restaurant.find()
+	.then(data => {
+		res.status(200).json(data);
+	});
+});
 
 let server;
 
