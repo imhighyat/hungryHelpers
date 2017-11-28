@@ -1,0 +1,25 @@
+{
+  "name": "hungryhelpers",
+  "version": "1.0.0",
+  "description": "Helps connect retaurants and charitable groups in helping people.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imhighyat/hungryHelpers.git"
+  },
+  "author": "Hayat Mazzarella",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/imhighyat/hungryHelpers/issues"
+  },
+  "homepage": "https://github.com/imhighyat/hungryHelpers#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "mongoose": "^4.13.5",
+    "morgan": "^1.9.0"
+  }
+}
