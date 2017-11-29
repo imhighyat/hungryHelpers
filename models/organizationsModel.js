@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
-const restaurantSchema = mongoose.Schema({
+const organizationSchema = mongoose.Schema({
 	name: {
+		type: String,
+		required: true
+	},
+	causeDescription: {
 		type: String,
 		required: true
 	},
@@ -42,14 +46,14 @@ const restaurantSchema = mongoose.Schema({
 	}	
 });
 
-restaurantSchema.virtual('personInCharge').get(function(){
+organizationSchema.virtual('personInCharge').get(function(){
 	return `${this.manager.firstName} ${this.manager.lastName}`;
 });
 
-restaurantSchema.virtual('fullAddress').get(function(){
+organizationSchema.virtual('fullAddress').get(function(){
 	return `${this.address.building}, ${this.address.street}, ${this.address.city}, ${this.address.state} ${this.address.zipcode}`;
 });
 
-const Restaurant = mongoose.model('restaurant', restaurantSchema);
+const Organization = mongoose.model('organization', organizationSchema);
 
-module.exports = {Restaurant};
+module.exports = {Organization};
