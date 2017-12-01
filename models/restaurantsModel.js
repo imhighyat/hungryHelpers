@@ -33,13 +33,20 @@ const restaurantSchema = mongoose.Schema({
 		required: true
 	},
 	verified: {
-		type: Boolean
+		type: Boolean,
+		required: true,
+		default: false
 	},
 	memberSince: {
 		type: Date,
 		required: true,
 		default: Date.now
-	}	
+	},
+	isActive: {
+		type: Boolean,
+		required: true,
+		default: true
+	}
 });
 
 restaurantSchema.virtual('personInCharge').get(function(){
