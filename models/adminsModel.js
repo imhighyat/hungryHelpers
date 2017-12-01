@@ -20,7 +20,12 @@ const adminSchema = mongoose.Schema({
 	phoneNumber: {
 		type: String,
 		required: true
-	}	
+	},
+	isActive: {
+		type: Boolean,
+		required: true,
+		default: true
+	}
 });
 
 adminSchema.virtual('fullName').get(function(){

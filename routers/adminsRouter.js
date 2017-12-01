@@ -7,9 +7,40 @@ mongoose.Promise = global.Promise;
 
 const {Admin} = require('../models/adminsModel');
 
-router.get('/', (req, res)=>{
-	Admin.find()
-	.then(data=> res.status(200).json(data));
+//view multiple organization profiles whether with queries or none
+router.get('/', (req,res)=>{
+	//store the values of the query
+	const active = req.query.active;
+	//if query is undefined, get all the admins
+	if(typeof(active) === "undefined"){
+		Admin.find()
+		.then(data => res.status(200).json(data))
+		.catch(err => res.status(500).send('Internal server error occured.'));
+	}
+	//if the query has a value
+	else if(typeof(active) === "string"){
+		//test if the value is what we expect
+		if(active === "true" || active === "false"){
+			Admin.find({isActive: active})
+			.then(data => res.status(200).json(data))
+			.catch(err => res.status(500).send('Internal server error occured.'));
+		}
+		else{
+			const message = 'Query value unexpected.';
+			res.status(400).send(message);
+		}
+	}
+	else{
+		const message = 'Query value unexpected.';
+		res.status(400).send(message);
+	}
+});
+
+//View a single admin account/profile
+router.get('/:id', (req, res) => {
+	Admin.findById(req.params.id)
+	.then(data => res.status(200).json(data))
+	.catch(err => res.status(500).send('Internal server error occured.'));
 });
 
 router.post('/', (req, res)=>{
@@ -41,10 +72,11 @@ router.post('/', (req, res)=>{
 	});
 });
 
+//update a specific admin account/profile
 router.put('/:id', (req, res)=>{
 	// ensure that the id in the request path and the one in request body match
-	if(!(req.params.id === req.body._id)){
-		const message = `The request path ID ${req.params.id} and request body ID ${req.body._id} should match.`;
+	if(!(req.params.id === req.body.id)){
+		const message = `The request path ID ${req.params.id} and request body ID ${req.body.id} should match.`;
 		console.error(message);
 		return res.status(400).send(message);
 	}
@@ -61,16 +93,20 @@ router.put('/:id', (req, res)=>{
 			//start adding the properties to the toUpdate object
 			toUpdate[field] = req.body[field];
 		}
-		//update the database by finding the id first using the id from req
-		//then set the data to update
-		Admin.findByIdAndUpdate(req.params.id, {$set: toUpdate})
-		.then(result => res.status(204).end())
-		.catch(err => res.status(400).send('Internal server error occured.'));
 	}
+	//update the database by finding the id first using the id from req
+	//then set the data to update
+	Admin.findByIdAndUpdate(req.params.id, {$set: toUpdate})
+	.then(()=>{
+		return Admin.findById(req.params.id)
+			.then(data => res.status(200).json(data));
+	})
+	.catch(err => res.status(400).send('Internal server error occured.'));
 });
 
+//disable a specific admin profile/account by setting isActive to false
 router.delete('/:id', (req,res)=>{
-	Admin.findByIdAndRemove(req.params.id)
+	Admin.findByIdAndUpdate(req.params.id, {$set: {isActive: "false"}})
 	.then(result=> res.status(204).end())
 	.catch(err=> res.status(400).send('Internal server error occured.'));
 });

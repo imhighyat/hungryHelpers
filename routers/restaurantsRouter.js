@@ -117,13 +117,13 @@ router.put('/:id', (req, res)=>{
 		}
 	}
 	//update the database by finding the id first using the id from req
-		//then set the data to update
-		Restaurant.findByIdAndUpdate(req.params.id, {$set: toUpdate})
-		.then(()=>{
-			return Restaurant.findById(req.params.id)
-				.then(data => res.status(200).json(data));
-		})
-		.catch(err => res.status(400).send('Internal server error occured.'));
+	//then set the data to update
+	Restaurant.findByIdAndUpdate(req.params.id, {$set: toUpdate})
+	.then(()=>{
+		return Restaurant.findById(req.params.id)
+			.then(data => res.status(200).json(data));
+	})
+	.catch(err => res.status(400).send('Internal server error occured.'));
 });
 
 //update a restaurant profile/account verified property

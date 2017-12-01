@@ -12,7 +12,7 @@ router.get('/', (req,res)=>{
 	//store the values of the queries
 	const active = req.query.active;
 	const verified = req.query.verified;
-	//if both queries are undefined, get all the restaurants
+	//if both queries are undefined, get all the organizations
 	if(typeof(active) === "undefined" && typeof(verified) === "undefined"){
 		Organization.find()
 		.then(data => res.status(200).json(data))
@@ -117,13 +117,13 @@ router.put('/:id', (req, res)=>{
 		}
 	}
 	//update the database by finding the id first using the id from req
-		//then set the data to update
-		Organization.findByIdAndUpdate(req.params.id, {$set: toUpdate})
-		.then(()=>{
-			return Organization.findById(req.params.id)
-				.then(data => res.status(200).json(data));
-		})
-		.catch(err => res.status(400).send('Internal server error occured.'));
+	//then set the data to update
+	Organization.findByIdAndUpdate(req.params.id, {$set: toUpdate})
+	.then(()=>{
+		return Organization.findById(req.params.id)
+			.then(data => res.status(200).json(data));
+	})
+	.catch(err => res.status(400).send('Internal server error occured.'));
 });
 
 //update an organization profile/account verified property
