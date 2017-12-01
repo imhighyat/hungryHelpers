@@ -62,7 +62,7 @@ router.get('/:id', (req, res) => {
 });
 
 
-
+//create a new restaurant profile/account
 router.post('/', (req, res)=>{
 	//store the required properties in an array
 	const requiredFields = ['name', 'phoneNumber', 'manager', 'address', 'email', 'username', 'password'];
@@ -94,6 +94,7 @@ router.post('/', (req, res)=>{
 	});
 });
 
+//update a specific restaurant account/profile
 router.put('/:id', (req, res)=>{
 	// ensure that the id in the request path and the one in request body match
 	if(!(req.params.id === req.body.id)){
@@ -114,16 +115,28 @@ router.put('/:id', (req, res)=>{
 			//start adding the properties to the toUpdate object
 			toUpdate[field] = req.body[field];
 		}
-		//update the database by finding the id first using the id from req
+	}
+	//update the database by finding the id first using the id from req
 		//then set the data to update
 		Restaurant.findByIdAndUpdate(req.params.id, {$set: toUpdate})
-		.then(result => res.status(202).json(result))
+		.then(()=>{
+			return Restaurant.findById(req.params.id)
+				.then(data => res.status(200).json(data));
+		})
 		.catch(err => res.status(400).send('Internal server error occured.'));
-	}
 });
 
+//update a restaurant profile/account verified property
+router.put('/:id/verify', (req,res) => {
+	Restaurant.findByIdAndUpdate(req.params.id, {$set: {verified: "true"}})
+	.then(result => res.status(200).send('Account verified!'))
+	.catch(err => res.status(400).send('Internal server error occured.'));
+});
+
+
+//disable a specific restaturant profile/account by setting isActive to false
 router.delete('/:id', (req,res)=>{
-	Restaurant.findByIdAndRemove(req.params.id)
+	Restaurant.findByIdAndUpdate(req.params.id, {$set: {isActive: "false"}})
 	.then(result=> res.status(204).end())
 	.catch(err=> res.status(400).send('Internal server error occured.'));
 });
