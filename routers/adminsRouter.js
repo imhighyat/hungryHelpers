@@ -7,7 +7,7 @@ mongoose.Promise = global.Promise;
 
 const {Admin} = require('../models/adminsModel');
 
-//view multiple organization profiles whether with queries or none
+//view multiple admin profiles whether with queries or none
 router.get('/', (req,res)=>{
 	//store the values of the query
 	const active = req.query.active;
