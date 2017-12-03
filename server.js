@@ -8,6 +8,7 @@ const {PORT, DATABASE_URL} = require('./config');
 const restaurantsRouter = require('./routers/restaurantsRouter');
 const organizationsRouter = require('./routers/organizationsRouter');
 const adminsRouter = require('./routers/adminsRouter');
+const schedulesRouter = require('./routers/schedulesRouter');
 //use ES6 promises
 mongoose.Promise = global.Promise;
 const app = express();
@@ -21,6 +22,8 @@ app.use('/restaurants', restaurantsRouter);
 app.use('/organizations', organizationsRouter);
 //route all /restaurants to adminsRouter.js
 app.use('/admins', adminsRouter);
+//route all /schedules to schedulesRouter.js
+app.use('/schedules', schedulesRouter);
 //root of the website
 app.get('/', (req, res)=>{
 	res.json({name: package.name, version: package.version});

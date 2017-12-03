@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const {Restaurant} = require('../models/restaurantsModel');
+const {Schedule} = require('../models/schedulesModel');
 
 //view multiple restaurant profiles whether with queries or none
 router.get('/', (req,res)=>{
@@ -88,6 +89,44 @@ router.post('/', (req, res)=>{
 		password: req.body.password
 	})
 	.then(newRest => res.status(201).json(newRest))
+	.catch(err => {
+		console.log(err);
+		res.status(500).send('Internal server error occured');
+	});
+});
+
+//post a schedule
+router.post('/:id/schedules', (req, res)=>{
+	// ensure that the id in the request path and the one in request body match
+	if(!(req.params.id === req.body.restaurant)){
+		const message = `The request path ID ${req.params.id} and request body ID ${req.body.restaurant} should match.`;
+		console.error(message);
+		return res.status(400).send(message);
+	}
+	//store the required properties in an array
+	const requiredFields = ['schedType', 'starting', 'ending', 'weekday', 'time', 'restaurant', 'restPerson'];
+	//use for loop to check if all required properties are in the req body
+	for(let i=0; i<requiredFields.length; i++){
+		const field = requiredFields[i];
+		if(!(field in req.body)){
+			const message = `Missing ${field} in request body.`;
+			//console error the message if at least one is missing
+			console.error(message);
+			//return with a 400 staus and the error message
+			return res.status(400).send(message);
+		}
+	}
+	//if all properties are in the request body
+	Schedule.create({
+		schedType: req.body.schedType,
+		starting: req.body.starting,
+		ending: req.body.ending,
+		weekday: req.body.weekday,
+		time: req.body.time,
+		restaurant: req.body.restaurant,
+		restPerson: req.body.restPerson
+	})
+	.then(newSched => res.status(201).json(newSched))
 	.catch(err => {
 		console.log(err);
 		res.status(500).send('Internal server error occured');
