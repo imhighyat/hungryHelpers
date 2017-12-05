@@ -104,7 +104,7 @@ router.post('/:id/schedules', (req, res)=>{
 		return res.status(400).send(message);
 	}
 	//store the required properties in an array
-	const requiredFields = ['schedType', 'starting', 'ending', 'weekday', 'time', 'restaurant', 'restPerson'];
+	const requiredFields = ['schedType', 'starting', 'ending', 'weekday', 'time', 'restPerson'];
 	//use for loop to check if all required properties are in the req body
 	for(let i=0; i<requiredFields.length; i++){
 		const field = requiredFields[i];
