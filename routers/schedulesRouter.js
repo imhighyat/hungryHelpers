@@ -7,7 +7,7 @@ mongoose.Promise = global.Promise;
 
 const {Schedule} = require('../models/schedulesModel');
 
-//view multiple schedules
+//view multiple schedules whether there is query or not
 router.get('/', (req,res)=>{
 	const today = new Date();
 	let finalDate = new Date();
@@ -17,16 +17,22 @@ router.get('/', (req,res)=>{
 	let schedulePromise;
 	//if query is undefined, get all the admins
 	if(typeof(active) === "undefined"){
-		schedulePromise = Schedule.find()
+		schedulePromise = Schedule.find().populate('restaurant');
 	}
 	//if the query has a value
 	else if(typeof(active) === "string"){
-		//test if the value is what we expect
+		//if value is true, show schedules that are active
 		if(active === "true"){
-			schedulePromise = Schedule.find({ending: {$gt: today}, starting: {$lt: finalDate}});
+			schedulePromise = Schedule.find({endingDate: {$gte: today}, startingDate: {$lte: finalDate}}).populate('restaurant');
 		}
+		//else show the past schedules
 		else if(active === "false") {
-			schedulePromise = Schedule.find({ending: {$lt: today}});
+			schedulePromise = Schedule.find({endingDate: {$lt: today}}).populate('restaurant');
+		}
+		//everything else
+		else {
+		const message = 'Query value unexpected.';
+		return res.status(400).send(message);
 		}
 	}
 	else{
@@ -35,12 +41,12 @@ router.get('/', (req,res)=>{
 	}
 	schedulePromise
 	.then(data => res.status(200).json(data))
-	.catch(err => res.status(500).send('Internal server error occured.'));
+	.catch(err => res.status(500).send(err));
 });
 
 //get the schedule of a specific restaurant
-router.get('/:restaurant', (req,res)=>{
-	Schedule.find({restaurant: req.params.restaurant})
+router.get('/:id', (req,res)=>{
+	Schedule.findById(req.params.id).populate('restaurant')
 		.then(data => res.status(200).json(data))
 		.catch(err => res.status(500).send('Internal server error occured.'));
 });

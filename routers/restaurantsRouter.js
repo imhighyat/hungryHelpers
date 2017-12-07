@@ -7,59 +7,61 @@ mongoose.Promise = global.Promise;
 
 const {Restaurant} = require('../models/restaurantsModel');
 const {Schedule} = require('../models/schedulesModel');
+const internalMsg = 'Internal server error occured.';
 
 //view multiple restaurant profiles whether with queries or none
 router.get('/', (req,res)=>{
 	//store the values of the queries
 	const active = req.query.active;
 	const verified = req.query.verified;
+	let restaurantPromise;
 	//if both queries are undefined, get all the restaurants
 	if(typeof(active) === "undefined" && typeof(verified) === "undefined"){
-		Restaurant.find()
-		.then(data => res.status(200).json(data))
-		.catch(err => res.status(500).send('Internal server error occured.'));
+		restaurantPromise = Restaurant.find();
 	}
 	//if we have values for BOTH queries and they are strings
 	else if(typeof(active) === "string" && typeof(verified) === "string"){
 		//check to see if it's our expected values for both query
 		if((active === "true" || active === "false") && (verified === "true" || verified === "false")){
-			Restaurant.find({isActive: active, verified: verified})
-			.then(data => res.status(200).json(data))
-			.catch(err => res.status(500).send('Internal server error occured.'));
+			restaurantPromise = Restaurant.find({isActive: active, verified: verified});
 		}
 		else{
 			const message = `Query values ${active} and/or ${verified} are not expected.`;
-			res.status(400).send(message);
+			return res.status(400).send(message);
 		}
-
 	}
 	//if only one of the queries have values
 	else if(typeof(active) === "string" || typeof(verified) === "string"){
 		//test if active is the one with value and the values are what we expect
 		if(typeof(active) === "string" && (active === "true" || active === "false")){
-			Restaurant.find({isActive: active})
-			.then(data => res.status(200).json(data))
-			.catch(err => res.status(500).send('Internal server error occured.'));
+			restaurantPromise = Restaurant.find({isActive: active});
 		}
 		//then check verified for the same condition
 		else if(typeof(verified) === "string" && (verified === "true" || verified === "false")){
-			Restaurant.find({verified: verified})
-			.then(data => res.status(200).json(data))
-			.catch(err => res.status(500).send('Internal server error occured.'));
+			restaurantPromise = Restaurant.find({verified: verified});
 		}
 		else{
 			const message = 'Query value unexpected.';
-			res.status(400).send(message);
+			return res.status(400).send(message);
 		}
 	}
-
+	//proceed with the query to the db
+	restaurantPromise
+	.then(data => res.status(200).json(data))
+	.catch(err => {
+		console.log(err);
+		res.status(500).send(internalMsg);
+	});
 });
 
 //View a single restaurant account/profile
 router.get('/:id', (req, res) => {
 	Restaurant.findById(req.params.id)
 	.then(data => res.status(200).json(data))
-	.catch(err => res.status(500).send('Internal server error occured.'));
+	.catch(err => {
+		console.log(err);
+		res.status(500).send(internalMsg);
+	});
 });
 
 
@@ -91,7 +93,7 @@ router.post('/', (req, res)=>{
 	.then(newRest => res.status(201).json(newRest))
 	.catch(err => {
 		console.log(err);
-		res.status(500).send('Internal server error occured');
+		res.status(500).send(internalMsg);
 	});
 });
 
@@ -104,7 +106,7 @@ router.post('/:id/schedules', (req, res)=>{
 		return res.status(400).send(message);
 	}
 	//store the required properties in an array
-	const requiredFields = ['schedType', 'starting', 'ending', 'weekday', 'time', 'restPerson'];
+	const requiredFields = ['schedType', 'startingDate', 'endingDate', 'dayOfWeek', 'time','restaurant', 'restPerson', 'bookings'];
 	//use for loop to check if all required properties are in the req body
 	for(let i=0; i<requiredFields.length; i++){
 		const field = requiredFields[i];
@@ -119,17 +121,18 @@ router.post('/:id/schedules', (req, res)=>{
 	//if all properties are in the request body
 	Schedule.create({
 		schedType: req.body.schedType,
-		starting: req.body.starting,
-		ending: req.body.ending,
-		weekday: req.body.weekday,
+		startingDate: req.body.startingDate,
+		endingDate: req.body.endingDate,
+		dayOfWeek: req.body.dayOfWeek,
 		time: req.body.time,
 		restaurant: req.body.restaurant,
-		restPerson: req.body.restPerson
+		restPerson: req.body.restPerson,
+		bookings: req.body.bookings
 	})
 	.then(newSched => res.status(201).json(newSched))
 	.catch(err => {
 		console.log(err);
-		res.status(500).send('Internal server error occured');
+		res.status(500).send(internalMsg);
 	});
 });
 
@@ -162,14 +165,10 @@ router.put('/:id', (req, res)=>{
 		return Restaurant.findById(req.params.id)
 			.then(data => res.status(200).json(data));
 	})
-	.catch(err => res.status(400).send('Internal server error occured.'));
-});
-
-//update a restaurant profile/account verified property
-router.put('/:id/verify', (req,res) => {
-	Restaurant.findByIdAndUpdate(req.params.id, {$set: {verified: "true"}})
-	.then(result => res.status(200).send('Account verified!'))
-	.catch(err => res.status(400).send('Internal server error occured.'));
+	.catch(err => {
+		console.log(err);
+		res.status(400).send(internalMsg)
+	});
 });
 
 
@@ -177,7 +176,10 @@ router.put('/:id/verify', (req,res) => {
 router.delete('/:id', (req,res)=>{
 	Restaurant.findByIdAndUpdate(req.params.id, {$set: {isActive: "false"}})
 	.then(result=> res.status(204).end())
-	.catch(err=> res.status(400).send('Internal server error occured.'));
+	.catch(err => {
+		console.log(err);
+		res.status(400).send(internalMsg)
+	});
 });
 
 

@@ -6,29 +6,27 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const {Organization} = require('../models/organizationsModel');
+const internalMsg = 'Internal server error occured.';
 
 //view multiple organization profiles whether with queries or none
 router.get('/', (req,res)=>{
 	//store the values of the queries
 	const active = req.query.active;
 	const verified = req.query.verified;
+	let orgPromise;
 	//if both queries are undefined, get all the organizations
 	if(typeof(active) === "undefined" && typeof(verified) === "undefined"){
-		Organization.find()
-		.then(data => res.status(200).json(data))
-		.catch(err => res.status(500).send('Internal server error occured.'));
+		orgPromise = Organization.find();
 	}
 	//if we have values for BOTH queries and they are strings
 	else if(typeof(active) === "string" && typeof(verified) === "string"){
 		//check to see if it's our expected values for both query
 		if((active === "true" || active === "false") && (verified === "true" || verified === "false")){
-			Organization.find({isActive: active, verified: verified})
-			.then(data => res.status(200).json(data))
-			.catch(err => res.status(500).send('Internal server error occured.'));
+			orgPromise = Organization.find({isActive: active, verified: verified});
 		}
 		else{
 			const message = `Query values ${active} and/or ${verified} are not expected.`;
-			res.status(400).send(message);
+			return res.status(400).send(message);
 		}
 
 	}
@@ -36,29 +34,33 @@ router.get('/', (req,res)=>{
 	else if(typeof(active) === "string" || typeof(verified) === "string"){
 		//test if active is the one with value and the values are what we expect
 		if(typeof(active) === "string" && (active === "true" || active === "false")){
-			Organization.find({isActive: active})
-			.then(data => res.status(200).json(data))
-			.catch(err => res.status(500).send('Internal server error occured.'));
+			orgPromise = Organization.find({isActive: active});
 		}
 		//then check verified for the same condition
 		else if(typeof(verified) === "string" && (verified === "true" || verified === "false")){
-			Organization.find({verified: verified})
-			.then(data => res.status(200).json(data))
-			.catch(err => res.status(500).send('Internal server error occured.'));
+			orgPromise = Organization.find({verified: verified});
 		}
 		else{
 			const message = 'Query value unexpected.';
-			res.status(400).send(message);
+			return res.status(400).send(message);
 		}
 	}
-
+	orgPromise
+	.then(data => res.status(200).json(data))
+	.catch(err => {
+		console.log(err);
+		res.status(500).send(internalMsg)
+	});
 });
 
 //View a single organization account/profile
 router.get('/:id', (req, res) => {
 	Organization.findById(req.params.id)
 	.then(data => res.status(200).json(data))
-	.catch(err => res.status(500).send('Internal server error occured.'));
+	.catch(err => {
+		console.log(err);
+		res.status(500).send(internalMsg)
+	});
 });
 
 
@@ -90,7 +92,7 @@ router.post('/', (req, res)=>{
 	.then(newOrg => res.status(201).json(newOrg))
 	.catch(err => {
 		console.log(err);
-		res.status(500).send('Internal server error occured');
+		res.status(500).send(internalMsg);
 	});
 });
 
@@ -123,21 +125,20 @@ router.put('/:id', (req, res)=>{
 		return Organization.findById(req.params.id)
 			.then(data => res.status(200).json(data));
 	})
-	.catch(err => res.status(400).send('Internal server error occured.'));
-});
-
-//update an organization profile/account verified property
-router.put('/:id/verify', (req,res) => {
-	Organization.findByIdAndUpdate(req.params.id, {$set: {verified: "true"}})
-	.then(result => res.status(200).send('Account verified!'))
-	.catch(err => res.status(400).send('Internal server error occured.'));
+	.catch(err => {
+		console.log(err);
+		res.status(400).send(internalMsg);
+	});
 });
 
 //disable a specific organization profile/account by setting isActive to false
 router.delete('/:id', (req,res)=>{
 	Organization.findByIdAndUpdate(req.params.id, {$set: {isActive: "false"}})
 	.then(result=> res.status(204).end())
-	.catch(err=> res.status(400).send('Internal server error occured.'));
+	.catch(err => {
+		console.log(err);
+		res.status(400).send(internalMsg);
+	});
 });
 
 

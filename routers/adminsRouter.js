@@ -6,41 +6,70 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const {Admin} = require('../models/adminsModel');
+const {Restaurant} = require('../models/restaurantsModel');
+const {Organization} = require('../models/organizationsModel');
+const internalMsg = 'Internal server error occured.';
+const queryMsg = 'Query value unexpected.';
 
 //view multiple admin profiles whether with queries or none
 router.get('/', (req,res)=>{
 	//store the values of the query
 	const active = req.query.active;
+	//variable to store what the collection query will be
+	let adminPromise;
 	//if query is undefined, get all the admins
 	if(typeof(active) === "undefined"){
-		Admin.find()
-		.then(data => res.status(200).json(data))
-		.catch(err => res.status(500).send('Internal server error occured.'));
+		adminPromise = Admin.find();
 	}
 	//if the query has a value
 	else if(typeof(active) === "string"){
 		//test if the value is what we expect
 		if(active === "true" || active === "false"){
-			Admin.find({isActive: active})
-			.then(data => res.status(200).json(data))
-			.catch(err => res.status(500).send('Internal server error occured.'));
+			adminPromise = Admin.find({isActive: active});
 		}
 		else{
-			const message = 'Query value unexpected.';
-			res.status(400).send(message);
+			return res.status(400).send(queryMsg);
 		}
 	}
 	else{
-		const message = 'Query value unexpected.';
-		res.status(400).send(message);
+		return res.status(400).send(queryMsg);
 	}
+	adminPromise
+	.then(data => res.status(200).json(data))
+	.catch(err => {
+		console.log(err);
+		res.status(500).send(internalMsg)
+	});
+});
+
+//View all restaurants waiting for verification
+router.get('/restverify', (req, res) => {
+	Restaurant.find({verified: "false"})
+	.then(data => res.status(200).json(data))
+	.catch(err => {
+		console.log(err);
+		res.status(500).send(internalMsg)
+	});
+});
+
+//View all organizations waiting for verification
+router.get('/orgverify', (req, res) => {
+	Organization.find({verified: "false"})
+	.then(data => res.status(200).json(data))
+	.catch(err => {
+		console.log(err);
+		res.status(500).send(internalMsg)
+	});
 });
 
 //View a single admin account/profile
 router.get('/:id', (req, res) => {
 	Admin.findById(req.params.id)
 	.then(data => res.status(200).json(data))
-	.catch(err => res.status(500).send('Internal server error occured.'));
+	.catch(err => {
+		console.log(err);
+		res.status(500).send(internalMsg)
+	});
 });
 
 router.post('/', (req, res)=>{
@@ -51,7 +80,6 @@ router.post('/', (req, res)=>{
 		const field = requiredFields[i];
 		if(!(field in req.body)){
 			const message = `Missing ${field} in request body.`;
-			//console error the message if at least one is missing
 			console.error(message);
 			//return with a 400 staus and the error message
 			return res.status(400).send(message);
@@ -68,7 +96,7 @@ router.post('/', (req, res)=>{
 	.then(newAdmin => res.status(201).json(newAdmin))
 	.catch(err => {
 		console.log(err);
-		res.status(500).send('Internal server error occured');
+		res.status(500).send(internalMsg);
 	});
 });
 
@@ -101,14 +129,40 @@ router.put('/:id', (req, res)=>{
 		return Admin.findById(req.params.id)
 			.then(data => res.status(200).json(data));
 	})
-	.catch(err => res.status(400).send('Internal server error occured.'));
+	.catch(err => {
+		console.log(err);
+		res.status(400).send(internalMsg)
+	});
+});
+
+//update a restaurant profile/account verified property
+router.put('/restverify/:id', (req,res) => {
+	Restaurant.findByIdAndUpdate(req.params.id, {$set: {verified: "true"}})
+	.then(result => res.status(200).send('Account verified!'))
+	.catch(err => {
+		console.log(err);
+		res.status(400).send(internalMsg)
+	});
+});
+
+//update an organization profile/account verified property
+router.put('/orgverify/:id', (req,res) => {
+	Organization.findByIdAndUpdate(req.params.id, {$set: {verified: "true"}})
+	.then(result => res.status(200).send('Account verified!'))
+	.catch(err => {
+		console.log(err);
+		res.status(400).send(internalMsg)
+	});
 });
 
 //disable a specific admin profile/account by setting isActive to false
 router.delete('/:id', (req,res)=>{
 	Admin.findByIdAndUpdate(req.params.id, {$set: {isActive: "false"}})
 	.then(result=> res.status(204).end())
-	.catch(err=> res.status(400).send('Internal server error occured.'));
+	.catch(err => {
+		console.log(err);
+		res.status(400).send(internalMsg)
+	});
 });
 
 module.exports = router;

@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const adminSchema = mongoose.Schema({
 	name: {
-		firstName: String,
-		lastName: String
+		firstName: {type: String, required: true},
+		lastName: {type: String, required: true}
 	},
 	email: {
 		type: String,
@@ -11,8 +11,7 @@ const adminSchema = mongoose.Schema({
 	},
 	username: {
 		type: String,
-		required: true //,
-		//unique: true
+		required: true
 	},
 	password: {
 		type: String,
@@ -33,6 +32,6 @@ adminSchema.virtual('fullName').get(function(){
 	return `${this.name.firstName} ${this.name.lastName}`;
 });
 
-const Admin = mongoose.model('admin', adminSchema);
+const Admin = mongoose.model('Admin', adminSchema);
 
 module.exports = {Admin};

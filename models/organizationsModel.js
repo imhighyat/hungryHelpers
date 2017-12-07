@@ -14,15 +14,14 @@ const organizationSchema = mongoose.Schema({
 		required: true
 	},
 	manager: {
-		firstName: String,
-		lastName: String
+		firstName: {type: String, required: true},
+		lastName: {type: String, required: true}
 	},
 	address: {
-		building: String,
-		street: String,
-		city: String,
-		state: String,
-		zipcode: String
+		street: {type: String, required: true},
+		city: {type: String, required: true},
+		state: {type: String, required: true},
+		zipcode: {type: String, required: true}
 	},
 	email: {
 		type: String,
@@ -30,8 +29,7 @@ const organizationSchema = mongoose.Schema({
 	},
 	username: {
 		type: String,
-		required: true //,
-		//unique: true
+		required: true
 	},
 	password: {
 		type: String,
@@ -62,6 +60,6 @@ organizationSchema.virtual('fullAddress').get(function(){
 	return `${this.address.building}, ${this.address.street}, ${this.address.city}, ${this.address.state} ${this.address.zipcode}`;
 });
 
-const Organization = mongoose.model('organization', organizationSchema);
+const Organization = mongoose.model('Organization', organizationSchema);
 
 module.exports = {Organization};

@@ -5,15 +5,15 @@ const scheduleSchema = mongoose.Schema({
 		type: String,
 		required: true
 	},
-	starting: {
+	startingDate: {
 		required: true,
 		type: Date
 	},
-	ending: {
+	endingDate: {
 		required: true,
 		type: Date
 	},
-	weekday: [{
+	dayOfWeek: [{
 		required: true,
 		type: Number
 	}],
@@ -22,8 +22,9 @@ const scheduleSchema = mongoose.Schema({
 		minutes: {required: true, type: Number}
 	},
 	restaurant:{ 
-		type: mongoose.Schema.Types.ObjectId, 
-		ref: 'Restaurant'
+		type: mongoose.Schema.Types.ObjectId, //string with ID of rest
+		ref: 'Restaurant',
+		required: true
 	},
 	restPerson: {
 		type: String, 
@@ -32,9 +33,7 @@ const scheduleSchema = mongoose.Schema({
 	bookings: [{
 		date: {type: Date},
 		organization: {type: mongoose.Schema.Types.ObjectId, ref: 'Organization'},
-		orgPerson: {
-			type: String
-		}
+		orgPerson: {type: String}
 	}]
 });
 
@@ -42,6 +41,6 @@ scheduleSchema.virtual('hourMin').get(function(){
 	return `${this.time.hour}:${this.time.minutes}`;
 });
 
-const Schedule = mongoose.model('schedule', scheduleSchema);
+const Schedule = mongoose.model('Schedule', scheduleSchema);
 
 module.exports = {Schedule};
