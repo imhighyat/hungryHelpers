@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const moment = require('moment');
 
 //use ES6 promises
 mongoose.Promise = global.Promise;
@@ -49,44 +50,45 @@ router.get('/', (req,res)=>{
 router.get('/:id', (req,res)=>{
 	Schedule.findById(req.params.id).populate('restaurant')
 		.then(data => {
-			let today = new Date();
-			let finalDate = today.getDate() + 6;
-			//take the bookings data and assign it to a var for comparison later
+			let today = moment();
+			let finalDate = today.clone().add(6,'day');
 			const bookings = data.bookings;
-			//create object to put booking dates available in the next 7 weeks
 			const availBookDates = {};
-			//for loop to get a weeks dates starting from today
-			//will check the days preferred compared to the coming days
+			//loop through the days starting today + 6 days
+			//if the day matches the preferred dayOfWeek then add the date
+			//assign a value of true
 			for(let i = 0; i < 7; i++){
-    			if(data.dayOfWeek.indexOf(today.getDay() + i) > -1){
-      				availBookDates[`${today.getFullYear()}${today.getMonth() + 1}${today.getDate() + i}`] = true;
-    			}
-  			}
-  			//for loop to go through the availBookDates and check if there are dates that are past the starting date
-  			let bookDatesKeys = Object.keys(availBookDates);
-  			for(let i = 0; i < bookDatesKeys.length; i++){
-    			start = new Date(data.startingDate);
-    			if(parseInt(bookDatesKeys[i]) < parseInt(`${start.getFullYear()}${start.getMonth() + 1}${start.getDate()}`)){
-      				availBookDates[bookDatesKeys[i]] = false; 
-    			}
-  			}
-  			//for loop to go through the availBookDates and check if there are dates that are after the end date
-  			for(let i = 0; i < bookDatesKeys.length; i++){
-    			end = new Date(data.endingDate);
-    			console.log(Date.parse(bookDatesKeys[i]));
-    			if(parseInt(bookDatesKeys[i]) > parseInt(`${end.getFullYear()}${end.getMonth()+1}${end.getDate()}`)) {
-      				availBookDates[bookDatesKeys[i]] = false; 
-    			}
-  			}
-  			console.log(availBookDates);
-  			//for loop to check if date has been taken
-  			for(var i = 0; i < bookings.length; i++){
-  				let bookingDate = new Date(bookings[i].date);
-    			if(parseInt(bookDatesKeys[i]) === parseInt(`${bookingDate.getFullYear()}${bookingDate.getMonth() + 1}${bookingDate.getDate()}`)){
-      				availBookDates[bookDatesKeys[i]] = false; 
-    			}
-    		}
-    		res.status(200).json({data, availBookDates});
+				let currentDay = today.clone().add(i,'day').day();
+				if(data.dayOfWeek.indexOf(currentDay) > -1){
+					availBookDates[today.clone().add(i, 'day').format('YYYYMMDD')] = true;
+				}
+			}
+			//loop through the dates
+			//assign false to a date key that is before the start date
+			for(let bookDateKey in availBookDates){
+				start = moment(data.startingDate);
+				if (start.diff(moment(bookDateKey), 'days') > 0){
+					availBookDates[bookDateKey] = false;
+				}
+			}
+			//loop through the dates
+			//assign false to a date key that is after the end date
+			for(let bookDateKey in availBookDates){
+				end = moment(data.endingDate);
+				if (end.diff(moment(bookDateKey), 'days') < 0){
+					availBookDates[bookDateKey] = false;
+				}
+			}
+			//loop through the bookings array of the rest sched
+			//assign false to a date key that exist in the array
+			//it means that the date has been booked and is unavailable
+			for(var i = 0; i < bookings.length; i++){
+				bookingDate = moment(bookings[i].date);
+				if(availBookDates[bookingDate.format('YYYYMMDD')]){
+					availBookDates[bookingDate.format('YYYYMMDD')] = false;
+				}
+			}
+			res.status(200).json({data, availBookDates});
 		})
 		.catch(err => {
 			console.log(err);
