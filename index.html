@@ -297,6 +297,9 @@
       function w3_close() {
         mySidebar.style.display = "none";
       }
+      
+      //sets the first tab as the default clicked tab on the registration modal
+      document.getElementsByClassName("tablink")[0].click();
 
       // Switch tabs for registration modal
       function openTab(evt, regisType) {
