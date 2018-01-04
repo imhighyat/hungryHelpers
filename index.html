@@ -1,317 +1,255 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>HUNGRY | HELPERS</title>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>HUNGRY | HELPERS</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
   </head>
-
   <body>
-    <!-- Navbar (sit on top) -->
-    <div class="w3-top">
-      <!--LOGO link in horizontal bar-->
-      <div class="w3-bar w3-white" id="myNavbar">
-        <a href="#home" class="w3-bar-item w3-button w3-wide">HUNGRY | HELPERS</a>
-        <!-- Right-sided navbar links -->
-        <div class="w3-right w3-hide-small">
-          <a href="javascript:void(0)" class="w3-bar-item w3-button" onclick="document.getElementById('register').style.display='block'"><i class="fa fa-user"></i> REGISTER</a>
-          <a href="javascript:void(0)" class="w3-bar-item w3-button" onclick="document.getElementById('login').style.display='block'"><i class="fa fa-user"></i> LOG IN</a>
-          <a href="#howTo" class="w3-bar-item w3-button"><i class="fa fa-cogs"></i> HOW TO</a>
-          <a href="#contact" class="w3-bar-item w3-button"><i class="fa fa-id-card-o"></i> CONTACT</a>
-        </div>
-        <!-- Hide right-floated links on small screens and replace them with a menu icon -->
-        <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
-          <i class="fa fa-bars"></i>
-        </a>
+    <!--navigation-->
+    <nav class="fixed-nav">
+      <!--div for the logo-->
+      <div class="nav-logo">
+        <a href="#home">HUNGRY | HELPERS</a>
       </div>
-    </div>
+      <!--div for the links-->
+      <div class="nav-links">
+        <ul>
+          <li class="register-link"><a href="#register"><i class="fa fa-user"></i> REGISTER</a></li>
+          <li class="login-link"><a href="#login"><i class="fa fa-user"></i> LOG IN</a></li>
+          <li><a href="#howto"><i class="fa fa-cogs"></i> HOW TO</a></li>
+          <li><a href="#contact"><i class="fa fa-id-card-o"></i> CONTACT</a></li>
+        </ul>
+      </div>
 
-    <!-- Sidebar on small screens when clicking the menu icon -->
-    <nav class="w3-sidebar w3-bar-block w3-black w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidebar">
-      <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-medium w3-padding-24">Close ×</a>
-      <a href="javascript:void(0)" onclick="document.getElementById('register').style.display='block', w3_close()" class="w3-bar-item w3-button">REGISTER</a>
-      <a href="javascript:void(0)" onclick="document.getElementById('login').style.display='block', w3_close()" class="w3-bar-item w3-button">LOG IN</a>
-      <a href="#howTo" onclick="w3_close()" class="w3-bar-item w3-button">HOW TO</a>
-      <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">CONTACT</a>
+      <!--hamburger icon-->
+      <div class="sidebar-icon">
+        <a href="javascript:void(0)"><i class="fa fa-bars"></i></a>
+      </div>
+
+      <div class="hamburger-menu">
+        <ul>
+          <li><a class="hamburger-close" href="javascript:void(0)">&times; Close</a></li>
+          <li class="register-link"><a href="#register"><i class="fa fa-user"></i> Register</a></li>
+          <li class="login-link"><a href="#login"><i class="fa fa-user"></i> Log In</a></li>
+          <li class="howto-link"><a href="#howto"><i class="fa fa-cogs"></i> How To</a></li>
+          <li class="contact-link"><a href="#contact"><i class="fa fa-id-card-o"></i> Contact</a></li>
+        </ul>
+      </div>
     </nav>
 
-
-    <!--register modal-->
-    <div id="register" class="w3-modal w3-round">
-      <div class="w3-modal-content w3-card-4 w3-animate-zoom w3-round" style="max-width:600px">
-        <div class="w3-center"><br>
-          <div class="w3-bar">
-            <button class="tablink w3-bar-item w3-button w3-border-right w3-border-teal w3-text-blue-grey w3-large" onclick="openTab(event, 'Restaurants')"><b>Restaurants/Establishments</b></button>
-            <button class="tablink w3-bar-item w3-button w3-large w3-text-blue-grey" onclick="openTab(event, 'Organizations')"><b>Organizations/Groups</b></button>
-          </div>
-          <span onclick="document.getElementById('register').style.display='none'" class="w3-button w3-large w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
-        </div>
-        <!--RESTAURANTS TAB-->
-        <div id="Restaurants" class="w3-container typeOfReg">
-          <form class="w3-container" action="">
-            <div class="w3-section">
-              <label><b>Restaurant/Establishment Name</b></label>
-              <input class="w3-input w3-border-bottom w3-margin-bottom" style="width: 70%" type="text" placeholder="Enter name" name="name" required>
-              <label><b>Person In Charge</b></label>
-              <div class="w3-bar w3-margin-bottom">
-                <input class="w3-input w3-border-bottom w3-bar-item w3-margin-right" type="text" placeholder="Enter first name" name="fName" required>
-                <input class="w3-input w3-border-bottom w3-bar-item" type="text" placeholder="Enter last Name" name="lName" required>
-              </div>
-              <label><b>Business phone number</b></label>
-              <input class="w3-input w3-border-bottom w3-margin-bottom" style="width: 70%" type="tel" placeholder="Enter phone number" name="phone" required>
-              <label><b>Email Address</b></label>
-              <input class="w3-input w3-border-bottom w3-margin-bottom" style="width: 70%" type="email" placeholder="email@domain.com" name="email" required>
-              <label><b>Address</b></label>
-              <div class="w3-bar w3-margin-bottom">
-                <input class="w3-input w3-border-bottom w3-bar-item w3-margin-right" type="text" placeholder="Street address" name="street" required>
-                <input class="w3-input w3-border-bottom w3-bar-item" type="text" placeholder="City" name="city" required>
-              </div>
-              <div class="w3-bar w3-margin-bottom">
-                <input class="w3-input w3-border-bottom w3-bar-item w3-margin-right" type="text" placeholder="State" name="state" required>
-                <input class="w3-input w3-border-bottom w3-bar-item" type="text" placeholder="ZIP code" name="zip" required>
-              </div>
-              <label><b>Username</b></label>
-              <input class="w3-input w3-border-bottom w3-margin-bottom" style="width: 70%" type="text" placeholder="Enter preferred username" name="username" required>
-              <label><b>Password</b></label>
-              <input class="w3-input w3-border-bottom w3-margin-bottom" style="width: 70%" type="password" placeholder="Enter preferred password" name="password" required>
-            </div>
-          </form>
-          <div class="w3-container w3-border-top w3-padding-16">
-            <button onclick="document.getElementById('register').style.display='none'" type="button" class="w3-button w3-red w3-left">CANCEL</button>
-            <button class="w3-button w3-green w3-right" type="submit">CREATE ACCOUNT</button>
-          </div>
-        </div>
-        <!-- ORGANIZATIONS tab-->
-        <div id="Organizations" class="w3-container typeOfReg">
-          <form class="w3-container" action="">
-            <div class="w3-section">
-              <label><b>Organization/Group Name</b></label>
-              <input class="w3-input w3-border-bottom w3-margin-bottom" style="width: 70%" type="text" placeholder="Enter name" name="name" required>
-              <label><b>Cause Description</b></label>
-              <textarea class="w3-input w3-border-bottom w3-margin-bottom" style="width: 70%" placeholder="Tell us what your organization/group does" name="cause" rows="3" required></textarea>
-              <label><b>Person In Charge</b></label>
-              <div class="w3-bar w3-margin-bottom">
-                <input class="w3-input w3-border-bottom w3-bar-item w3-margin-right" type="text" placeholder="Enter first name" name="fName" required>
-                <input class="w3-input w3-border-bottom w3-bar-item" type="text" placeholder="Enter last name" name="lName" required>
-              </div>
-              <label><b>Business phone number</b></label>
-              <input class="w3-input w3-border-bottom w3-margin-bottom" style="width: 70%" type="tel" placeholder="Enter phone number" name="phone" required>
-              <label><b>Email Address</b></label>
-              <input class="w3-input w3-border-bottom w3-margin-bottom" style="width: 70%" type="email" placeholder="email@domain.com" name="email" required>
-              <label><b>Address</b></label>
-              <div class="w3-bar w3-margin-bottom">
-                <input class="w3-input w3-border-bottom w3-bar-item w3-margin-right" type="text" placeholder="Street address" name="street" required>
-                <input class="w3-input w3-border-bottom w3-bar-item" type="text" placeholder="City" name="city" required>
-              </div>
-              <div class="w3-bar w3-margin-bottom">
-                <input class="w3-input w3-border-bottom w3-bar-item w3-margin-right" type="text" placeholder="State" name="state" required>
-                <input class="w3-input w3-border-bottom w3-bar-item" type="text" placeholder="ZIP code" name="zip" required>
-              </div>
-              <label><b>Username</b></label>
-              <input class="w3-input w3-border-bottom w3-margin-bottom" style="width: 70%" type="text" placeholder="Enter preferred username" name="username" required>
-              <label><b>Password</b></label>
-              <input class="w3-input w3-border-bottom w3-margin-bottom" style="width: 70%" type="password" placeholder="Enter preferred password" name="password" required>
-            </div>
-          </form>
-          <div class="w3-container w3-border-top w3-padding-16">
-            <button onclick="document.getElementById('register').style.display='none'" type="button" class="w3-button w3-red w3-left">CANCEL</button>
-            <button class="w3-button w3-green w3-right" type="submit">CREATE ACCOUNT</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!--login modal-->
-    <div id="login" class="w3-modal">
-      <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
-        <div class="w3-center"><br>
-          <span onclick="document.getElementById('login').style.display='none'" class="w3-button w3-large w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
-          <img src="images/loginAvatar.jpeg" alt="Cat Log In Avatar" style="width:40%" class="w3-round-large w3-margin-top">
-        </div>
-        <form class="w3-container" action="">
-          <div class="w3-section">
-            <label><b>Username</b></label>
-            <input class="w3-input w3-border-bottom w3-margin-bottom" type="text" placeholder="Enter Username" name="usrname" required>
-            <label><b>Password</b></label>
-            <input class="w3-input w3-border-bottom" type="password" placeholder="Enter Password" name="psw" required>
-            <button class="w3-button w3-block w3-green w3-section w3-padding" type="submit">LOGIN</button>
-            <input class="w3-check w3-margin-top" type="checkbox" checked="checked"> Remember me
-          </div>
-        </form>
-        <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-          <button onclick="document.getElementById('login').style.display='none'" type="button" class="w3-button w3-red">Cancel</button>
-          <span class="w3-right w3-padding w3-hide-small">Forgot <a href="#">password?</a></span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Header with full-height image -->
-    <header class="bgimg w3-display-container" id="home">
-      <div class="w3-display-left w3-text-sand w3-card" style="padding:48px">
-        <span class="w3-xxlarge w3-hide-small">There's enough for everyone. <em>SHARE.</em></span><br>
-        <span class="w3-xlarge w3-hide-large w3-hide-medium">There's enough for everyone. <em>SHARE</em>.</span><br>
-        <span class="w3-large">Stop wasting food and donate to those who are in need instead.</span>
-        <p><a href="#howTo" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-border w3-round-large w3-hover-border-dark-gray w3-opacity w3-hover-opacity-off w3-hover-dark-gray">Learn more and start today.</a></p>
-      </div> 
-      <div class="w3-display-bottommiddle w3-text-sand w3-large w3-card" style="padding:24px 10px">
-        <i class="fa fa-facebook-official w3-hover-opacity"></i>
-        <i class="fa fa-instagram w3-hover-opacity"></i>
-        <i class="fa fa-snapchat w3-hover-opacity"></i>
-        <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-        <i class="fa fa-twitter w3-hover-opacity"></i>
-        <i class="fa fa-linkedin w3-hover-opacity"></i>
+    <!--header with full image-->
+    <header id="home">
+      <div>
+        <h1>There's enough for everyone. <em>SHARE.</em></h1>
+        <p>Stop wasting food and donate to those who are in need instead.</p>
+        <button class="learn-more-button" type="button">Learn more and start today.</button>
       </div>
     </header>
 
-    <!-- How it works Section -->
-    <div class="w3-container" style="padding:100px 16px" id="howTo">
-      <h3 class="w3-center">HOW IT WORKS <i class="fa fa-cogs fa-2x" aria-hidden="true"></i></h3>
-      <!-- for restos -->
-      <div class="w3-container w3-border-bottom w3-padding-64">
-        <h5 class="w3-leftbar w3-padding-large w3-margin-bottom w3-hover-border-black"><b>For Restaurants/Estrablishments</b><i class="fa fa-cutlery fa-2x w3-margin-left" aria-hidden="true"></i></h3>
-        <div class="w3-container w3-row-padding">
-          <div class="w3-col l3 m6 w3-margin-bottom w3-center">
-            <div class="w3-display-container w3-card w3-light-grey w3-padding w3-hover-grey">
-              <h4 class="w3-wide">REGISTER</h4>
-              <img src="images/register.jpg" alt="register" style="width:100%">
-              <p>Sign up and create your account with a few easy steps.</p>
-            </div>
+    <main>
+      <!--section for login modal-->
+      <section id="login">
+        <div class="login-wrapper">
+          <div class="login-close">
+            <button>&times;</button>
           </div>
-          <div class="w3-col l3 m6 w3-margin-bottom w3-center">
-            <div class="w3-display-container w3-card w3-light-grey w3-padding w3-hover-grey">
-              <h4 class="w3-wide">SCHEDULE</h4>
-              <img src="images/schedule.jpg" alt="schedule" style="width:100%">
-              <p>Set up your preffered schedule and time for donation.</p>
-            </div>
+          <div class="login-form">
+            <form>
+              <label>Username</label>
+              <input type="text" name="username" placeholder="Enter Username" required>
+              <label>Password</label>
+              <input type="password" name="password" placeholder="Enter Password" required>
+              <button type="submit">Log In</button>
+            </form>
           </div>
-          <div class="w3-col l3 m6 w3-margin-bottom w3-center">
-            <div class="w3-display-container w3-card w3-light-grey w3-padding w3-hover-grey">
-              <h4 class="w3-wide">WAIT</h4>
-              <img src="images/wait.jpg" alt="wait" style="width:100%">
-              <p>Wait for verified organizations/group to book your available appointments.</p>
-            </div>
+          <div class="login-cancel-forgot">
+            <button>Cancel</button>
+            <p>Forgot <a href="#">password</a>?</p>
           </div>
-          <div class="w3-col l3 m6 w3-margin-bottom w3-center">
-            <div class="w3-display-container w3-card w3-light-grey w3-padding w3-hover-grey">
-              <h4 class="w3-wide">DONATE</h4>
-              <img src="images/donate.jpg" alt="donate" style="width:100%">
-              <p>Organizations/groups will come to your location to pick up your donation.</p>
-            </div>
-          </div>
-        </div>      
-      </div>
-      <!--for orgs-->
-      <div class="w3-container w3-padding-64">
-        <h5 class="w3-leftbar w3-padding-large w3-margin-bottom w3-hover-border-black"><b>For Organizations/Charitable Groups</b><i class="fa fa-users fa-2x w3-margin-left" aria-hidden="true"></i></h3>
-        <div class="w3-row-padding">
-          <div class="w3-col l3 m6 w3-margin-bottom w3-center">
-            <div class="w3-display-container w3-card w3-light-grey w3-padding w3-hover-grey">
-              <h4 class="w3-wide">REGISTER</h4>
-              <img src="images/register.jpg" alt="register" style="width:100%">
-              <p>Sign up and create your account with a few easy steps.</p>
-            </div>
-          </div>
-          <div class="w3-col l3 m6 w3-margin-bottom w3-center">
-            <div class="w3-display-container w3-card w3-light-grey w3-padding w3-hover-grey">
-              <h4 class="w3-wide">VIEW</h4>
-              <img src="images/view.jpeg" alt="view" style="width:100%">
-              <p>View the restaurants/establishments with active schedules.</p>
-            </div>
-          </div>
-          <div class="w3-col l3 m6 w3-margin-bottom w3-center">
-            <div class="w3-display-container w3-card w3-light-grey w3-padding w3-hover-grey">
-              <h4 class="w3-wide">BOOK</h4>
-              <img src="images/appointment.jpg" alt="appointment" style="width:100%">
-              <p>Book the dates that you prefer from the available dates shown.</p>
-            </div>
-          </div>
-          <div class="w3-col l3 m6 w3-margin-bottom w3-center">
-            <div class="w3-display-container w3-card w3-light-grey w3-padding w3-hover-grey">
-              <h4 class="w3-wide">PICK-UP</h4>
-              <img src="images/pickup.jpg" alt="pickup" style="width:100%">
-              <p>Pick-up the donation from the restaurant/establishment's address.</p>
-            </div>
-          </div>
-        </div>      
-      </div>
-    </div>
-
-    <!-- Contact Section -->
-    <div class="w3-container w3-light-grey" style="padding:100px 16px" id="contact">
-      <h3 class="w3-center">CONTACT <i class="fa fa-id-card-o fa-2x" aria-hidden="true"></i></h3>
-      <p class="w3-center w3-large">Lets get in touch. Send us a message:</p>
-      <div class="w3-row-padding" style="margin-top:64px">
-        <div class="w3-third w3-center">
-          <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i> California, USA</p>
-          <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> Phone: +3109999999</p>
-          <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> Email: mail@mail.com</p>
-          <br>
         </div>
-        <div class="w3-twothird w3-center">
-          <form action="/action_page.php" target="_blank">
-            <p><input class="w3-input w3-border" type="text" placeholder="Name" required name="Name"></p>
-            <p><input class="w3-input w3-border" type="text" placeholder="Email" required name="Email"></p>
-            <p><input class="w3-input w3-border" type="text" placeholder="Subject" required name="Subject"></p>
-            <p><input class="w3-input w3-border" type="text" placeholder="Message" required name="Message"></p>
-            <p>
-              <button class="w3-button w3-dark-grey" type="submit">
-                <i class="fa fa-paper-plane"></i> SEND MESSAGE
-              </button>
-            </p>
+      </section>
+      <!--section for register modal-->
+      <section id="register">
+        <div class="register-wrapper">
+          <div class="register-types">
+            <h5>What are you registering as?</h5>
+            <div class="register-types-buttons">
+              <button class="resto-selected">Restaurants/Establishments</button>
+              <button class="org-selected">Organizations/Charitable Groups</button>
+            </div>
+            <button>Cancel</button>
+          </div>
+
+          <div class="resto-register">
+            <h4>Restaurant/Establishment Registration Form</h4>
+            <form>
+              <label>Restaurant/Establishment Name</label>
+              <input type="text" name="resto-name" placeholder="Enter name" required>
+              <label>Person In Charge</label>
+              <div class="fullname-input">
+                <input type="text" name="first-name" placeholder="Enter first name" required>
+                <input type="text" name="last-name" placeholder="Enter last name" required>
+              </div>
+              <label>Contact Number</label>
+              <input type="tel" name="phone" placeholder="Enter phone number" required>
+              <label>Email Address</label>
+              <input type="email" name="email" placeholder="Enter email address" required>
+              <label>Address</label>
+              <div class="fulladdress-input">
+                <input type="text" name="street" placeholder="Street address" required>
+                <input type="text" name="city" placeholder="City" required>
+                <input type="text" name="state" placeholder="State" required>
+                <input type="text" name="zip" placeholder="Zipcode" required>
+              </div>
+              <label>Username</label>
+              <input type="text" name="username" placeholder="Enter preferred username" required>
+              <label>Password</label>
+              <input type="password" name="password" placeholder="Enter preferred password" required>
+              <div class="reg-form-buttons">
+                <button class="cancel">Cancel</button>
+                <button class="sign-up" type="submit">Complete Registration</button>
+              </div>
+            </form>
+            <h5>Already have an account? Sign in <a class="login-link" href="#login">here</a>.</h5>
+          </div>
+
+          <div class="org-register">
+            <h4>Organizations/Charitable Groups Registration Form</h4>
+            <form>
+              <label>Organizations/Charitable Groups Name</label>
+              <input type="text" name="org-name" placeholder="Enter name" required>
+              <label>Person In Charge</label>
+              <div class="fullname-input">
+                <input type="text" name="first-name" placeholder="Enter first name" required>
+                <input type="text" name="last-name" placeholder="Enter last name" required>
+              </div>
+              <label>Cause Description</label>
+              <textarea placeholder="Tell us about your cause or what you're supporting"></textarea>
+              <label>Contact Number</label>
+              <input type="tel" name="phone" placeholder="Enter phone number" required>
+              <label>Email Address</label>
+              <input type="email" name="email" placeholder="Enter email address" required>
+              <label>Address</label>
+              <div class="fulladdress-input">
+                <input type="text" name="street" placeholder="Street address" required>
+                <input type="text" name="city" placeholder="City" required>
+                <input type="text" name="state" placeholder="State" required>
+                <input type="text" name="zip" placeholder="Zipcode" required>
+              </div>
+              <label>Username</label>
+              <input type="text" name="username" placeholder="Enter preferred username" required>
+              <label>Password</label>
+              <input type="password" name="password" placeholder="Enter preferred password" required>
+              <div class="reg-form-buttons">
+                <button class="cancel">Cancel</button>
+                <button class="sign-up" type="submit">Complete Registration</button>
+              </div>
+            </form>
+            <h5>Already have an account? Sign in <a class="login-link" href="#login">here</a>.</h5>
+          </div>
+        </div>
+      </section>
+
+
+
+
+      <!--section for how to-->
+      <section id="howto">
+        <h2>HOW IT WORKS <i class="fa fa-cogs fa-2x" aria-hidden="true"></i></h2>
+        <!--for resto-->
+        <h3>For Restaurants / Establishments <i class="fa fa-cutlery fa-2x" aria-hidden="true"></i></h3>
+        <!--row that holds the text and the thumbnails-->
+        <div class="resto-thumb-row">
+          <!--have 4 thumbnails for instructions-->
+          <div class="thumb-instructions">
+            <h4>REGISTER</h4>
+            <div class="image register"></div>
+            <p>Sign up and create your account with a few easy steps.</p>
+          </div>
+          <div class="thumb-instructions">
+            <h4>SCHEDULE</h4>
+            <div class="image schedule"></div>
+            <p>Set up your preffered schedule and time for donation.</p>
+          </div>
+          <div class="thumb-instructions">
+            <h4>WAIT</h4>
+            <div class="image wait"></div>
+            <p>Wait for verified organizations/group to book your available appointments.</p>
+          </div>
+          <div class="thumb-instructions">
+            <h4>DONATE</h4>
+            <div class="image donate"></div>
+            <p>Organizations/groups will come to your location to pick up your donation.</p>
+          </div>
+        </div>        
+        <!--for orgs-->
+        <h3>For Organizations / Charitable Groups <i class="fa fa-users fa-2x" aria-hidden="true"></i></h3>
+        <div class="org-thumb-row">
+          <!--have 4 thumbnails for instructions-->
+          <div class="thumb-instructions">
+            <h4>REGISTER</h4>
+            <div class="image register"></div>
+            <p>Sign up and create your account with a few easy steps.</p>
+          </div>
+          <div class="thumb-instructions">
+            <h4>VIEW</h4>
+            <div class="image view"></div>
+            <p>View the restaurants/establishments with active schedules.</p>
+          </div>
+          <div class="thumb-instructions">
+            <h4>BOOK</h4>
+            <div class="image book"></div>
+            <p>Book the dates that you prefer from the available dates shown.</p>
+          </div>
+          <div class="thumb-instructions">
+            <h4>PICK UP</h4>
+            <div class="image pickup"></div>
+            <p>Pick-up the donation from the restaurant/establishment's address.</p>
+          </div>
+        </div>  
+      </section>
+      
+      <!--section for contact us-->
+      <section id="contact">
+        <h2>CONTACT US <i class="fa fa-id-card-o fa-2x" aria-hidden="true"></i></h2>
+        <p>Lets get in touch. Send us a message:</p>
+        <!--for our contact info-->
+        <div class="our-info">
+          <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i> California, USA</p>
+          <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> Phone: +3109625803</p>
+          <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> Email: mail@mail.com</p>
+        </div>
+        <!--form for sending message-->
+        <div class="contact-form">
+          <form action="#">
+            <input class="" type="text" placeholder="Name" required name="name">
+            <input class="" type="text" placeholder="Email" required name="email">
+            <input class="" type="text" placeholder="Subject" required name="subject">
+            <input class="" type="text" placeholder="Message" required name="message">
+            <button class="" type="submit"><i class="fa fa-paper-plane"></i> SEND MESSAGE</button>
           </form>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- Footer -->
-    <footer class="w3-center w3-dark-grey w3-padding-32">
-      <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>Back to top</a>
-      <div class="w3-xlarge w3-section">
-        <i class="fa fa-facebook-official w3-hover-opacity"></i>
-        <i class="fa fa-instagram w3-hover-opacity"></i>
-        <i class="fa fa-snapchat w3-hover-opacity"></i>
-        <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-        <i class="fa fa-twitter w3-hover-opacity"></i>
-        <i class="fa fa-linkedin w3-hover-opacity"></i>
+      <footer>
+      <a href="#home"><i class="fa fa-arrow-up"></i> BACK TO TOP</a>
+      <div class="icons">
+        <a href="#"><i class="fa fa-facebook-official"></i></a>
+        <a href="#"><i class="fa fa-instagram"></i></a>
+        <a href="#"><i class="fa fa-snapchat"></i></a>
+        <a href="#"><i class="fa fa-pinterest-p"></i></a>
+        <a href="#"><i class="fa fa-twitter"></i></a>
+        <a href="#"><i class="fa fa-linkedin"></i></a>
       </div>
     </footer>
+    </main>
 
-    <script>
-      // Toggle between showing and hiding the sidebar when clicking the menu icon
-      var mySidebar = document.getElementById("mySidebar");
-
-      function w3_open() {
-        if (mySidebar.style.display === 'block') {
-          mySidebar.style.display = 'none';
-        } 
-        else {
-          mySidebar.style.display = 'block';
-        }
-      }
-
-      // Close the sidebar with the close button
-      function w3_close() {
-        mySidebar.style.display = "none";
-      }
-
-      // Switch tabs for registration modal
-      function openTab(evt, regisType) {
-        var i, x, tablinks;
-        x = document.getElementsByClassName("typeOfReg");
-        for (i = 0; i < x.length; i++) {
-          x[i].style.display = "none";
-        }
-        tablinks = document.getElementsByClassName("tablink");
-        for (i = 0; i < x.length; i++) {
-          tablinks[i].classList.remove("w3-light-grey");
-        }
-        document.getElementById(regisType).style.display = "block";
-        evt.currentTarget.classList.add("w3-light-grey");
-      }
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/index.js"></script>
   </body>
 </html>

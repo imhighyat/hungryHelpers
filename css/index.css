@@ -1,23 +1,1128 @@
-body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
-body, html {
-    height: 100%;
-    line-height: 1.8;
+*{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
-.bgimg {
-    background-position: center;
-    background-size: cover;
-    background-image: url("../images/mainImage.jpg");
-    min-height: 100%;
-}
-.w3-bar .w3-button {
-    padding: 16px;
+body{
+	font-family: 'Raleway', sans-serif;
+	min-width: 320px;
+	min-height: 530px;
 }
 
-.w3-top{
-  font-weight: bolder;
+.fixed-nav{
+	width: 100%;
+	position: fixed;
+	background-color: #ffffff;
+	font-weight: bold;
+	z-index: 1;
 }
 
-input, textarea{
-  outline: none;
+.fixed-nav:before,
+.fixed-nav:after{
+	content: "";
+	clear: both;
+}
+
+.nav-logo{
+	display: inline-block;
+	float: left;
+	letter-spacing: .3rem;
+	line-height: 3rem;
+	padding: 0 2rem;
+}
+
+.nav-logo a{
+	text-decoration: none;
+	color: #000000;
+}
+
+.nav-links{
+	display: inline-block;
+	float: right;
+}
+
+.nav-links li{
+	display: inline-block;
+	padding: 0 2rem;
+	line-height: 3rem;
+}
+
+.nav-links a{
+	text-decoration: none;
+	color: #000000;
+}
+
+.nav-links li:hover,
+.nav-logo:hover {
+	background-color: #e7e5e5;
+}
+
+header{
+	position: relative;
+	height: 100vh;
+	background-image: url("../images/mainImage.jpg");
+	background-size: cover;
+	background-position: center;
+	color: #ffffff;
+	overflow: hidden;
+}
+
+header div{
+	position: relative;
+	top: 35%;
+	left: 5%;
+	font-weight: lighter;
+	line-height: 4rem;
+}
+
+header p{
+	font-size: 18px;
+}
+
+.learn-more-button{
+	border-radius: 8px;
+	outline: none;
+	border-style: none;
+	padding: 1rem 2rem;
+	font-family: 'Raleway', sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	opacity: .8;
+}
+
+.learn-more-button:hover {
+	background-color: #9a9999;
+	opacity: 1;
+	cursor: pointer;
+}
+
+.hamburger-menu,
+.sidebar-icon {
+	display: none;
+}
+
+#login{
+	display: none;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 3;
+	background-color: rgba(0,0,0,0.6);
+}
+
+.login-wrapper{
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #ffffff;
+	width: 40%;
+	height: 50%;
+	margin: 0 auto;
+	min-height: 25rem;
+	max-width: 38rem;
+	border-radius: 5px;
+}
+
+.login-close{
+	text-align: right;
+	padding-bottom: 2rem;
+}
+
+.login-close button{
+	font-size: 24px;
+	border: none;
+	width: 3rem;
+	height: 3rem;
+	background-color: #ffffff;
+	border-top-right-radius: 5px;
+	outline: none;
+}
+
+.login-close button:hover{
+	background-color: #ff4c4c;
+	color: #ffffff;
+	cursor: pointer;
+	border-bottom-left-radius: 5px;
+}
+
+.login-form{
+	width: 90%;
+	margin: 0 auto;
+}
+
+.login-form label{
+	display: block;
+	font-weight: bold;
+	padding: .5rem 0;
+}
+
+.login-form input{
+	display: block;
+	width: 100%;
+	border-style: none;
+	padding: .5rem;
+	margin-bottom: 1rem;
+	border-bottom: 1px solid #cccccc;
+	outline: none;
+	font-size: 15px;
+}
+
+.login-form button{
+	width: 100%;
+	padding: .7rem 0;
+	border-style: none;
+	outline: none;
+	background-color: #83d387;
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+	border-radius: 5px;
+}
+
+.login-form button:hover{
+	cursor: pointer;
+	background-color: #4caf50;
+}
+
+.login-cancel-forgot{
+	width: 90%;
+	height: 3rem;
+	margin: 0 auto;
+	margin-top: 3rem;
+}
+
+.login-cancel-forgot:before,
+.login-cancel-forgot:after{
+	content: "";
+	clear: both;
+}
+
+.login-cancel-forgot button{
+	display: inline-block;
+	float: left;
+	width: 5rem;
+	border-style: none;
+	outline: none;
+	height: 3rem;
+	background-color: #eb8e87;
+	color: #ffffff;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.login-cancel-forgot button:hover{
+	background-color: #ff4c4c;
+}
+
+.login-cancel-forgot p{
+	display: inline-block;
+	float: right;
+	line-height: 3rem;
+}
+
+.login-cancel-forgot a{
+	color: inherit;
+	text-decoration: underline;
+}
+
+#register{
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding-top: 5rem;
+	padding-bottom: 5rem;
+	width: 100%;
+	height: 100%;
+	z-index: 3;
+	background-color: rgba(0,0,0,0.6);
+	overflow: auto;
+}
+
+.register-wrapper{
+	background-color: #ffffff;
+	width: 40%;
+	margin: auto;
+	border-radius: 5px;
+	max-width: 38rem;
+}
+
+.register-types{
+	width: 100%;
+	text-align: center;
+	padding: 2rem;
+	margin-top: 8rem;
+}
+
+.register-types > h5{
+	padding-bottom: 2rem;
+	font-size: 16px;
+}
+
+.register-types-buttons{
+	width: 100%;
+	height: 5rem;
+}
+
+.register-types-buttons:before,
+.register-types-buttons:after{
+	content: "";
+	clear: both;
+}
+
+.resto-selected,
+.org-selected{
+	display: inline-block;
+	width: 45%;
+	height: 3rem;
+	border-style: none;
+	outline: none;
+	background-color: #396c89;
+	color: #ffffff;
+	border-radius: 5px;
+	font-size: 15px;
+	cursor: pointer;
+}
+
+.resto-selected{
+	float: left;
+}
+
+.org-selected{
+	float: right;
+}
+
+.resto-selected:hover,
+.org-selected:hover{
+	background-color: #296839;
+}
+
+.register-types > button{
+	background-color: #eb8e87;
+	width: 8rem;
+	height: 3rem;
+	border-style: none;
+	outline: none;
+	border-radius: 5px;
+	font-size: 15px;
+	color: #ffffff;
+	cursor: pointer;
+}
+
+.register-types > button:hover{
+	background-color: #ff4c4c;
+}
+
+
+.resto-register{
+	display: none;
+	width: 90%;
+	margin:  auto;
+}
+
+.resto-register > h4,
+.org-register > h4{
+	text-align: center;
+	padding-top: 2rem;
+	font-size: 18px;
+	color: #396c89;
+}
+
+.resto-register > form,
+.org-register > form{
+	padding: 1rem 0;
+}
+
+.resto-register label,
+.resto-register input,
+.org-register label,
+.org-register input,
+.org-register textarea{
+	display: block;
+	margin: 1rem;
+}
+
+.resto-register label,
+.org-register label{
+	font-weight: bold;
+	font-size: 15px;
+
+}
+
+.resto-register input,
+.org-register input{
+	border-style: none;
+    border-bottom: 1px solid gray;
+    width: 90%;
+    outline: none;
+    padding: .5rem;
+    font-size: 14px;
+}
+
+.org-register textarea{
+    width: 90%;
+    outline: none;
+    padding: .5rem;
+    font-size: 14px;
+    height: 7rem;
+}
+
+.fullname-input input{
+	width: 40%;
+	display: inline-block;
+
+}
+
+.fulladdress-input input{
+	width: 40%;
+	display: inline-block;
+}
+
+.reg-form-buttons{
+	margin-top: 2rem;
+	height: 4rem;
+}
+
+.reg-form-buttons button{
+	width: 11rem;
+	height: 3rem;
+	outline: none;
+	border-style: none;
+	border-radius: 5px;
+	color: white;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.reg-form-buttons button:before,
+.reg-form-buttons button:after{
+	content: "";
+	clear: both;
+}
+
+.reg-form-buttons .cancel{
+	float: left;
+	background-color: #eb8e87;
+}
+
+.reg-form-buttons .sign-up{
+	float: right;
+	background-color: #83d387;
+}
+
+.reg-form-buttons .cancel:hover{
+	background-color: #ff4c4c;
+}
+
+.reg-form-buttons .sign-up:hover{
+	background-color: #4caf50;
+}
+
+.resto-register > h5,
+.org-register > h5{
+	text-align: center;
+	padding: 2rem 0;
+	font-size: 14px;
+}
+
+.resto-register > h5 > a,
+.org-register > h5 > a{
+	color: #000000;
+}
+
+.resto-register > h5 > a:hover,
+.org-register > h5 > a:hover{
+	color: blue;
+}
+
+.org-register{
+	display: none;
+	width: 90%;
+	margin:  auto; 	
+}
+
+#howto,
+#contact {
+	padding: 5rem 2rem 0 2rem;
+}
+
+#howto h2,
+#contact h2,
+#contact > p{
+	text-align: center;
+	padding-bottom: 2rem;
+}
+
+#howto h3{
+	padding-bottom: 2rem;
+}
+
+#howto:before,
+#howto:after,
+#contact:before,
+#contact:after{
+	content: "";
+	clear: both;
+}
+
+.resto-thumb-row{
+	padding-bottom: 3rem;
+	height: 70vh;
+	border-bottom: 2px solid #d2dde7;
+	margin-bottom: 3rem;
+}
+
+.org-thumb-row{
+	padding-bottom: 3rem;
+	height: 70vh;
+}
+
+.thumb-instructions{
+	padding: 1rem;	
+	display: inline-block;
+	position: relative;
+	width: 23%;
+	float: left;
+	height: 90%;
+	margin: 0 1%;
+	min-height: 10rem;
+	border-radius: 5px;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+	text-align: center;
+	overflow: hidden;
+}
+
+.thumb-instructions:hover{
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+	background-color: #f0f3f6;
+
+}
+
+.thumb-instructions h4{
+	letter-spacing: .5rem;
+}
+
+.thumb-instructions p{
+	font-size: 14px;
+}
+
+.thumb-instructions .image{
+	margin: 1rem 0;
+	height: 70%;
+	width: 100%;
+	background-position: center;
+	background-size: cover;
+}
+
+.register{
+	background-image: url("../images/register.jpg");
+}
+
+.schedule{
+	background-image: url("../images/schedule.jpg");
+}
+
+.wait{
+	background-image: url("../images/wait.jpg");
+}
+
+.donate{
+	background-image: url("../images/donate.jpg");
+}
+
+.view{
+	background-image: url("../images/view.jpeg");
+}
+
+.book{
+	background-image: url("../images/appointment.jpg");
+}
+
+.pickup{
+	background-image: url("../images/pickup.jpg");
+}
+
+#contact{
+	height: auto;
+	width: 100%;
+	background-color: #f0f3f6;
+	padding-bottom: 5rem;
+}
+
+.our-info{
+	display: inline-block;
+	float: left;
+	width: 25%;
+	padding: 3.5rem 1rem;
+	
+}
+
+.our-info p{
+	text-align: right;
+	padding-bottom: 2rem;
+}
+}
+
+.contact-form{
+	display: inline-block;
+	float: right;
+	width: 75%;
+}
+
+.contact-form input{
+	display: block;
+	margin: 1rem auto;
+	width: 70%;
+	height: 2.5rem;
+	padding: 1rem;
+	outline: none;
+	border-radius: 5px;
+	border-style: none;
+}
+
+.contact-form button{
+	display: block;
+	width: 10rem;
+	height: 2.5rem;
+	padding: .5rem;
+	margin: 1rem auto;
+	color: #ffffff;
+	background-color: #616161;
+	outline: none;
+	border-style: none;
+	border-radius: 5px;
+}
+
+.contact-form button:hover{
+	color: #000000;
+	background-color: #cccccc;
+}
+
+footer{
+	width: 100%;
+	padding: 2rem;
+	background-color: #616161;
+	height: auto;
+}
+
+footer > a{
+	display: block;
+	margin: 1rem auto;
+	background-color: #cccccc;
+	text-decoration: none;
+	color: #000000;
+	width: 10%;
+	padding: .5rem;
+	text-align: center;
+	border-radius: 5px;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+footer > a:hover{
+	opacity: .7;
+}
+
+.icons{
+	text-align: center;
+	margin: 1rem auto;
+}
+
+.icons a{
+	text-decoration: none;
+	color: #000000;
+	color: #ffffff;
+}
+
+.icons a:hover{
+	opacity: .5;
+}
+
+
+
+/* media queries*/
+@media only screen and (max-width: 420px){
+	.nav-logo{
+		letter-spacing: 0;
+		padding: 0 1rem;
+	}
+
+	.hamburger-menu{
+		width: 10rem;
+	}
+
+	.sidebar-icon{
+		padding: 0 1.5rem;
+	}
+
+	header div{
+		top: 30%;
+		left: 0;
+		width: 90%;
+		margin: 0 auto;
+		line-height: normal;
+		padding: 0 1rem;
+		text-align: center;
+	}
+
+	header div h1{
+		font-weight: lighter;
+		font-size: 20px;
+		padding-bottom: 1rem;
+	}
+
+	header div p{
+		font-size: 14px;
+		padding: 1rem 0;
+	}
+
+	.learn-more-button{
+		margin-top: 1rem;
+		padding: .5rem .5rem;
+		font-size: 14px;
+	}
+
+	#howto{
+		min-height: 3200px;
+	}
+
+	.register-wrapper{
+		width: 90%;
+	}
+
+	.register-types{
+		margin-top: 3rem;
+		padding: 1rem;
+	}
+
+	.register-types > h5{
+		font-size: 14px;
+		padding-bottom: 1rem;
+	}
+
+	.resto-selected, .org-selected{
+		width: 100%;
+		height: 2rem;
+		font-size: 13px;
+		margin-bottom: 1.5rem;
+	}
+	.register-types > button{
+		width: 5rem;
+		height: 2rem;
+		font-size: 13px;
+		font-weight: bold;
+	}
+
+	.resto-register > h4,
+	.org-register > h4{
+		 font-size: 14px;
+	}
+
+	.resto-register label,
+	.resto-register input,
+	.org-register label,
+	.org-register input,
+	.org-register textarea{
+		margin: 1rem 0;
+	}
+
+	.resto-register label,
+	.org-register label{
+	    font-size: 14px;
+	}
+
+	.resto-register input,
+	.org-register input{
+		padding: 0;
+	    font-size: 13px;
+	}
+
+	.org-register textarea{
+		padding: .5rem;
+	    font-size: 13px;
+	}
+
+	.fullname-input input,
+	.fulladdress-input input{
+		width: 47%;
+	}
+
+	.reg-form-buttons{
+		height: 1rem;
+	}
+
+	.reg-form-buttons button{
+		width: 45%;
+	    height: 2rem;
+		font-size: 12px;
+	}
+
+	.resto-register > h5,
+	.org-register > h5{
+		font-size: 12px;
+	}
+}
+
+@media only screen and (max-width: 540px){
+	#howto h2,
+	#contact h2{
+    	font-size: 18px;
+	}
+
+	#howto i,
+	#contact i{
+		display: none;
+	}
+
+	#howto h3{
+		font-size: 16px;
+    	text-align: center;
+	}
+
+	.thumb-instructions h4{
+		letter-spacing: 0;
+		font-size: 15px;
+	}
+
+	.resto-thumb-row{
+		overflow: auto;
+		height: auto;
+	}
+
+	.thumb-instructions{
+		width: 90%;
+		height: 20rem;
+		margin-bottom: 2rem;
+		float: none;
+    	display: block;
+    	margin-left: auto;
+    	margin-right: auto;
+	}
+
+	#howto{
+		min-height: 3200px;
+	}
+
+	.our-info{
+		width: 100%;
+		padding: 1rem;
+	}
+
+	.our-info p{
+		text-align: center;
+	}
+
+	.contact-form{
+		width: 100%;
+		padding: 0;
+	}
+
+	.contact-form input{
+		width: 90%;
+		height: 1.5rem;
+	}
+
+	#contact{
+		padding: 2rem;
+	}
+
+	#contact p{
+		font-size: 14px;
+	}
+
+	.contact-form button{
+		font-size: 12px;
+	}
+
+	footer{
+		padding: 1rem;
+	}
+
+	footer > a{
+		width: 10rem;
+	}
+}
+
+@media only screen and (min-width: 541px) and (max-width: 1023px){
+	.thumb-instructions h4{
+		letter-spacing: normal;
+	}
+
+	.resto-thumb-row{
+		overflow: auto;
+		height: auto;
+	}
+
+	.thumb-instructions{
+		width: 48%;
+		height: 20rem;
+		margin-bottom: 2rem;
+	}
+
+	#howto{
+		min-height: 1850px;
+	}
+
+	.our-info{
+		width: 100%;
+		padding: 1rem;
+	}
+
+	.our-info p{
+		text-align: center;
+	}
+
+	.contact-form{
+		width: 100%;
+		padding: 0;
+	}
+
+	.contact-form input{
+		width: 90%;
+		height: 1.5rem;
+	}
+
+	#contact{
+		padding: 2rem;
+	}
+
+	footer{
+		padding: 1rem;
+	}
+
+	footer > a{
+		width: 10rem;
+	}
+
+	.register-wrapper{
+		width: 90%;
+	}
+
+	.register-types{
+		margin-top: 5rem;
+		padding: .5rem;
+	}
+
+	.register-types h5{
+		margin-top: 1rem;
+	}
+
+	.resto-selected, .org-selected{
+		width: 49%;
+		font-size: 14px;
+	}
+
+	.register-types > button{
+		width: 6rem;
+		height: 2rem;
+		font-size: 14px;
+		font-weight: bold;
+		margin-bottom: 1rem;
+	}
+}
+
+@media only screen and (min-width:421px) and (max-width: 650px){
+	.nav-logo{
+	letter-spacing: 1;
+	padding: 0 1rem;
+	}
+
+	.hamburger-menu{
+		width: 10rem;
+	}
+
+	.sidebar-icon{
+		padding: 0 1.5rem;
+	}
+
+	header div{
+		top: 30%;
+		left: 0;
+		width: 90%;
+		margin: 0 auto;
+		line-height: normal;
+		padding: 0 1rem;
+		text-align: center;
+	}
+
+	header div h1{
+		font-weight: bold;
+		font-size: 24px;
+		padding-bottom: 1rem;
+	}
+
+	header div p{
+		font-size: 18px;
+		padding: 1rem 0;
+	}
+
+	.learn-more-button{
+		margin-top: 1rem;
+		padding: 1rem 1rem;
+		font-size: 16px;
+	}
+
+	.register-wrapper{
+		width: 90%;
+	}
+
+	.register-types{
+		margin-top: 5rem;
+		padding: .5rem;
+	}
+
+	.register-types h5{
+		margin-top: 1rem;
+	}
+
+	.resto-selected, .org-selected{
+		width: 49%;
+		font-size: 14px;
+	}
+
+	.register-types > button{
+		width: 6rem;
+		height: 2rem;
+		font-size: 14px;
+		font-weight: bold;
+		margin-bottom: 1rem;
+	}
+
+	.resto-register > h4,
+	.org-register > h4{
+		 font-size: 14px;
+	}
+
+	.resto-register label,
+	.resto-register input,
+	.org-register label,
+	.org-register input{
+		margin: 1rem 0;
+	}
+
+	.resto-register label,
+	.org-register label{
+	    font-size: 14px;
+	}
+
+	.resto-register input,
+	.org-register input{
+		padding: 0;
+	    font-size: 13px;
+	}
+
+	.fullname-input input,
+	.fulladdress-input input{
+		width: 47%;
+	}
+
+	.reg-form-buttons{
+		height: 1rem;
+	}
+
+	.reg-form-buttons button{
+		width: 45%;
+	    height: 2rem;
+		font-size: 12px;
+	}
+
+	.resto-register > h5,
+	.org-register > h5{
+		font-size: 12px;
+	}
+}
+
+@media only screen and (max-width: 950px){
+	.login-wrapper{
+		width: 90%;
+	}
+
+	.login-close button{
+		background-color: #ff4c4c;
+		color: #ffffff;
+		border-bottom-left-radius: 5px;
+	}
+
+	.login-cancel-forgot button{
+		background-color: #ff4c4c;
+	}
+
+	.login-form button{
+		background-color: #4caf50;
+	}
+
+	.nav-links{
+		display: none;
+	}
+
+	/*should be displayed inline-block with jQuery*/
+	.hamburger-menu{
+		position: absolute;
+		width: 15rem;
+		right: 0;
+		display: none;
+		background-color: #000000;
+		text-align: center;
+		font-weight: lighter;
+		height: 100vh;
+		opacity: .9;
+	}
+
+	.hamburger-menu a{
+		color: #ffffff;
+		text-decoration: none;
+	}
+
+	.hamburger-menu li{
+		list-style-type: none;
+		padding: 1rem 0;
+	}
+
+	.hamburger-menu li:hover{
+		background-color: #9a9999;
+		color: #000000;
+	}
+
+	.hamburger-menu a:hover{
+		color: #000000;
+	}
+
+	.sidebar-icon{
+		display: inline-block;
+		float: right;
+		padding: 0 2.5rem;
+		line-height: 3rem;
+	}
+
+	.sidebar-icon a{
+		color: black;
+	}
+}
+
+@media only screen and (max-width: 1270px) and (min-width: 1023px){
+	.register-types{
+		margin-top: 5rem;
+		padding: .5rem;
+	}
+
+	.register-types h5{
+		margin-top: 1rem;
+	}
+
+	.resto-selected, .org-selected{
+		width: 49%;
+		font-size: 14px;
+	}
+
+	.register-types > button{
+		width: 6rem;
+		height: 2rem;
+		font-size: 14px;
+		font-weight: bold;
+		margin-bottom: 1rem;
+	}
 }
