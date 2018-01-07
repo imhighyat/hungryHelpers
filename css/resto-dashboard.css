@@ -1,0 +1,624 @@
+*{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	font-family: 'Raleway', sans-serif;
+	min-width: 320px;
+	min-height: 530px;
+}
+
+.fixed-nav{
+	width: 100%;
+	position: fixed;
+	background-color: #ffffff;
+	font-weight: bold;
+	z-index: 2;
+}
+
+.fixed-nav:before,
+.fixed-nav:after{
+	content: "";
+	clear: both;
+}
+
+.nav-logo{
+	display: inline-block;
+	float: left;
+	letter-spacing: .3rem;
+	line-height: 3rem;
+	padding: 0 2rem;
+}
+
+.nav-logo a{
+	text-decoration: none;
+	color: #000000;
+}
+
+.nav-links{
+	display: inline-block;
+	float: right;
+}
+
+.nav-links li{
+	display: inline-block;
+	padding: 0 2rem;
+	line-height: 3rem;
+}
+
+.nav-links a{
+	text-decoration: none;
+	color: #000000;
+}
+
+.nav-links li:hover,
+.nav-logo:hover {
+	background-color: #e7e5e5;
+}
+
+main{
+	position: relative;
+	height: 100vh;
+	background-image: url("../images/dashboard.jpeg");
+	background-size: cover;
+	background-position: center;
+	overflow: hidden;
+}
+
+.hamburger-menu,
+.sidebar-icon {
+	display: none;
+}
+
+.modal-dashboard{
+	z-index: 1;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.5);
+	padding: 5rem 0;
+	overflow: auto;
+}
+
+.profile-card{
+	background-color: #ffffff;
+	width: 70%;
+	margin: auto;
+	border-radius: 5px;
+	padding: 2rem;
+	min-height: 38rem;
+	max-width: 70rem;
+}
+
+.profile-card > h3{
+	margin-bottom: 2rem;
+	font-style: italic;
+	font-weight: normal;
+}
+
+.profile-nav{
+	width: 80%;
+	height: 2rem;
+	margin: 1rem auto;
+	text-align: center;
+}
+
+.profile-nav:before,
+.profile-nav:after{
+	content: "";
+	clear: both;
+}
+
+.profile-nav > a{
+	text-decoration: none;
+	color: #000000;
+	display: inline-block;
+	font-weight: bold;
+	font-size: 18px;
+	float: left;
+	width: 45%;
+	line-height: 2rem;
+}
+
+.upcoming-donations{
+	margin-right: 1rem;
+}
+
+.account-settings{
+	margin-left: 1rem;
+}
+
+.js-donation-list{
+	display: none;
+	width: 100%;
+	height: auto;
+    overflow: auto;
+}
+
+.js-donation-list:before,
+.js-donation-list:after{
+	content: "";
+	clear: both;
+}
+
+table{
+  margin: 1rem auto;
+}
+
+table, th, td {
+    border: 1px solid #000000;
+    border-collapse: collapse;
+}
+
+td, th{
+  padding: 1rem 2rem;
+  text-align: center;
+}
+
+th{
+  background-color: #3a3f55;
+  color: #ffffff;
+}
+
+tr:nth-child(even){
+  background-color: #e3e9f1;
+}
+
+td > a{
+  text-decoration: none;
+}
+
+.js-account-settings{
+	width: 90%;
+	height: auto;
+    overflow: auto;
+    padding: 1rem;
+    margin: 0 auto;
+}
+
+.js-account-settings > h3{
+	text-align: center;
+	margin-bottom: 1rem;
+	color: #3a3f55;
+}
+
+.js-account-settings div{
+	width: 100%;
+	margin-bottom: 1rem;
+	overflow: auto;
+}
+
+.js-account-settings h4{
+	color: #3a3f55;
+	margin: 1rem 0;
+}
+
+.js-resto-name p,
+.js-contact input,
+.js-email input,
+.js-username p,
+.js-password input,
+input[name=first-name],
+input[name=street]{
+	margin-left: 2rem;
+}
+
+.js-incharge input{
+	width: 15%;
+	float: left;
+	margin-right: 1rem;
+}
+
+.js-incharge:before,
+.js-incharge:after{
+	content: "";
+	clear: both;
+}
+
+.js-account-settings input{
+	font-family: 'Raleway', sans-serif;
+	font-size: 16px;
+	border-style: none;
+	outline: none;
+	padding-left: 1rem;
+}
+
+.js-address input{
+	width: 20%;
+	float: left;
+	margin-right: 1rem;
+	overflow: auto;
+}
+
+.js-address:before,
+.js-address:after{
+	content: "";
+	clear: both;
+}
+
+.account-settings-buttons{
+	width: 100%;
+	text-align: center;
+}
+
+.edit-details,
+.save-changes{
+	width: 10rem;
+	padding: 1rem;
+	margin: 0 1rem;
+	border-radius: 5px;
+	border-style: none;
+	font-family: 'Raleway', sans-serif;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.edit-details{
+	background-color: #257197;
+	opacity: .7;
+	color: #ffffff;
+}
+
+.save-changes{
+	background-color: #217e38;
+	opacity: .7;
+	color: #ffffff;
+}
+
+.edit-details:hover,
+.save-changes:hover{
+	opacity: 1;
+	cursor: pointer;
+}
+
+
+/* media queries*/
+@media only screen and (max-width: 420px){
+	.nav-logo{
+		letter-spacing: 0;
+		padding: 0 1rem;
+	}
+
+	.hamburger-menu{
+		width: 10rem;
+	}
+
+	.sidebar-icon{
+		padding: 0 1.5rem;
+	}
+
+	.profile-card > h3{
+		margin-bottom: 1rem;
+		font-size: 14px;
+	    text-align: center;
+	}
+
+	.profile-nav{
+		height: 1rem;
+		margin: 0 auto;
+		width: 100%;
+	}
+
+	.profile-nav > a{
+		line-height: normal;
+		font-size: 14px;
+		width: 50%;
+		text-align: center;
+	}
+
+	.profile-card{
+		min-height: 20rem;
+	}
+
+	th,td{
+		padding: 1rem 0;
+		font-size: 14px;
+	}
+
+	th > .fa{
+		display: none;
+	}
+
+	th{
+		font-weight: normal;
+	}
+
+	.js-account-settings{
+		width: 100%;
+		padding: 0;
+		margin-top: 3rem;
+	}
+
+	.js-account-settings div{
+		margin-bottom: .5rem;
+	}
+
+	.js-account-settings > h3{
+		font-size: 14px;
+	}
+
+	.js-account-settings h4{
+		margin: .5rem 0;
+		font-size: 14px;
+	}
+
+	.js-resto-name p,
+	.js-contact input,
+	.js-email input,
+	.js-username p,
+	.js-password input,
+	input[name=first-name],
+	input[name=street]{
+		margin-left: 0;
+	}
+
+	.js-resto-name p,
+	.js-username p,
+	.js-account-settings input{
+		font-size: 14px;
+	}
+
+	.js-account-settings input{
+		padding-left: 0;
+	}
+
+	.js-incharge input{
+		width: 45%;
+		max-width: 5rem;
+		float: left;
+		margin-right: .5rem;
+	}
+
+	.js-address input{
+		width: 90%;
+	}
+
+	.edit-details,
+	.save-changes{
+		width: 7rem;
+		padding: .5rem 0;
+		margin: 0 .5rem;
+		font-size: 13px;
+		opacity: 1;
+	}
+
+	.edit-details{
+		float: left;
+	}
+
+	.save-changes{
+		float: right;
+	}
+
+	.account-settings-buttons:before,
+	.account-settings-buttons:after{
+		content: "";
+		clear: both;
+	}
+}
+
+@media only screen and (min-width:421px) and (max-width: 650px){
+	.nav-logo{
+		letter-spacing: 1;
+		padding: 0 1rem;
+	}
+
+	.hamburger-menu{
+		width: 10rem;
+	}
+
+	.sidebar-icon{
+		padding: 0 1.5rem;
+	}
+
+	.profile-nav{
+		height: 1rem;
+		margin: 0 auto;
+		width: 100%;
+	}
+
+	.profile-nav > a{
+		line-height: normal;
+		font-size: 14px;
+		width: 50%;
+		text-align: center;
+	}
+
+	.profile-card{
+		min-height: 25rem;
+	}
+
+	.profile-card > h3{
+		margin-bottom: 1rem;
+		font-size: 14px;
+	    text-align: center;
+	}
+
+	th,td{
+		padding: 1rem .5rem;
+		font-size: 14px;
+	}
+
+	th > .fa{
+		display: none;
+	}
+
+	.js-account-settings{
+		width: 100%;
+		padding: 0 1rem;
+		margin-top: 2rem;
+	}
+
+	.js-account-settings div{
+		margin-bottom: 1rem;
+	}
+
+	.js-account-settings > h3{
+		font-size: 16px;
+	}
+
+	.js-account-settings h4{
+		margin: .5rem 0;
+		font-size: 15px;
+	}
+
+	.js-resto-name p,
+	.js-contact input,
+	.js-email input,
+	.js-username p,
+	.js-password input,
+	input[name=first-name],
+	input[name=street],
+	input[name=state]{
+		margin-left: 1rem;
+	}
+
+	.js-resto-name p,
+	.js-username p,
+	.js-account-settings input{
+		font-size: 15px;
+	}
+
+	.js-account-settings input{
+		padding-left: 0;
+	}
+
+	.js-incharge input{
+		width: 45%;
+		margin-right: .5rem;
+	}
+
+	.js-address input{
+		width: 40%;
+	}
+
+	.edit-details,
+	.save-changes{
+		width: 7rem;
+		padding: .5rem 0;
+		margin: 0 .5rem;
+		font-size: 14px;
+		opacity: 1;
+	}
+
+	.edit-details{
+		float: none;
+	}
+
+	.save-changes{
+		float: none;
+	}
+
+	.account-settings-buttons:before,
+	.account-settings-buttons:after{
+		content: "";
+		clear: both;
+	}
+}
+
+@media only screen and (min-width: 650px) and (max-width: 950px){
+	.profile-card > h3{
+		font-size: 16px;
+		margin-bottom: 1rem;
+	    text-align: center;
+	}
+
+	.profile-nav{
+		height: 1rem;
+		margin: 0 2rem;
+		width: 90%;
+	}
+
+	.profile-nav > a{
+		line-height: normal;
+		font-size: 16px;
+		width: 50%;
+		text-align: center;
+	}
+
+	.profile-card{
+		max-width: 40rem;
+	}
+
+	.js-incharge input,
+	.js-address input{
+		width: 40%;
+	}
+
+	input[name=state]{
+		margin-left: 2rem;
+	}
+
+	.edit-details,
+	.save-changes{
+		opacity: 1;
+	}
+}
+
+@media only screen and (max-width: 950px){
+	.nav-links{
+		display: none;
+	}
+
+	.hamburger-menu{
+		position: absolute;
+		width: 15rem;
+		right: 0;
+		display: none;
+		background-color: #000000;
+		text-align: center;
+		font-weight: lighter;
+		height: 100vh;
+		opacity: .9;
+	}
+
+	.hamburger-menu a{
+		color: #ffffff;
+		text-decoration: none;
+	}
+
+	.hamburger-menu li{
+		list-style-type: none;
+		padding: 1rem 0;
+	}
+
+	.hamburger-menu li:hover{
+		background-color: #9a9999;
+		color: #000000;
+	}
+
+	.hamburger-menu a:hover{
+		color: #000000;
+	}
+
+	.sidebar-icon{
+		display: inline-block;
+		float: right;
+		padding: 0 2.5rem;
+		line-height: 3rem;
+	}
+
+	.sidebar-icon a{
+		color: black;
+	}
+
+	.profile-card{
+		width: 90%;
+		padding: 1rem .5rem;
+	}
+
+	.upcoming-donations{
+		margin-right: 0;
+	}
+
+	.account-settings{
+		margin-left: 0;
+	}
+
+	.js-donation-list{
+		padding: 1rem 0;
+	}
+}

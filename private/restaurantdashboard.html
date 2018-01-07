@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MY | DASHBOARD</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/resto-dashboard.css">
+  </head>
+  <body>
+    <!--navigation-->
+    <nav class="fixed-nav">
+      <!--div for the logo-->
+      <div class="nav-logo">
+        <a href="#home">HUNGRY | HELPERS</a>
+      </div>
+      <!--div for the links-->
+      <div class="nav-links">
+        <ul>
+          <li><a href="#"><i class="fa fa-users"></i> BROWSE ORGANIZATIONS</a></li>
+          <li><a href="#"><i class="fa fa-id-card-o"></i> CONTACT</a></li>
+          <li><a href="#"><i class="fa fa-sign-out"></i> LOG OUT</a></li>
+        </ul>
+      </div>
+
+      <!--hamburger icon-->
+      <div class="sidebar-icon">
+        <a href="javascript:void(0)"><i class="fa fa-bars"></i></a>
+      </div>
+
+      <div class="hamburger-menu">
+        <ul>
+          <li><a class="hamburger-close" href="javascript:void(0)">&times; Close</a></li>
+          <li><a href="#"><i class="fa fa-users"></i> Browse Organizations</a></li>
+          <li><a href="#"><i class="fa fa-id-card-o"></i> Contact</a></li>
+          <li><a href="#"><i class="fa fa-sign-out"></i> Log Out</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main>
+      <div class="modal-dashboard">
+        <div class="profile-card">
+          <h3>Welcome, Restaurant!</h3>
+          <div class="profile-nav">
+            <a class="upcoming-donations" href="javascript:void(0)">UPCOMING DONATIONS</a>
+            <a class="account-settings" href="javascript:void(0)">ACCOUNT SETTINGS</a>
+          </div>
+          <!--donations (default)-->
+          <div class="js-donation-list">
+            <table>
+              <tr>
+                <th><i class="fa fa-calendar"></i> DATE</th>
+                <th><i class="fa fa-clock-o"></i> TIME</th> 
+                <th><i class="fa fa-users"></i> ORGANIZATION</th>
+                <th><i class="fa fa-user"></i> PERSON IN CHARGE</th>
+              </tr>
+              <tr class="js-donation-entry">
+                <td>January 23, 2018</td>
+                <td>9:30 PM</td> 
+                <td><a href="#">Red Cross USA</a></td>
+                <td>John Doe</td>
+              </tr>
+              <tr class="js-donation-entry">
+                <td>January 23, 2018</td>
+                <td>9:30 PM</td> 
+                <td><a href="#">Red Cross USA</a></td>
+                <td>John Doe</td>
+              </tr>
+              <tr class="js-donation-entry">
+                <td>January 23, 2018</td>
+                <td>9:30 PM</td> 
+                <td><a href="#">Red Cross USA</a></td>
+                <td>John Doe</td>
+              </tr>
+              <tr class="js-donation-entry">
+                <td>January 23, 2018</td>
+                <td>9:30 PM</td> 
+                <td><a href="#">Red Cross USA</a></td>
+                <td>John Doe</td>
+              </tr>
+              <tr class="js-donation-entry">
+                <td>January 23, 2018</td>
+                <td>9:30 PM</td> 
+                <td><a href="#">Red Cross USA</a></td>
+                <td>John Doe</td>
+              </tr>
+            </table>
+          </div>
+          <!--account settings-->
+          <div class="js-account-settings">
+            <h3>My Profile</h3>
+            <form>
+              <div class="js-resto-name">
+                <h4>Restaurant/Establishment Name</h4>
+                <p>Hayat's Kitchen</p>
+              </div>
+              <div class="js-incharge">
+                <h4>Person In Charge</h4>
+                <input type="text" name="first-name" value="Hayat" readonly>
+                <input type="text" name="last-name" value="Mazz" readonly>
+              </div>
+              <div class="js-contact">
+                <h4>Contact Number</h4>
+                <input type="tel" name="phone" value="3109625803" readonly>
+              </div>
+              <div class="js-email">
+                <h4>Email Address</h4>
+                <input type="email" name="email" value="imhighyat@gmail.com" readonly>
+              </div>
+              <div class="js-address">
+                <h4>Address</h4>
+                <input type="text" name="street" value="1234 main st" readonly>
+                <input type="text" name="city" value="National City" readonly>
+                <input type="text" name="state" value="California" readonly>
+                <input type="text" name="zip" value="91402" readonly>
+              </div>
+              <div class="js-username">
+                <h4>Username</h4>
+                <p>hayatskitchen123</p>
+              </div>
+              <div class="js-password">
+                <h4>Password</h4>
+                <input type="password" name="password" value="hayatisgreat" readonly>
+              </div>
+              <div class="account-settings-buttons">
+                <button class="edit-details">Edit Details</button>
+                <button class="save-changes">Save Changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../scripts/resto-dashboard.js"></script>
+  </body>
+</html>
