@@ -17,7 +17,7 @@ router.get('/', (req,res)=>{
 	//store the values of the query
 	const active = req.query.active;
 	let schedulePromise;
-	//if query is undefined, get all the admins
+	//if query is undefined, get all the schedules
 	if(typeof(active) === "undefined"){
 		schedulePromise = Schedule.find().populate('restaurant');
 	}
