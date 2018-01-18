@@ -159,12 +159,12 @@ td, th{
 }
 
 th{
-  background-color: #3a3f55;
+  background-color: #58635b;
   color: #ffffff;
 }
 
 tr:nth-child(even){
-  background-color: #e3e9f1;
+  background-color: #eef1ef;
 }
 
 td > a{
@@ -179,12 +179,6 @@ td > a{
     margin: 0 auto;
 }
 
-.js-account-settings > h3{
-	text-align: center;
-	margin-bottom: 1rem;
-	color: #3a3f55;
-}
-
 .js-account-settings div{
 	width: 100%;
 	margin-bottom: 1rem;
@@ -192,7 +186,7 @@ td > a{
 }
 
 .js-account-settings h4{
-	color: #3a3f55;
+	color: #58635b;
 	margin: 1rem 0;
 }
 
@@ -256,7 +250,7 @@ input[name=street],
   font-size: 16px;
   font-family: 'Raleway', san-serif;
   font-weight: bold;
-  color: #3a3f55;
+  color: #58635b;
 }
 
 .js-sched-type select,

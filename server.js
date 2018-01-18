@@ -16,6 +16,16 @@ const app = express();
 //for logging
 app.use(morgan('common'));
 app.use(bodyParser.json());
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', req.get('origin'));
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
+  if (req.method === 'OPTIONS') {
+    return res.send(204);
+  }
+  next();
+});
 //route all /restaurants to restaurantsRouter.js
 app.use('/restaurants', restaurantsRouter);
 //route all /restaurants to organizationsRouter.js

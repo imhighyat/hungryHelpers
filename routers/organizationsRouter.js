@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const {Organization} = require('../models/organizationsModel');
+const {Schedule} = require('../models/schedulesModel');
 const internalMsg = 'Internal server error occured.';
 
 //view multiple organization profiles whether with queries or none
@@ -63,6 +64,17 @@ router.get('/:id', (req, res) => {
 	});
 });
 
+//get pickups of a single organization
+router.get('/:id/pickups', (req, res) => {
+	Schedule.find({bookings: { $elemMatch: {organization: req.params.id}}}).populate('restaurant')
+	.then(data => {
+		res.status(200).json(data);
+	})
+	.catch(err => {
+		console.log(err);
+		res.status(500).send(internalMsg)
+	});
+});
 
 router.post('/', (req, res)=>{
 	//store the required properties in an array

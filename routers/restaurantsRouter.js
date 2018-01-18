@@ -64,6 +64,16 @@ router.get('/:id', (req, res) => {
 	});
 });
 
+//View a single restaurant schedules
+router.get('/:id/schedules', (req, res) => {
+	Schedule.find({restaurant: req.params.id}).populate('bookings.organization')
+	.then(data => res.status(200).json(data))
+	.catch(err => {
+		console.log(err);
+		res.status(500).send(internalMsg);
+	});
+});
+
 
 //create a new restaurant profile/account
 router.post('/', (req, res)=>{
@@ -101,7 +111,7 @@ router.post('/', (req, res)=>{
 router.post('/:id/schedules', (req, res)=>{
 	// ensure that the id in the request path and the one in request body match
 	if(!(req.params.id === req.body.restaurant)){
-		const message = `The request path ID ${req.params.id} and request body ID ${req.body.restaurant} should match.`;
+		const message = `The request path ID ${req.params.id} and restaurant ID ${req.body.restaurant} should match.`;
 		console.error(message);
 		return res.status(400).send(message);
 	}
@@ -171,6 +181,38 @@ router.put('/:id', (req, res)=>{
 	});
 });
 
+//update the schedule settings of a restaurant
+router.put('/:id/schedules', (req, res)=>{
+	// ensure that the id in the request path and the one in request body match
+	if(!(req.params.id === req.body.id)){
+		const message = `The request path ID ${req.params.id} and request body ID ${req.body.id} should match.`;
+		console.error(message);
+		return res.status(400).send(message);
+	}
+	//we need something to hold what the updated data should be
+	const toUpdate = {};
+	//properties that client can update
+	const canBeUpdated = ['schedType', 'startingDate', 'endingDate', 'dayOfWeek', 'time'];
+	//loop through the properties that can be updated
+	//check if client sent in updated data for those
+	for(let i=0; i<canBeUpdated.length;i++){
+		const field = canBeUpdated[i];
+		//if the property is in the req body and it is not null
+		if(field in req.body && req.body.field !== null){
+			//start adding the properties to the toUpdate object
+			toUpdate[field] = req.body[field];
+		}
+	}
+	Schedule.findOneAndUpdate({restaurant: req.params.id}, {$set: toUpdate}, {new: true})
+	.then(()=>{
+		return Schedule.find({restaurant: req.params.id})
+			.then(data => res.status(200).json(data));
+	})
+	.catch(err => {
+		console.log(err);
+		res.status(400).send(internalMsg)
+	});
+});
 
 //disable a specific restaturant profile/account by setting isActive to false
 router.delete('/:id', (req,res)=>{

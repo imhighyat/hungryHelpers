@@ -48,7 +48,7 @@ router.get('/', (req,res)=>{
 
 //get the schedule of a specific restaurant
 router.get('/:id', (req,res)=>{
-	Schedule.findById(req.params.id).populate('restaurant')
+	Schedule.findOne({restaurant: req.params.id}).populate('restaurant')
 		.then(data => {
 			let today = moment();
 			let finalDate = today.clone().add(6,'day');
@@ -57,6 +57,7 @@ router.get('/:id', (req,res)=>{
 			//loop through the days starting today + 6 days
 			//if the day matches the preferred dayOfWeek then add the date
 			//assign a value of true
+			//note that 0 in moment is equal to Sunday
 			for(let i = 0; i < 7; i++){
 				let currentDay = today.clone().add(i,'day').day();
 				if(data.dayOfWeek.indexOf(currentDay) > -1){

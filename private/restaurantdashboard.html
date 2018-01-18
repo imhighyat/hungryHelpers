@@ -43,7 +43,7 @@
     <main>
       <div class="modal-dashboard">
         <div class="profile-card">
-          <h3>Welcome, Restaurant!</h3>
+          <h3></h3> <!--welcome, restaurant-->
           <div class="profile-nav">
             <a class="upcoming-donations" href="javascript:void(0)">UPCOMING DONATIONS</a>
             <a class="account-settings" href="javascript:void(0)">ACCOUNT SETTINGS</a>
@@ -57,36 +57,6 @@
                 <th><i class="fa fa-users"></i> ORGANIZATION</th>
                 <th><i class="fa fa-user"></i> PERSON IN CHARGE</th>
               </tr>
-              <tr class="js-donation-entry">
-                <td>January 23, 2018</td>
-                <td>9:30 PM</td> 
-                <td>Red Cross USA</td>
-                <td>John Doe</td>
-              </tr>
-              <tr class="js-donation-entry">
-                <td>January 23, 2018</td>
-                <td>9:30 PM</td> 
-                <td>Red Cross USA</td>
-                <td>John Doe</td>
-              </tr>
-              <tr class="js-donation-entry">
-                <td>January 23, 2018</td>
-                <td>9:30 PM</td> 
-                <td>Red Cross USA</td>
-                <td>John Doe</td>
-              </tr>
-              <tr class="js-donation-entry">
-                <td>January 23, 2018</td>
-                <td>9:30 PM</td> 
-                <td>Red Cross USA</td>
-                <td>John Doe</td>
-              </tr>
-              <tr class="js-donation-entry">
-                <td>January 23, 2018</td>
-                <td>9:30 PM</td> 
-                <td>Red Cross USA</td>
-                <td>John Doe</td>
-              </tr>
             </table>
           </div>
           <!--account settings-->
@@ -94,67 +64,67 @@
             <form>
               <div class="js-resto-name">
                 <h4>Restaurant/Establishment Name</h4>
-                <p>Hayat's Kitchen</p>
+                <p></p>
               </div>
               <div class="js-incharge">
                 <h4>Person In Charge</h4>
-                <input type="text" name="first-name" value="Hayat" readonly>
-                <input type="text" name="last-name" value="Mazz" readonly>
+                <input type="text" name="first-name" value="" readonly>
+                <input type="text" name="last-name" value="" readonly>
               </div>
               <div class="js-contact">
                 <h4>Contact Number</h4>
-                <input type="tel" name="phone" value="3109625803" readonly>
+                <input type="tel" name="phone" value="" readonly>
               </div>
               <div class="js-email">
                 <h4>Email Address</h4>
-                <input type="email" name="email" value="imhighyat@gmail.com" readonly>
+                <input type="email" name="email" value="" readonly>
               </div>
               <div class="js-address">
                 <h4>Address</h4>
-                <input type="text" name="street" value="1234 main st" readonly>
-                <input type="text" name="city" value="National City" readonly>
-                <input type="text" name="state" value="California" readonly>
-                <input type="text" name="zip" value="91402" readonly>
+                <input type="text" name="street" value="" readonly>
+                <input type="text" name="city" value="" readonly>
+                <input type="text" name="state" value="" readonly>
+                <input type="text" name="zip" value="" readonly>
               </div>
               <div class="js-username">
                 <h4>Username</h4>
-                <p>hayatskitchen123</p>
+                <p></p>
               </div>
               <div class="js-password">
                 <h4>Password</h4>
-                <input type="password" name="password" value="hayatisgreat" readonly>
+                <input type="password" name="password" value="" readonly>
               </div>
 
               <div class="frequency-wrapper">
                 <div class="js-sched-type">
                   <label for="sched-type">Donation Frequency</label></br>
                   <select class="no-appearance" name="sched-type" disabled>
-                    <option value="one-time">One time</option>
-                    <option value="recurring">Recurring</option>
-                    <option value="recurring-until" selected>Recurring until</option>
+                    <option value="One Time">One Time</option>
+                    <option value="Recurring">Recurring</option>
+                    <option value="Recurring Until">Recurring Until</option>
                   </select>
                 </div>
                 <div class="js-start-date">
                   <label for="start-date">Starting date</label></br>
-                  <input type="date" name="start-date" value="2017-10-16" readonly>
+                  <input type="date" name="start-date" value="" readonly>
                 </div>
                 <div class="js-end-date">
                   <label for="end-date">End date</label></br>
-                  <input type="date" name="end-date" value="2018-10-25" readonly>
+                  <input type="date" name="end-date" value="" readonly>
                 </div>
                 <div class="js-day-of-week">
                   <label for="day-of-week">Days you want to donate</label></br>
-                  <input class="no-appearance" type="checkbox" name="monday" value="1" hidden><span hidden>Monday</span>
-                  <input class="no-appearance" type="checkbox" name="tuesday" value="2" checked><span>Tuesday</span>
-                  <input class="no-appearance" type="checkbox" name="wednesday" value="3" hidden><span hidden>Wednesday</span>
-                  <input class="no-appearance" type="checkbox" name="thursday" value="4" checked><span>Thursday</span>
-                  <input class="no-appearance" type="checkbox" name="friday" value="5" hidden><span hidden>Friday</span>
-                  <input class="no-appearance" type="checkbox" name="saturday" value="6" hidden><span hidden>Saturday</span>
-                  <input class="no-appearance" type="checkbox" name="sunday" value="7" hidden><span hidden>Sunday</span>
+                  <input class="no-appearance" type="checkbox" name="monday" value="1"><span>Monday</span>
+                  <input class="no-appearance" type="checkbox" name="tuesday" value="2"><span>Tuesday</span>
+                  <input class="no-appearance" type="checkbox" name="wednesday" value="3"><span>Wednesday</span>
+                  <input class="no-appearance" type="checkbox" name="thursday" value="4"><span>Thursday</span>
+                  <input class="no-appearance" type="checkbox" name="friday" value="5"><span>Friday</span>
+                  <input class="no-appearance" type="checkbox" name="saturday" value="6"><span>Saturday</span>
+                  <input class="no-appearance" type="checkbox" name="sunday" value="0"><span>Sunday</span>
                 </div>
                 <div class="js-time">
                   <label for="appt-time">Preffered donation time</label></br>
-                  <input id="appt-time" type="time" name="appt-time" value="23:00" readonly>
+                  <input id="appt-time" type="time" name="appt-time" value="" readonly>
                 </div>
               </div>
               <div class="account-settings-buttons">
@@ -164,7 +134,7 @@
               </div>
             </form>
             <div class="success-modal">
-              <p>Account has been updated!</p>
+              <p></p>
               <button><i class="fa fa-check fa-lg"></i></button>
             </div>
           </div>
@@ -173,6 +143,7 @@
     </main>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <script type="text/javascript" src="../scripts/resto-dashboard.js"></script>
   </body>
 </html>
