@@ -164,12 +164,12 @@ td, th{
 }
 
 th{
-  background-color: #3a3f55;
+  background-color: #58635b;
   color: #ffffff;
 }
 
 tr:nth-child(even){
-  background-color: #e3e9f1;
+  background-color: #eef1ef;
 }
 
 td > a{
@@ -184,12 +184,6 @@ td > a{
     margin: 0 auto;
 }
 
-.js-account-settings > h3{
-	text-align: center;
-	margin-bottom: 1rem;
-	color: #3a3f55;
-}
-
 .js-account-settings div{
 	width: 100%;
 	margin-bottom: 1rem;
@@ -197,11 +191,12 @@ td > a{
 }
 
 .js-account-settings h4{
-	color: #3a3f55;
+	color: #58635b;
 	margin: 1rem 0;
 }
 
 .js-org-name p,
+.js-org-cause p,
 .js-contact input,
 .js-email input,
 .js-username p,
@@ -227,7 +222,9 @@ input[name=street]{
 .js-contact input,
 .js-email input,
 .js-address input,
-.js-password input{
+.js-password input,
+.js-org-cause p,
+.js-org-name p{
 	font-family: 'Raleway', sans-serif;
 	font-size: 16px;
 	border-style: none;
@@ -412,6 +409,7 @@ input[name=street]{
 	cursor: pointer;
 	background-color: #ab4842;
 	color: #ffffff;
+	margin-top: 1rem;
 }
 
 .booking-confirmation{
@@ -437,6 +435,32 @@ input[name=street]{
 	padding: 2rem 1rem;
 }
 
+.booking-confirmation-card p{
+	margin-bottom: 1rem;
+}
+
+.book-yes,
+.book-no,
+.date-booked-card button{
+	color: #ffffff;
+	padding: .5rem 1rem;
+	margin: 0 1rem;
+	border-none;
+	outline: none;
+	border-radius: 5px;
+	border-style: none;
+	cursor: pointer;
+}
+
+.book-yes,
+.date-booked-card button{
+	background-color: #217e38;
+}
+
+.book-no{
+	background-color: #ab4842;
+}
+
 .date-booked{
 	display: none;
 	position: fixed;
@@ -460,6 +484,9 @@ input[name=street]{
 	padding: 2rem 1rem;
 }
 
+.date-booked-card p{
+	margin-bottom: 1rem;
+}
 
 
 /* media queries*/
@@ -523,10 +550,6 @@ input[name=street]{
 		margin-bottom: .5rem;
 	}
 
-	.js-account-settings > h3{
-		font-size: 14px;
-	}
-
 	.js-account-settings h4{
 		margin: .5rem 0;
 		font-size: 14px;
@@ -538,13 +561,15 @@ input[name=street]{
 	.js-username p,
 	.js-password input,
 	input[name=first-name],
-	input[name=street]{
+	input[name=street],
+	.js-org-cause p{
 		margin-left: 0;
 	}
 
 	.js-org-name p,
 	.js-username p,
-	.js-account-settings input{
+	.js-account-settings input,
+	.js-org-cause p{
 		font-size: 14px;
 	}
 
@@ -552,7 +577,9 @@ input[name=street]{
   	.js-contact input,
   	.js-email input,
   	.js-address input,
-  	.js-password input{
+  	.js-password input,
+  	.js-org-cause p,
+  	.js-org-name p{
 		padding-left: 0;
 	}
 
@@ -640,6 +667,19 @@ input[name=street]{
 		width: 90%;
 		padding: .5rem;
 	}
+
+	.booking-confirmation-card{
+		width: 70%;
+	}
+
+	.booking-confirmation-card p{
+		font-size: 14px;
+	}
+
+	.date-booked-card{
+		width: 80%;
+		max-width: 20rem;
+	}
 }
 
 @media only screen and (min-width:421px) and (max-width: 650px){
@@ -714,13 +754,15 @@ input[name=street]{
 	.js-password input,
 	input[name=first-name],
 	input[name=street],
-	input[name=state]{
+	input[name=state],
+	.js-org-cause p{
 		margin-left: 1rem;
 	}
 
 	.js-org-name p,
 	.js-username p,
-	.js-account-settings input{
+	.js-account-settings input,
+	.js-org-cause p{
 		font-size: 15px;
 	}
 
@@ -728,7 +770,9 @@ input[name=street]{
   	.js-contact input,
   	.js-email input,
   	.js-address input,
-  	.js-password input{
+  	.js-password input,
+  	.js-org-cause p,
+  	.js-org-name p{
 		padding-left: 0;
 	}
 
@@ -779,8 +823,8 @@ input[name=street]{
 	}
 
 	.js-schedule-entry{
-		width: 49%;
-		margin: 1rem auto;
+		width: 41%;
+		margin: 1rem 1rem;
 		padding: 1rem;
 	}
 
@@ -802,6 +846,11 @@ input[name=street]{
 	.js-avail-bookings{
 		width: 90%;
 		padding: .5rem;
+	}
+
+	.booking-confirmation-card{
+		width: 80%;
+		max-width: 30rem;
 	}
 }
 

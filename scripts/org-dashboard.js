@@ -1,7 +1,13 @@
 $(document).ready(function() {
     const currentSettings = {};
     const updatedSettings = {};
-    const orgId = "5a5ff9245670e92d08e25f3b";
+    const query = window.location.search;
+    const orgId = (query.split('?id=')[1]).toString();
+    //set the default tab onload
+    $('.js-pickups-list').css('display', 'block');
+    $('.upcoming-pickups').css('border-bottom', '3px ridge #58635b');
+    $('.js-account-settings').css('display', 'none');
+    fetchOrgData();
 
     function fetchOrgData(id){
         $.ajax({
@@ -33,7 +39,7 @@ $(document).ready(function() {
     function renderAccountInfo(obj){
         $('.profile-card h3').text(`Welcome, ${currentSettings.orgName}!`);
         $('.js-org-name p').text(currentSettings.orgName);
-        $('.js-org-cause textarea').val(currentSettings.cause);
+        $('.js-org-cause p').text(currentSettings.cause);
         $("input[name=first-name]").val(currentSettings.firstName);
         $("input[name=last-name]").val(currentSettings.lastName);
         $("input[name=phone]").val(currentSettings.phone);
@@ -47,7 +53,7 @@ $(document).ready(function() {
     }
 
     function getUpdatedValues(){
-        updatedSettings.cause = $('.js-org-cause textarea').val();
+        updatedSettings.cause = $('.js-org-cause p').text();
         updatedSettings.phone = $("input[name=phone]").val();
         updatedSettings.email = $("input[name=email]").val();
         updatedSettings.password = $("input[name=password]").val();
@@ -76,7 +82,7 @@ $(document).ready(function() {
                     street: updatedSettings.street,
                     city: updatedSettings.city,
                     state: updatedSettings.state,
-                    zipcode: updatedSettings.zipcode
+                    zipcode: updatedSettings.zip
                 },
                 email: updatedSettings.email,
                 password: updatedSettings.password
@@ -84,7 +90,6 @@ $(document).ready(function() {
             contentType: "application/json; charset=utf-8"
         })
         .done(function(data){
-            console.log(data);
             storeAccountData(data);
             renderAccountInfo(currentSettings);
         });
@@ -101,7 +106,6 @@ $(document).ready(function() {
     }
 
     function renderResto(data){
-        console.log(data);
         $('.schedules-wrapper').empty();
         if(data.length >= 1){
             for(let i = 0; i < data.length; i++){
@@ -147,7 +151,12 @@ $(document).ready(function() {
                 }
             }
         }
-        renderUpcomingPickups(pickups);
+        let sortedPickups = pickups.sort(function(a, b){
+            a = moment(a.date);
+            b = moment(b.date);
+            return a - b;
+        });
+        renderUpcomingPickups(sortedPickups);
     }
 
     function renderUpcomingPickups(array){
@@ -174,7 +183,6 @@ $(document).ready(function() {
     }
 
     function getAvailableDates(data){
-        console.log(data);
         let time = moment(`${data.data.time.hour}:${data.data.time.minutes}`, 'HH:mm').format('LT');
         const availableDates = {
             schedId: data.data._id,
@@ -221,163 +229,211 @@ $(document).ready(function() {
         .done(function(){
             loadRestaurants();
         });
+    }  
+
+//--------click events-------------//
+    const clickEvents = {
+        closeHamburgerMenu: function(){
+            $('.hamburger-menu').css('display', 'none');
+        },
+        clickBrowseSched: function(){
+            loadRestaurants();
+            this.closeHamburgerMenu();
+            renderAccountInfo();
+            $('.profile-card > h3').css('display', 'none');
+            $('.profile-nav').css('display', 'none');
+            $('.js-pickups-list').css('display', 'none');
+            $('.js-account-settings').css('display', 'none');
+            $('.browse-schedules').css('display', 'block');
+            $('.nav-links .dashboard-link').css('display', 'inline-block');
+            $('.hamburger-menu .dashboard-link').css('display', 'block');
+            $('.browse-sched-link').css('display', 'none');
+        },
+        showHamburgerMenu: function(){
+            $('.hamburger-menu').fadeIn().css('display', 'block');
+        },
+        closeAvailableDates: function(){
+            $('.schedule-info-modal').css('display', 'none');
+        },
+        openRestoAvailDates: function(){
+            $('.schedule-info-modal').css('display', 'block');
+        },
+        clickDashboardLink: function(){
+            loadUpcomingPickups();
+            this.closeHamburgerMenu();
+            this.closeAvailableDates();
+            $('.profile-card > h3').css('display', 'block');
+            $('.profile-nav').css('display', 'block');
+            $('.js-pickups-list').css('display', 'block');
+            $('.js-account-settings').css('display', 'none');
+            $('.browse-schedules').css('display', 'none');
+            $('.dashboard-link').css('display', 'none');
+            $('.nav-links .browse-sched-link').css('display', 'inline-block');
+            $('.hamburger-menu .browse-sched-link').css('display', 'block');
+            $('.upcoming-pickups').css('border-bottom', '3px ridge #58635b');
+            $('.account-settings').css('border-bottom', 'none');
+            $('.cancel-changes').attr('hidden', 'true');
+            $('.edit-details').removeAttr('hidden');
+            $('.js-account-settings input').attr('readonly', 'true').css({'border-bottom': 'none', 'font-style': 'normal', 'outline': 'none'});
+            $('.js-org-cause p').attr('readonly', 'true').css({'border-bottom': 'none', 'font-style': 'normal', 'outline': 'none'});
+        },
+        closeSuccessModal: function(){
+            $(".success-modal").css("display", "none");
+        },
+        clickSaveChanges: function(){
+            this.closeHamburgerMenu();
+            //check if info is being edited first
+            if($('.js-account-settings input').css('font-style') == 'italic'){
+                //make sure that all editable contents have value before saving
+                if($('.js-org-cause p').text() && $('input[name="first-name"]').val() && $('input[name="last-name"]').val() && $('input[name="phone"]').val() && $('input[name="email"]').val() && $('input[name="street"]').val() && $('input[name="city"]').val() && $('input[name="state"]').val() && $('input[name="zip"]').val() && $('input[name="password"]').val()){
+                    getUpdatedValues();
+                    $('.success-modal').css('display', 'block').find('p').text('Account has been updated!');
+                    $('.cancel-changes').attr('hidden', 'true');
+                    $('.edit-details').removeAttr('hidden');
+                    $('.js-account-settings input').attr('readonly', 'true').css({'border-bottom': 'none', 'font-style': 'normal', 'outline': 'none'});
+                    $('.js-org-cause p').attr('readonly', 'true').css({'border-bottom': 'none', 'font-style': 'normal', 'outline': 'none'});
+                }
+                else{
+                    $('.success-modal').css('display', 'block').find('p').text('Please make sure all entries have values.');
+                }                
+            }
+            else{
+                $('.success-modal').css('display', 'block').find('p').text('Your information is up to date.');
+            }
+        },
+        cancelEditInfo: function(){
+            this.closeHamburgerMenu();
+            renderAccountInfo();
+            $('.cancel-changes').attr('hidden', 'true');
+            $('.edit-details').removeAttr('hidden');
+            $('.js-account-settings input').attr('readonly', 'true').css({'border-bottom': 'none', 'font-style': 'normal', 'outline': 'none'});
+            $('.js-org-cause p').attr('readonly', 'true').css({'border-bottom': 'none', 'font-style': 'normal', 'outline': 'none'});
+        },
+        editInfo: function(){
+            this.closeHamburgerMenu();
+            $('.cancel-changes').removeAttr('hidden');
+            $('.edit-details').attr('hidden', 'true');
+            $('.js-account-settings input').removeAttr('readonly').css({'border-bottom': '1px solid black', 'font-style': 'italic'});
+            $('.js-org-cause p').attr('contenteditable', 'true').css({'border-bottom': '1px solid black', 'font-style': 'italic'});
+        },
+        clickUpcomingPickups: function(){
+            this.closeHamburgerMenu();
+            renderAccountInfo();
+            $('.cancel-changes').attr('hidden', 'true');
+            $('.edit-details').removeAttr('hidden');
+            $('.account-settings').css('border-bottom', 'none');
+            $('.upcoming-pickups').css('border-bottom', '3px ridge #58635b');
+            $('.js-pickups-list').css('display', 'block');
+            $('.js-account-settings').css('display', 'none');
+            $('.js-account-settings input').attr('readonly', 'true').css({'border-bottom': 'none', 'font-style': 'normal', 'outline': 'none'});
+            $('.js-org-cause p').attr('contenteditable', 'false').css({'border-bottom': 'none', 'font-style': 'normal', 'outline': 'none'});
+        },
+        clickAccountSettings: function(){
+            this.closeHamburgerMenu();
+            $('.upcoming-pickups').css('border-bottom', 'none');
+            $('.account-settings').css('border-bottom', '3px ridge #58635b');
+            $('.js-pickups-list').css('display', 'none');
+            $('.js-account-settings').css('display', 'block');
+        },
+        afterBookingTheDate: function(){
+            $('.date-booked').css('display', 'none');
+            $('.booking-confirmation').css('display', 'none');
+            $('.schedule-info-modal').css('display', 'none');
+        },
+        bookDateSuccessful: function(event){
+            schedId = $('.js-avail-bookings').attr('id');
+            date = $(this).text();
+            $('.booking-confirmation').css('display', 'block');
+            //when yes was clicked to book the date
+            $('.book-yes').on('click', function(event){
+                event.preventDefault();
+                event.stopPropagation();
+                bookTheDate(schedId, date);
+                $('.booking-confirmation').css('display', 'none');
+                $('.date-booked').css('display', 'block');
+            });
+        },
+        openRestoSched: function(event){
+            let restoId = $(this).attr('id');
+            loadRestaurantSchedule(restoId);
+            $('.schedule-info-modal').css('display', 'block');
+        }
     }
 
-    fetchOrgData();
-
-
-    
-
-//DYNAMIC STYLES!!!!!!!!!!!
-    //to click a resto and view open schedule
-    $('.schedules-wrapper').on('click', 'a', function(event){
-        event.preventDefault();
-        let restoId = $(this).attr('id');
-        loadRestaurantSchedule(restoId);
-        $('.schedule-info-modal').css('display', 'block');
+    $('.dashboard-link').on('click', function(){
+        clickEvents.clickDashboardLink();
     });
 
-    //click on an available date to book
-    $('.js-dates-wrapper').on('click', '.js-avail-bookings', function(){
-        schedId = $('.js-avail-bookings').attr('id');
-        date = $(this).text();
-        $('.booking-confirmation').css('display', 'block');
-        //when yes to book the date
-        $('.book-yes').on('click', function(){
-            bookTheDate(schedId, date);
-            $('.booking-confirmation').css('display', 'none');
-            $('.date-booked').css('display', 'block');
-        });
+    $('.js-schedule-entry').on('click', function(event){
+        event.stopPropagation();
+        clickEvents.openRestoAvailDates();
     });
 
-    //when no to book the date
-    $('.book-no').on('click', function(){
-        $('.booking-confirmation').css('display', 'none');
+    $('.avail-bookings-buttons button').on('click', function(event){
+        event.stopPropagation();
+        clickEvents.closeAvailableDates();
     });
-
-    //okay after booking the date
-    $('.date-booked-card button').on('click', function(){
-        $('.date-booked').css('display', 'none');
-        $('.booking-confirmation').css('display', 'none');
-        $('.schedule-info-modal').css('display', 'none');
+    $('.sidebar-icon').on('click', function(){
+        clickEvents.showHamburgerMenu();
     });
-
-    //upcoming pickups should be the default tab
-    $(".js-pickups-list").css("display", "block");
-    $(".upcoming-pickups").css("border-bottom", "3px ridge #5779ac");
-    $(".js-account-settings").css("display", "none");
-
-    //when account settings tab is clicked
-    $(".account-settings").click(function(){
-        $(".upcoming-pickups").css("border-bottom", "none");
-        $(".account-settings").css("border-bottom", "3px ridge #5779ac");
-        $(".js-pickups-list").css("display", "none");
-        $(".js-account-settings").css("display", "block");
-    });
-
-    //when upcoming pickups tab is clicked
-    $(".upcoming-pickups").click(function(){
-        $(".account-settings").css("border-bottom", "none");
-        $(".upcoming-pickups").css("border-bottom", "3px ridge #5779ac");
-        $(".js-pickups-list").css("display", "block");
-        $(".js-account-settings").css("display", "none");
-        $('.js-org-cause textarea').attr('readonly', 'true');
-    });
-
-    //make the editable content editable when edit is clicked
-    $(".account-settings-buttons > .edit-details").click(function(e){
-        e.preventDefault();
-        $(".cancel-changes").removeAttr("hidden");
-        $(".edit-details").attr("hidden", "true");
-        $(".js-account-settings input").removeAttr("readonly").css({"border-bottom": "1px solid black", "font-style": "italic"});
-        $('.js-org-cause textarea').removeAttr("readonly");
-    });
-
-    //when the cancel has been clicked, should show the initial settings
-    $(".account-settings-buttons > .cancel-changes").click(function(e){
-        e.preventDefault();
-        $(".cancel-changes").attr("hidden", "true");
-        $(".edit-details").removeAttr("hidden");
-        $(".js-account-settings input").attr("readonly", "true").css({"border-bottom": "none", "font-style": "normal"});
-        $('.js-org-cause textarea').attr("readonly", "true");
-    });
-
-        
-    //when the save changes is clicked
-    $(".account-settings-buttons > .save-changes").click(function(e){
-        e.preventDefault();
-        //check if customer was editing first before clicking save
-        if($('.js-account-settings input').css('font-style') == 'italic'){
-            getUpdatedValues();
-            $(".cancel-changes").attr("hidden", "true");
-            $(".edit-details").removeAttr("hidden");
-            $(".js-account-settings input").attr("readonly", "true").css({"border-bottom": "none", "font-style": "normal"});
-            $('.js-org-cause textarea').attr("readonly", "true");
-            $('.success-modal').css('display', 'block').find('p').text('Account has been updated!');
-        } else{
-            $('.success-modal').css('display', 'block').find('p').text('Your information is up to date.');
-        }        
-    });
-  
-    //okay button after changes have been made
-    $(".success-modal button").click(function(e){
-        e.preventDefault();
-        $(".success-modal").css("display", "none");
-    });
-
-    //when browse schedules is clicked
-    $(".browse-sched-link").on('click', function(){
-        $('.profile-card > h3').css("display", "none");
-        $('.profile-nav').css("display", "none");
-        $('.js-pickups-list').css("display", "none");
-        $(".js-account-settings").css("display", "none");
-        $('.browse-schedules').css("display", "block");
-        $(".hamburger-menu").css("display", "none");
-        $(".nav-links .dashboard-link").css("display", "inline-block");
-        $(".hamburger-menu .dashboard-link").css("display", "block");
-        $(".browse-sched-link").css("display", "none");
-    });
-
-    //when my dashboard is clicked
-    $(".dashboard-link").click(function(){
-        loadUpcomingPickups();
-        $('.profile-card > h3').css("display", "block");
-        $('.profile-nav').css("display", "block");
-        $('.js-pickups-list').css("display", "block");
-        $('.js-account-settings').css("display", "none");
-        $('.browse-schedules').css("display", "none");
-        $(".dashboard-link").css("display", "none");
-        $(".nav-links .browse-sched-link").css("display", "inline-block");
-        $(".hamburger-menu .browse-sched-link").css("display", "block");
-        $(".upcoming-pickups").css("border-bottom", "3px ridge #5779ac");
-        $(".account-settings").css("border-bottom", "none");
-        $(".hamburger-menu").css("display", "none");
-    });
-
-    //when restaurant is clicked for avail bookings
-    $(".js-schedule-entry").on('click', function(){
-        $(".schedule-info-modal").css("display", "block");
-    });
-
-    //when cancel is clicked from available bookings modal
-    $(".avail-bookings-buttons button").click(function(){
-        $(".schedule-info-modal").css("display", "none");
-    });
-  
-    //show hamburger-menu when sidebar icon is clicked
-    $(".sidebar-icon").click(function(){
-        $(".hamburger-menu").fadeIn().css("display", "block");
-    });
-
-    //hide hamburger-menu when X is clicked
-    $(".hamburger-close").click(function(){
-        $(".hamburger-menu").css("display", "none");
+    $('.hamburger-close').on('click', function(){
+        clickEvents.closeHamburgerMenu();
     });
 
     $('.browse-sched-link').on('click', function(){
-        loadRestaurants();
+        clickEvents.clickBrowseSched();
     });
 
-    
+    $('.success-modal button').on('click', function(event){
+        event.stopPropagation();
+        clickEvents.closeSuccessModal();
+    });
 
+    $('.account-settings-buttons > .save-changes').on('click', function(event){
+        event.preventDefault();
+        event.stopPropagation();
+        clickEvents.clickSaveChanges();
+    });
+
+    $('.account-settings-buttons > .cancel-changes').on('click', function(event){
+        event.preventDefault();
+        event.stopPropagation();
+        clickEvents.cancelEditInfo();
+    });
+
+    $('.account-settings-buttons > .edit-details').on('click', function(event){
+        event.preventDefault();
+        event.stopPropagation();
+        clickEvents.editInfo();
+    });
+
+    $('.upcoming-pickups').on('click', function(){
+        clickEvents.clickUpcomingPickups();
+    });
+
+    $('.account-settings').on('click', function(){
+        clickEvents.clickAccountSettings();
+    });
+
+    $('.date-booked-card button').on('click', function(event){
+        event.stopPropagation();
+        clickEvents.afterBookingTheDate();
+    });
+
+    $('.book-no').on('click', function(event){
+        event.preventDefault();
+        event.stopPropagation();
+        $('.booking-confirmation').css('display', 'none');
+    });
+
+    $('.js-dates-wrapper').on('click', '.js-avail-bookings', function(event){
+        event.stopPropagation();
+        clickEvents.bookDateSuccessful.call(this, event);
+    });
+
+    $('.schedules-wrapper').on('click', 'a', function(event){
+        event.preventDefault();
+        event.stopPropagation();
+        clickEvents.openRestoSched.call(this, event)
+    });
 });

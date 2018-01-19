@@ -1,4 +1,99 @@
 $(document).ready(function() {
+    let restoId = "";
+    let orgId = "";
+    const userInfo = {};
+    function getLoginValues(){
+        userInfo.username = $('input[name="username"]').val();
+        userInfo.password = $('input[name="password"').val();
+        checkRestoDbForUsername();
+    }
+
+    function checkRestoDbForUsername(){
+        $.ajax({
+            method: "GET",
+            url: `http://localhost:8080/restaurants` //will receive an array of objects
+        })
+        .done(function(data) {
+            for(let i = 0; i < data.length; i++){
+                if(data[i].username === userInfo.username){
+                    restoId = data[i]._id;
+                }
+            }
+            if(restoId){
+                checkIfPwMatches(data, restoId);
+            }
+            else {
+                checkOrgDbForUsername();
+            }
+        });
+    }
+
+    function checkOrgDbForUsername(){
+        $.ajax({
+            method: "GET",
+            url: `http://localhost:8080/organizations` //will receive an array of objects
+        })
+        .done(function(data) {
+            for(let i = 0; i < data.length; i++){
+                if(data[i].username === userInfo.username){
+                    orgId = data[i]._id;
+                }
+            }
+            if(orgId){
+                checkIfPwMatches(data, orgId);
+            }
+            else{
+                $('.incorrect-credentials').css('display', 'block');
+                $('.incorrect-credentials-card p').text('We cant find a match with your username.');
+            }
+        });
+    }
+
+    function checkIfPwMatches(data, id){
+        for(let i = 0; i < data.length; i++){
+            if(data[i]._id === id){
+                if(data[i].username === userInfo.username && data[i].password === userInfo.password){
+                    $('.incorrect-credentials').css('display', 'block');
+                    $('.incorrect-credentials-card p').text('Found ya! One moment while I load your dashboard.');
+                    if(orgId){
+                        loadOrgProfile();
+                    }
+                    else{
+                        loadRestoProfile();
+                    }
+                }
+                else{
+                    $('.incorrect-credentials').css('display', 'block');
+                    $('.incorrect-credentials-card p').text('Incorrect credentials.');
+                }
+            }
+        }
+    }
+
+    function loadOrgProfile(){
+        setTimeout(`window.location.href = "file:///C:/Users/imhig/Desktop/hungryHelpers/private/organizationdashboard.html?id=${orgId}"`, 3000);
+    }
+
+    function loadRestoProfile(){
+        setTimeout(`window.location.href = "file:///C:/Users/imhig/Desktop/hungryHelpers/private/restaurantdashboard.html?id=${restoId}"`, 3000);
+    }
+
+
+    $('.login-form button').on('click', function(event){
+        event.stopPropagation();
+        event.preventDefault();
+        getLoginValues();
+    });
+
+
+
+
+
+
+
+
+
+    /* DYNAMIC STYLES ------------------------------------*/
     //show hamburger-menu when sidebar icon is clicked
     $(".sidebar-icon").click(function(){
     	$(".hamburger-menu").fadeIn().css("display", "block");
@@ -79,5 +174,9 @@ $(document).ready(function() {
     //scroll to #howto section when learn more is clicked
     $(".learn-more-button").click(function(){
     	window.location.href = '#howto';
+    });
+
+    $('.incorrect-credentials-card button').on('click', function(){
+        $('.incorrect-credentials').css('display', 'none');
     });
 });

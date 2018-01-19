@@ -229,6 +229,43 @@ header p{
 	text-decoration: underline;
 }
 
+.incorrect-credentials{
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 3;
+	background-color: rgba(0,0,0,.7);
+}
+
+.incorrect-credentials-card{
+	position: relative;
+	top: 20%;
+	width: 20rem;
+	margin: 0 auto;
+	background-color: #ffffff;
+	min-height: 5rem;
+	border-radius: 5px;
+	text-align: center;
+	padding: 2rem 1rem;
+}
+
+.incorrect-credentials-card p{
+	margin-bottom: 1rem;
+}
+
+.incorrect-credentials-card button{
+	padding: .5rem 1rem;
+    border-radius: 5px;
+    outline: none;
+    border-style: none;
+    background-color: #217e38;
+    color: #ffffff;
+    cursor: pointer;
+}
+
 #register{
 	display: none;
 	position: fixed;
@@ -1100,6 +1137,11 @@ footer > a:hover{
 
 	.sidebar-icon a{
 		color: black;
+	}
+
+	.incorrect-credentials-card{
+		width: 80%;
+		max-width: 20rem;
 	}
 }
 

@@ -67,7 +67,7 @@ router.get('/:id', (req, res) => {
 //View a single restaurant schedules
 router.get('/:id/schedules', (req, res) => {
 	Schedule.find({restaurant: req.params.id}).populate('bookings.organization')
-	.then(data => res.status(200).json(data))
+	.then(data => {console.log(data[0].bookings); res.status(200).json(data);})
 	.catch(err => {
 		console.log(err);
 		res.status(500).send(internalMsg);
