@@ -80,11 +80,11 @@ $(document).ready(function() {
     }
 
     function loadOrgProfile(){
-        setTimeout(`window.location.href = "file:///C:/Users/imhig/Desktop/hungryHelpers/private/organizationdashboard.html?id=${orgId}"`, 3000);
+        setTimeout(`window.location.href = "private/organizationdashboard.html?id=${orgId}"`, 3000);
     }
 
     function loadRestoProfile(){
-        setTimeout(`window.location.href = "file:///C:/Users/imhig/Desktop/hungryHelpers/private/restaurantdashboard.html?id=${restoId}"`, 3000);
+        setTimeout(`window.location.href = "private/restaurantdashboard.html?id=${restoId}"`, 3000);
     }
 
 
