@@ -257,6 +257,8 @@ header p{
 }
 
 .incorrect-credentials-card button{
+	display: none;
+	text-align: center;
 	padding: .5rem 1rem;
     border-radius: 5px;
     outline: none;

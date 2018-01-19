@@ -44,7 +44,10 @@ $(document).ready(function() {
             }
             else{
                 $('.incorrect-credentials').css('display', 'block');
+                $('.incorrect-credentials button').css('display', 'inline-block');
                 $('.incorrect-credentials-card p').text('We cant find a match with your username.');
+                $('input[name="username"]').val("");
+                $('input[name="password"]').val("");
             }
         });
     }
@@ -55,6 +58,9 @@ $(document).ready(function() {
                 if(data[i].username === userInfo.username && data[i].password === userInfo.password){
                     $('.incorrect-credentials').css('display', 'block');
                     $('.incorrect-credentials-card p').text('Found ya! One moment while I load your dashboard.');
+                    $('.incorrect-credentials button').css('display', 'none');
+                    $('input[name="username"]').val("");
+                    $('input[name="password"]').val("");
                     if(orgId){
                         loadOrgProfile();
                     }
@@ -64,7 +70,10 @@ $(document).ready(function() {
                 }
                 else{
                     $('.incorrect-credentials').css('display', 'block');
+                    $('.incorrect-credentials button').css('display', 'inline-block');
                     $('.incorrect-credentials-card p').text('Incorrect credentials.');
+                    $('input[name="username"]').val("");
+                    $('input[name="password"]').val("");
                 }
             }
         }
