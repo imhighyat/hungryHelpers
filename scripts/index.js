@@ -1,191 +1,214 @@
 $(document).ready(function() {
-    let restoId = "";
-    let orgId = "";
-    const userInfo = {};
-    function getLoginValues(){
-        userInfo.username = $('input[name="username"]').val();
-        userInfo.password = $('input[name="password"').val();
-        checkRestoDbForUsername();
-    }
+    //log in section
+    let credentials = {};
 
-    function checkRestoDbForUsername(){
+    function testCredentials(obj){
         $.ajax({
-            method: "GET",
-            url: `http://localhost:8080/restaurants` //will receive an array of objects
+            method: 'POST',
+            url: `http://localhost:8080/sessions`,
+            data: JSON.stringify(obj),
+            contentType: 'application/json; charset=utf-8'
         })
-        .done(function(data) {
-            for(let i = 0; i < data.length; i++){
-                if(data[i].username === userInfo.username){
-                    restoId = data[i]._id;
-                }
-            }
-            if(restoId){
-                checkIfPwMatches(data, restoId);
-            }
-            else {
-                checkOrgDbForUsername();
-            }
+        .done(function(data){
+            launchDashboard(data);
         });
     }
 
-    function checkOrgDbForUsername(){
-        $.ajax({
-            method: "GET",
-            url: `http://localhost:8080/organizations` //will receive an array of objects
-        })
-        .done(function(data) {
-            for(let i = 0; i < data.length; i++){
-                if(data[i].username === userInfo.username){
-                    orgId = data[i]._id;
-                }
+    function launchDashboard(obj){
+        if(typeof(obj) === 'string'){
+            showLoginMessage();
+            $('.incorrect-credentials-card p').text('Incorrect credentials. Please try again.');
+            $('.incorrect-credentials button').css('display', 'inline-block');
+        }
+        else{
+            if('orgToken' in obj){
+                setTimeout(`window.location.href = "private/organizationdashboard.html?id=${obj.orgToken}"`, 3000);
+                showLoginMessage();
+                $('.incorrect-credentials-card p').text('Found ya! One moment while I load your dashboard.');
+                $('.incorrect-credentials button').css('display', 'none');
+                $('.incorrect-credentials-card span').css('display', 'block');
             }
-            if(orgId){
-                checkIfPwMatches(data, orgId);
-            }
-            else{
-                $('.incorrect-credentials').css('display', 'block');
-                $('.incorrect-credentials button').css('display', 'inline-block');
-                $('.incorrect-credentials-card p').text('We cant find a match with your username.');
-                $('input[name="username"]').val("");
-                $('input[name="password"]').val("");
-            }
-        });
-    }
-
-    function checkIfPwMatches(data, id){
-        for(let i = 0; i < data.length; i++){
-            if(data[i]._id === id){
-                if(data[i].username === userInfo.username && data[i].password === userInfo.password){
-                    $('.incorrect-credentials').css('display', 'block');
-                    $('.incorrect-credentials-card p').text('Found ya! One moment while I load your dashboard.');
-                    $('.incorrect-credentials button').css('display', 'none');
-                    $('input[name="username"]').val("");
-                    $('input[name="password"]').val("");
-                    if(orgId){
-                        loadOrgProfile();
-                    }
-                    else{
-                        loadRestoProfile();
-                    }
-                }
-                else{
-                    $('.incorrect-credentials').css('display', 'block');
-                    $('.incorrect-credentials button').css('display', 'inline-block');
-                    $('.incorrect-credentials-card p').text('Incorrect credentials.');
-                    $('input[name="username"]').val("");
-                    $('input[name="password"]').val("");
-                }
+            else if('restoToken' in obj){
+                setTimeout(`window.location.href = "private/restaurantdashboard.html?id=${obj.restoToken}"`, 3000);
+                showLoginMessage();
+                $('.incorrect-credentials-card p').text('Found ya! One moment while I load your dashboard.');
+                $('.incorrect-credentials button').css('display', 'none');
+                $('.incorrect-credentials-card span').css('display', 'block');
             }
         }
     }
 
-    function loadOrgProfile(){
-        setTimeout(`window.location.href = "private/organizationdashboard.html?id=${orgId}"`, 3000);
+    function showLoginMessage(){
+        $('.incorrect-credentials').css('display', 'block');
+        $('input[name="username"]').val("");
+        $('input[name="password"]').val("");
     }
 
-    function loadRestoProfile(){
-        setTimeout(`window.location.href = "private/restaurantdashboard.html?id=${restoId}"`, 3000);
-    }
-
+    //------click events-----------//
+    const clickEvents = {
+        logoClick: function(){
+            $('html, body').animate({scrollTop: 0}, 1000);
+            this.closeHamburgerMenu();
+        },
+        closeHamburgerMenu: function(){
+            $('.hamburger-menu').css('display', 'none');
+        },
+        showHamburgerMenu: function(){
+            $('.hamburger-menu').css('display', 'block');
+        },
+        closeLoginModal: function(){
+            setTimeout(function(){
+                $('#login').css('display', 'none');
+            }, 1500);
+            $('#login').removeClass('fadeInDown').addClass('fadeOutDown');
+            $('.register-types').css('display', 'block');
+            $('.resto-register').css('display', 'none');
+            $('.org-register').css('display', 'none');
+        },
+        cancelLogin: function(){
+            setTimeout(function(){
+                $('#login').css('display', 'none');
+            }, 1500);
+            $('#login').removeClass('fadeInDown').addClass('fadeOutDown');
+            $('.register-types').css('display', 'block');
+            $('.resto-register').css('display', 'none');
+            $('.org-register').css('display', 'none');
+        },
+        showLoginModal: function(){
+            $('#login').removeClass('fadeOutDown').css('display', 'block').addClass('fadeInDown');
+            $('.hamburger-menu').css('display', 'none');
+            $('#register').css('display', 'none');
+        },
+        showRegisterModal: function(){
+            $('#register').removeClass('fadeOutDown').css('display', 'block').addClass('fadeInDown');
+            $('.hamburger-menu').css('display', 'none');
+        },
+        closeRegisterTypesModal: function(){
+            setTimeout(function(){
+                $('#register').css('display', 'none');
+            }, 1500);
+            $('#register').removeClass('fadeInDown').addClass('fadeOutDown');
+        },
+        restoTypeSelected: function(){
+            $('.register-types').css('display', 'none');
+            $('.resto-register').css('display', 'block');
+        },
+        orgTypeSelected: function(){
+            $('.register-types').css('display', 'none');
+            $('.org-register').css('display', 'block');
+        },
+        cancelRegistration: function(){
+            $('.resto-register').css('display', 'none');
+            $('.org-register').css('display', 'none');
+            $('.register-types').css('display', 'block');
+        },
+        goToHowTo: function(){
+            $('html, body').animate({scrollTop: $('#howto').offset().top}, 1000);
+        },
+        goToContact: function(){
+            $('html, body').animate({scrollTop: $('#contact').offset().top}, 1000);
+        },
+        closeCredentialsModal: function(){
+            $('.incorrect-credentials').css('display', 'none');
+        },
+        loginClicked: function(){
+            this.getLoginValues();
+        },
+        getLoginValues: function(){
+            credentials.username = $('input[name="username"]').val();
+            credentials.password = $('input[name="password"]').val();
+            if(credentials.username !== "" && credentials.password !== ""){
+                testCredentials(credentials);
+            }
+        }
+    };
 
     $('.login-form button').on('click', function(event){
         event.stopPropagation();
         event.preventDefault();
-        getLoginValues();
+        clickEvents.loginClicked();
     });
 
-
-
-
-
-
-
-
-
-    /* DYNAMIC STYLES ------------------------------------*/
-    //show hamburger-menu when sidebar icon is clicked
-    $(".sidebar-icon").click(function(){
-    	$(".hamburger-menu").fadeIn().css("display", "block");
+    $('.nav-logo').on('click', function(event){
+        event.stopPropagation();
+        clickEvents.logoClick();
     });
 
-    //hide hamburger-menu when X is clicked
-    $(".hamburger-close").click(function(){
-    	$(".hamburger-menu").css("display", "none");
+    $('.sidebar-icon').on('click', function(){
+    	clickEvents.showHamburgerMenu();
     });
 
-    //hide login modal, register modals
-    $(".login-close").click(function(){
-    	$("#login").css("display", "none");
-        $(".register-types").css("display", "block");
-    	$(".resto-register").css("display", "none");
-    	$(".org-register").css("display", "none");
+    $('.hamburger-close').on('click', function(){
+    	clickEvents.closeHamburgerMenu();
     });
 
-    //hide login modal, register modals
-    $(".login-cancel-forgot > button").click(function(){
-    	$("#login").css("display", "none");
-    	$(".register-types").css("display", "block");
-    	$(".resto-register").css("display", "none");
-    	$(".org-register").css("display", "none");
+    $('.login-close').on('click', function(){
+    	clickEvents.closeLoginModal();
     });
 
-    //show login modal and close other open modals and hamburger menu
-    $(".login-link").click(function(){
-    	$("#login").css("display", "block");
-    	$(".hamburger-menu").css("display", "none");
-    	$("#register").css("display", "none");
+    $('.login-cancel-forgot > button').on('click', function(){
+    	clickEvents.cancelLogin();
     });
 
-    //will open up register modal and close hamburger menu
-    $(".register-link").click(function(){
-    	$("#register").css("display", "block");
-    	$(".hamburger-menu").css("display", "none");
+    $('.login-link').on('click', function(){
+    	clickEvents.showLoginModal();
     });
 
-    //register types window will close when the type has
-    //been selected by user
-    $(".register-types > button").click(function(){
-    	$("#register").css("display", "none");
+    $('.register-link').on('click', function(){
+    	clickEvents.showRegisterModal();
     });
 
-    //user types window will close and display the resto register form
-    //when resto type is selected 
-    $(".resto-selected").click(function(){
-    	$(".register-types").css("display", "none");
-    	$(".resto-register").css("display", "block");
+    $('.register-types > button').on('click', function(){
+    	clickEvents.closeRegisterTypesModal();
     });
 
-    //user types window will close and display the org register form
-    //when org type is selected
-    $(".org-selected").click(function(){
-    	$(".register-types").css("display", "none");
-    	$(".org-register").css("display", "block");
+    $('.resto-selected').on('click', function(){
+    	clickEvents.restoTypeSelected();
     });
 
-    //go back to user type selection when cancel is clicked
-    //on the reg form
-    $(".reg-form-buttons .cancel").click(function(){
-    	$(".resto-register").css("display", "none");
-    	$(".org-register").css("display", "none");
-    	$(".register-types").css("display", "block");
+    $('.org-selected').on('click', function(){
+    	clickEvents.orgTypeSelected();
     });
 
-    //close the hamburger-menu when the link is clicked
-    $(".howto-link").click(function(){
-    	$(".hamburger-menu").css("display", "none");
+    $('.reg-form-buttons .cancel').on('click', function(){
+    	clickEvents.cancelRegistration();
     });
 
-    //close the hamburger-menu when the link is clicked
-    $(".contact-link").click(function(){
-    	$(".hamburger-menu").css("display", "none");
+    $('.howto-link').on('click', function(){
+    	clickEvents.closeHamburgerMenu();
     });
 
-    //scroll to #howto section when learn more is clicked
-    $(".learn-more-button").click(function(){
-    	window.location.href = '#howto';
+    $('.contact-link').on('click', function(){
+    	clickEvents.closeHamburgerMenu();
+    });
+
+    $('.learn-more-button').on('click', function(){
+        clickEvents.goToHowTo();
+    });
+
+    $('.howto-link').on('click', function(){
+        clickEvents.goToHowTo();
+    });
+
+    $('.contact-link').on('click', function(){
+        clickEvents.goToContact();
     });
 
     $('.incorrect-credentials-card button').on('click', function(){
-        $('.incorrect-credentials').css('display', 'none');
+        clickEvents.closeCredentialsModal();
+    });
+
+    $('.thumb-instructions').mouseenter(function(){
+        $(this).addClass('animated pulse');
+        $(this).mouseleave(function(){
+            $(this).removeClass('pulse');
+        });
+    });
+
+    $('.learn-more-button').mouseenter(function(){
+        $(this).addClass('animated pulse infinite');
+        $(this).mouseleave(function(){
+            $(this).removeClass('pulse');
+        });
     });
 });

@@ -9,6 +9,7 @@ const restaurantsRouter = require('./routers/restaurantsRouter');
 const organizationsRouter = require('./routers/organizationsRouter');
 const adminsRouter = require('./routers/adminsRouter');
 const schedulesRouter = require('./routers/schedulesRouter');
+const sessionsRouter = require('./routers/sessionsRouter');
 //use ES6 promises
 mongoose.Promise = global.Promise;
 const app = express();
@@ -34,6 +35,8 @@ app.use('/organizations', organizationsRouter);
 app.use('/admins', adminsRouter);
 //route all /schedules to schedulesRouter.js
 app.use('/schedules', schedulesRouter);
+//route all /sessions to sessionsRouter.js
+app.use('/sessions', sessionsRouter);
 //root of the website
 app.get('/', (req, res)=>{
 	res.json({name: package.name, version: package.version});

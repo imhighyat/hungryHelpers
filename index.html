@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
   </head>
   <body>
     <!--navigation-->
@@ -19,10 +21,10 @@
       <!--div for the links-->
       <div class="nav-links">
         <ul>
-          <li class="register-link"><a href="#register"><i class="fa fa-user"></i> REGISTER</a></li>
+          <li class="register-link"><a href="#register"><i class="fa fa-book"></i> REGISTER</a></li>
           <li class="login-link"><a href="#login"><i class="fa fa-user"></i> LOG IN</a></li>
-          <li><a href="#howto"><i class="fa fa-cogs"></i> HOW TO</a></li>
-          <li><a href="#contact"><i class="fa fa-id-card-o"></i> CONTACT</a></li>
+          <li class="howto-link"><a href="#howto"><i class="fa fa-cogs"></i> HOW TO</a></li>
+          <li class="contact-link"><a href="#contact"><i class="fa fa-id-card-o"></i> CONTACT</a></li>
         </ul>
       </div>
 
@@ -34,7 +36,7 @@
       <div class="hamburger-menu">
         <ul>
           <li><a class="hamburger-close" href="javascript:void(0)">&times; Close</a></li>
-          <li class="register-link"><a href="#register"><i class="fa fa-user"></i> Register</a></li>
+          <li class="register-link"><a href="#register"><i class="fa fa-book"></i> Register</a></li>
           <li class="login-link"><a href="#login"><i class="fa fa-user"></i> Log In</a></li>
           <li class="howto-link"><a href="#howto"><i class="fa fa-cogs"></i> How To</a></li>
           <li class="contact-link"><a href="#contact"><i class="fa fa-id-card-o"></i> Contact</a></li>
@@ -53,7 +55,7 @@
 
     <main>
       <!--section for login modal-->
-      <section id="login">
+      <section id="login" class="animated">
         <div class="login-wrapper">
           <div class="login-close">
             <button>&times;</button>
@@ -74,13 +76,13 @@
         </div>
         <div class="incorrect-credentials">
           <div class="incorrect-credentials-card">
-            <p></p>
+            <p></p></br><span><i class="fa fa-smile-o fa-3x"></i></span>
             <button><i class="fa fa-check fa-lg"></i></button>
           </div>
         </div>
       </section>
       <!--section for register modal-->
-      <section id="register">
+      <section id="register" class="animated">
         <div class="register-wrapper">
           <div class="register-types">
             <h5>What are you registering as?</h5>
@@ -93,7 +95,7 @@
 
           <div class="resto-register">
             <h4>Restaurant/Establishment Registration Form</h4>
-            <form>
+            <form novalidate>
               <label>Restaurant/Establishment Name</label>
               <input type="text" name="resto-name" placeholder="Enter name" required>
               <label>Person In Charge</label>
@@ -126,7 +128,7 @@
 
           <div class="org-register">
             <h4>Organizations/Charitable Groups Registration Form</h4>
-            <form>
+            <form novalidate>
               <label>Organizations/Charitable Groups Name</label>
               <input type="text" name="org-name" placeholder="Enter name" required>
               <label>Person In Charge</label>
