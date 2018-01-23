@@ -221,6 +221,7 @@ $(document).ready(function() {
             url: `http://localhost:8080/restaurants/${id}`
         })
         .done(function(data) {
+            console.log(data);
             storeAccountData(data);
             fetchScheduleData();
             getUpcomingBookings();

@@ -112,7 +112,7 @@
                 <input type="text" name="street" placeholder="Street address" required>
                 <input type="text" name="city" placeholder="City" required>
                 <input type="text" name="state" placeholder="State" required>
-                <input type="text" name="zip" placeholder="Zipcode" required>
+                <input type="text" name="zip" placeholder="Zipcode" required size="2">
               </div>
               <label>Username</label>
               <input type="text" name="username" placeholder="Enter preferred username" required>
@@ -159,6 +159,52 @@
               </div>
             </form>
             <h5>Already have an account? Sign in <a class="login-link" href="#login">here</a>.</h5>
+          </div>
+        </div>
+        <div class="frequency-wrapper">
+          <div class="frequency-card">
+            <div class="frequency-text">
+              <h4>Please add your preferred donation schedule below.</h4>
+            </div>
+            <div class="js-sched-type">
+              <label for="sched-type">Donation Frequency</label></br>
+              <select name="sched-type">
+                <option value="One Time">One Time</option>
+                <option value="Recurring" selected>Recurring</option>
+                <option value="Recurring Until">Recurring Until</option>
+              </select>
+            </div>
+            <div class="js-start-date">
+              <label for="start-date">Starting date</label></br>
+              <input type="date" name="start-date" value="">
+            </div>
+            <div class="js-end-date">
+              <label for="end-date">End date</label></br>
+              <input type="date" name="end-date" value="">
+            </div>
+            <div class="js-day-of-week">
+              <label for="day-of-week">Days you want to donate</label></br>
+              <input type="checkbox" name="monday" value="1"><span>Monday</span>
+              <input type="checkbox" name="tuesday" value="2"><span>Tuesday</span>
+              <input type="checkbox" name="wednesday" value="3"><span>Wednesday</span>
+              <input type="checkbox" name="thursday" value="4"><span>Thursday</span>
+              <input type="checkbox" name="friday" value="5"><span>Friday</span>
+              <input type="checkbox" name="saturday" value="6"><span>Saturday</span>
+              <input type="checkbox" name="sunday" value="0"><span>Sunday</span>
+            </div>
+            <div class="js-time">
+              <label for="appt-time">Preffered donation time</label></br>
+              <input id="appt-time" type="time" name="appt-time" value="">
+            </div>
+            <div class="add-frequency">
+              <button>Add Schedule</button>
+            </div>
+          </div>
+        </div>
+        <div class="missing-values">
+          <div class="missing-values-card">
+            <p></p>
+            <button><i class="fa fa-check fa-lg"></i></button>
           </div>
         </div>
       </section>

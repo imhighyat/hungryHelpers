@@ -229,7 +229,8 @@ header p{
 	text-decoration: underline;
 }
 
-.incorrect-credentials{
+.incorrect-credentials,
+.missing-values{
 	display: none;
 	position: fixed;
 	top: 0;
@@ -240,7 +241,8 @@ header p{
 	background-color: rgba(0,0,0,.7);
 }
 
-.incorrect-credentials-card{
+.incorrect-credentials-card,
+.missing-values-card{
 	position: relative;
 	top: 20%;
 	width: 20rem;
@@ -252,7 +254,8 @@ header p{
 	padding: 2rem 1rem;
 }
 
-.incorrect-credentials-card p{
+.incorrect-credentials-card p,
+.missing-values-card p{
 	margin-bottom: 1rem;
 }
 
@@ -265,7 +268,8 @@ header p{
 	border-radius: 50%;
 }
 
-.incorrect-credentials-card button{
+.incorrect-credentials-card button,
+.missing-values-card button{
 	display: none;
 	text-align: center;
 	padding: .5rem 1rem;
@@ -491,6 +495,62 @@ header p{
 	display: none;
 	width: 90%;
 	margin:  auto; 	
+}
+
+.frequency-wrapper{
+	display: none;
+	position: fixed;
+	overflow: auto;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 3;
+	text-align: center;
+	background-color: rgba(0,0,0,.7);
+}
+
+.frequency-card{
+	position: relative;
+	top: 10%;
+	width: 40rem;
+	margin: 0 auto 5rem auto;
+	background-color: #ffffff;
+	min-height: 5rem;
+	border-radius: 5px;
+	padding: 2rem 1rem;
+}
+
+.frequency-card div{
+	margin-bottom: 1.5rem;
+}
+
+.frequency-card select,
+.frequency-card input{
+	margin: 1rem;
+	font-family: 'Raleway', sans-serif;
+	font-size: 16px;
+	border-style: none;
+	border-bottom: 1px solid black;
+	outline: none;
+	padding-left: 1rem;
+}
+
+.frequency-text h4,
+.add-frequency{
+	text-align: center;
+}
+
+.add-frequency button{
+	font-family: 'Raleway', sans-serif;
+	padding: .5rem 1rem;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	background-color: #217e38;
+	color: #ffffff;
+	font-weight: bold;
+	cursor: pointer;
 }
 
 #howto,
@@ -1150,7 +1210,8 @@ footer > a:hover{
 		color: black;
 	}
 
-	.incorrect-credentials-card{
+	.incorrect-credentials-card,
+	.missing-values-card{
 		width: 80%;
 		max-width: 20rem;
 	}
