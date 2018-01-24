@@ -1,141 +1,138 @@
 $(document).ready(function() {
-    //log in section
     let credentials = {};
-    let newRestoData = {};
+    //let newRestoData = {};
     let newOrgData = {};
 
-    function testCredentials(obj){
-        $.ajax({
-            method: 'POST',
-            url: `http://localhost:8080/sessions`,
-            data: JSON.stringify(obj),
-            contentType: 'application/json; charset=utf-8'
-        })
-        .done(function(data){
-            launchDashboard(data);
-        });
-    }
+    //LOGIN SECTION
 
-    function launchDashboard(obj){
-        if(typeof(obj) === 'string'){
-            showLoginMessage();
-            $('.incorrect-credentials-card p').text('Incorrect credentials. Please try again.');
-            $('.incorrect-credentials button').css('display', 'inline-block');
-        }
-        else{
-            if('orgToken' in obj){
-                setTimeout(`window.location.href = "private/organizationdashboard.html?id=${obj.orgToken}"`, 3000);
-                showLoginMessage();
-                $('.incorrect-credentials-card p').text('Found ya! One moment while I load your dashboard.');
-                $('.incorrect-credentials button').css('display', 'none');
-                $('.incorrect-credentials-card span').css('display', 'block');
+
+
+
+
+
+    //REGISTER SECTION
+    const restoDbCallMethods = {
+        newRestoData: {},
+        restoRegisterClicked: function(){
+            this.newRestoData.restoName = $('.resto-register input[name="resto-name"]').val();
+            this.newRestoData.firstName = $('.resto-register input[name="first-name"]').val();
+            this.newRestoData.lastName = $('.resto-register input[name="last-name"]').val();
+            this.newRestoData.phone = $('.resto-register input[name="phone"]').val();
+            this.newRestoData.email = $('.resto-register input[name="email"]').val();
+            this.newRestoData.street = $('.resto-register input[name="street"]').val();
+            this.newRestoData.city = $('.resto-register input[name="city"]').val();
+            this.newRestoData.state = $('.resto-register input[name="state"]').val();
+            this.newRestoData.zip = $('.resto-register input[name="zip"]').val();
+            this.newRestoData.username = $('.resto-register input[name="username"]').val();
+            this.newRestoData.password = $('.resto-register input[name="password"]').val();
+            console.log(this.newRestoData);
+            this.checkIfRestoValueMissing(this.newRestoData);
+        },
+        checkIfRestoValueMissing: function(restoObj){
+            for(let prop in restoObj){
+                if(restoObj[prop] === ""){
+                    return this.showMissingRestoValuesModal();
+                }   
             }
-            else if('restoToken' in obj){
-                setTimeout(`window.location.href = "private/restaurantdashboard.html?id=${obj.restoToken}"`, 3000);
-                showLoginMessage();
-                $('.incorrect-credentials-card p').text('Found ya! One moment while I load your dashboard.');
-                $('.incorrect-credentials button').css('display', 'none');
-                $('.incorrect-credentials-card span').css('display', 'block');
-            }
-        }
-    }
-
-    function showLoginMessage(){
-        $('.incorrect-credentials').css('display', 'block');
-        $('input[name="username"]').val("");
-        $('input[name="password"]').val("");
-    }
-
-    //register section
-    function checkIfValueMissing(obj){
-        for(var prop in obj){
-            if(obj[prop] === ""){
-                return missingValues();
-            }
-        }
-        newRestoRegister(obj);
-    }
-
-    function missingValues(){
-        $('.missing-values').css('display', 'block');
-        $('.missing-values p').text('Please fill out all the fields.');
-        $('.missing-values button').css('display', 'inline-block');
-    }
-
-    function newRestoRegister(obj){
-        $.ajax({
-            method: 'POST',
-            url: `http://localhost:8080/restaurants`,
-            data: JSON.stringify({
-                name: obj.restoName,
-                phoneNumber: obj.phone,
-                manager: {
-                    firstName: obj.firstName,
-                    lastName: obj.lastName
-                },
-                address: {
-                    street: obj.street,
-                    city: obj.city,
-                    state: obj.state,
-                    zipcode: obj.zip
-                },
-                email: obj.email,
-                username: obj.username,
-                password: obj.password
-            }),
-            contentType: 'application/json; charset=utf-8'
-        })
-        .done(function(data){
-            console.log(data);
-            $('.frequency-wrapper').css('display', 'block');
-            $('.register-wrapper').css('display', 'none');
-            $('.add-frequency button').on('click', function(event){
-                event.preventDefault();
+            console.log(this);
+            this.addNewRestoToDb(restoObj);
+        },
+        showMissingRestoValuesModal: function(){
+            myThis = this;
+            $('.missing-values').css('display', 'block');
+            $('.missing-values p').text('Please fill out all the fields.');
+            $('.missing-values button').css('display', 'inline-block');
+            $('.missing-values button').on('click', function(event){
                 event.stopPropagation();
-                storeFrequencyValues(data);
+                event.preventDefault();
+                $('.missing-values').css('display', 'none');
             });
-        });
-    }
-
-    function storeFrequencyValues(data){
-        let days = [];
-        $('input[type=checkbox]:checked').each(function(index, item){
-            days.push($(item).val());
-        });
-        let frequencySched = {
-            schedType: $('select').val(),
-            startingDate: $('input[name=start-date').val(),
-            endingDate: $('input[name=end-date').val(),
-            dayOfWeek: days,
-            time: {
-                hour: parseInt($("input[name=appt-time]").val().slice(0,2)),
-                minutes: parseInt($("input[name=appt-time]").val().slice(3))
-            }
-        };
-        sendFrequencyToDb(frequencySched, data);
-    }
-
-    function sendFrequencyToDb(sched, obj){
-        //make sure everything has value
-        if($('input[name="start-date"]').val() && $('input[name="end-date"]').val() && $('input[name="appt-time"]').val() && ($('input[name="monday"]').is(':checked') || $('input[name="tuesday"]').is(':checked') || $('input[name="wednesday"]').is(':checked') || $('input[name="thursday"]').is(':checked') || $('input[name="friday"]').is(':checked') || $('input[name="saturday"]').is(':checked') || $('input[name="sunday"]').is(':checked'))){
+        },
+        addNewRestoToDb: function(restoObj){
+            myThis = this;
             $.ajax({
                 method: 'POST',
-                url: `http://localhost:8080/restaurants/${obj._id}/schedules`,
+                url: `http://localhost:8080/restaurants`,
                 data: JSON.stringify({
-                    schedType: sched.schedType,
-                    startingDate: sched.startingDate,
-                    endingDate: sched.endingDate,
-                    dayOfWeek: sched.dayOfWeek,
-                    time: sched.time,
-                restaurant: obj._id,
-                restPerson: obj.manager.firstName + obj.manager.lastName,
-                bookings: []
+                    name: restoObj.restoName,
+                    phoneNumber: restoObj.phone,
+                    manager: {
+                        firstName: restoObj.firstName,
+                        lastName: restoObj.lastName
+                    },
+                    address: {
+                        street: restoObj.street,
+                        city: restoObj.city,
+                        state: restoObj.state,
+                        zipcode: restoObj.zip
+                    },
+                    email: restoObj.email,
+                    username: restoObj.username,
+                    password: restoObj.password
                 }),
                 contentType: 'application/json; charset=utf-8'
             })
-            .done(function(){
-                setTimeout(`window.location.href = "private/restaurantdashboard.html?id=${obj._id}"`, 5000);
+            .done(function(payload){
+                console.log(payload); //inspect what we received
+                let restoProfile = payload;
+                myThis.showFrequencyModal(restoProfile);
             });
+        },
+        showFrequencyModal: function(restoObj){
+            myThis = this;
+            $('.frequency-wrapper').css('display', 'block');
+            $('.register-wrapper').css('display', 'none');
+            $('.add-frequency button').on('click', function(event){
+                event.stopPropagation();
+                event.preventDefault();
+                myThis.storeFrequencyValues(restoObj);
+            });
+        },
+        storeFrequencyValues: function(restoObj){
+            let days = []; //to strore the daysOfWeek
+            $('input[type=checkbox]:checked').each(function(index, item){
+                    days.push($(item).val());
+            });
+            let frequencySched = {
+                schedType: $('select').val(),
+                startingDate: $('input[name=start-date').val(),
+                endingDate: $('input[name=end-date').val(),
+                dayOfWeek: days,
+                time: {
+                    hour: parseInt($("input[name=appt-time]").val().slice(0,2)),
+                    minutes: parseInt($("input[name=appt-time]").val().slice(3))
+                }
+            };
+            this.addFrequencyToDb(restoObj, frequencySched);
+        },
+        addFrequencyToDb(restoObj, schedObj){
+            myThis = this;
+            //make sure everything has value
+            if($('input[name="start-date"]').val() && $('input[name="end-date"]').val() && $('input[name="appt-time"]').val() && ($('input[name="monday"]').is(':checked') || $('input[name="tuesday"]').is(':checked') || $('input[name="wednesday"]').is(':checked') || $('input[name="thursday"]').is(':checked') || $('input[name="friday"]').is(':checked') || $('input[name="saturday"]').is(':checked') || $('input[name="sunday"]').is(':checked'))){
+                $.ajax({
+                    method: 'POST',
+                    url: `http://localhost:8080/restaurants/${restoObj._id}/schedules`,
+                    data: JSON.stringify({
+                        schedType: schedObj.schedType,
+                        startingDate: schedObj.startingDate,
+                        endingDate: schedObj.endingDate,
+                        dayOfWeek: schedObj.dayOfWeek,
+                        time: schedObj.time,
+                        restaurant: restoObj._id,
+                        restPerson: restoObj.manager.firstName + restoObj.manager.lastName,
+                        bookings: []
+                    }),
+                    contentType: 'application/json; charset=utf-8'
+                })
+                .done(function(){
+                    myThis.showRedirectMessage(restoObj.name);
+                    setTimeout(`window.location.href = "private/restaurantdashboard.html?id=${restoObj._id}"`, 5000);
+                });
+            }
+        },
+        showRedirectMessage: function(restoName){
+            $('.redirect-message').css('display', 'block');
+            $('.redirect-message p').text(`Welcome, ${restoName}! One moment while I load your dashboard.`);
         }
     }
 
@@ -143,218 +140,232 @@ $(document).ready(function() {
 
 
 
-    //------click events-----------//
+    //----------CLICK FUNCTIONS------------//
     const clickEvents = {
-        logoClick: function(){
-            $('html, body').animate({scrollTop: 0}, 1000);
-            this.closeHamburgerMenu();
-        },
         closeHamburgerMenu: function(){
             $('.hamburger-menu').css('display', 'none');
+        },
+        logoclick: function(){
+            $('html, body').animate({scrollTop: 0}, 1000);
         },
         showHamburgerMenu: function(){
             $('.hamburger-menu').css('display', 'block');
         },
-        closeLoginModal: function(){
-            setTimeout(function(){
-                $('#login').css('display', 'none');
-            }, 1500);
-            $('#login').removeClass('fadeInDown').addClass('fadeOutDown');
-            $('.register-types').css('display', 'block');
-            $('.resto-register').css('display', 'none');
-            $('.org-register').css('display', 'none');
-        },
-        cancelLogin: function(){
-            setTimeout(function(){
-                $('#login').css('display', 'none');
-            }, 1500);
-            $('#login').removeClass('fadeInDown').addClass('fadeOutDown');
-            $('.register-types').css('display', 'block');
-            $('.resto-register').css('display', 'none');
-            $('.org-register').css('display', 'none');
+        resetLoginInputs: function(){
+            credentials.username = "";
+            credentials.password = "";
         },
         showLoginModal: function(){
             $('#login').removeClass('fadeOutDown').css('display', 'block').addClass('fadeInDown');
-            $('.hamburger-menu').css('display', 'none');
-            $('#register').css('display', 'none');
+        },
+        closeLoginModal: function(){
+            this.resetLoginInputs();
+            setTimeout(function(){
+                    $('#login').css('display', 'none');
+                }, 1500);
+            $('#login').removeClass('fadeInDown').addClass('fadeOutDown');
         },
         showRegisterModal: function(){
             $('#register').removeClass('fadeOutDown').css('display', 'block').addClass('fadeInDown');
-            $('.hamburger-menu').css('display', 'none');
         },
-        closeRegisterTypesModal: function(){
+        closeRegisterModal: function(){
             setTimeout(function(){
-                $('#register').css('display', 'none');
+                    $('#register').css('display', 'none');
             }, 1500);
-            $('#register').removeClass('fadeInDown').addClass('fadeOutDown');
         },
-        restoTypeSelected: function(){
-            $('.register-types').css('display', 'none');
-            $('.resto-register').css('display', 'block');
-        },
-        orgTypeSelected: function(){
-            $('.register-types').css('display', 'none');
-            $('.org-register').css('display', 'block');
-        },
-        cancelRegistration: function(){
-            $('.resto-register').css('display', 'none');
-            $('.org-register').css('display', 'none');
+        showRegisterTypesModal: function(){
             $('.register-types').css('display', 'block');
         },
+        closeRegisterTypesModal: function(){
+            $('.register-types').css('display', 'none');
+        },
+        showRestoRegisterModal: function(){
+            $('.resto-register').css('display', 'block');
+        },
+        closeRestoRegisterModal: function(){
+            $('.resto-register').css('display', 'none');
+        },
+        showOrgRegisterModal: function(){
+            $('.org-register').css('display', 'block');
+        },
+        closeOrgRegisterModal: function(){
+            $('.org-register').css('display', 'none');
+        },
         goToHowTo: function(){
+            this.closeHamburgerMenu();
             $('html, body').animate({scrollTop: $('#howto').offset().top}, 1000);
         },
         goToContact: function(){
+            this.closeHamburgerMenu();
             $('html, body').animate({scrollTop: $('#contact').offset().top}, 1000);
         },
-        closeCredentialsModal: function(){
+        closeIncorrectCredentialsModal: function(){
             $('.incorrect-credentials').css('display', 'none');
         },
         closeMissingValuesModal: function(){
             $('.missing-values').css('display', 'none');
-        },
-        loginClicked: function(){
-            this.getLoginValues();
-        },
-        getLoginValues: function(){
-            credentials.username = $('input[name="username"]').val();
-            credentials.password = $('input[name="password"]').val();
-            if(credentials.username !== "" && credentials.password !== ""){
-                testCredentials(credentials);
-            }
-        },
-        restoRegisterClicked: function(){
-            this.getRestoSignupValues();
-        },
-        orgRegisterClicked: function(){
-            this.getOrgSignupValues();
-        },
-        getRestoSignupValues: function(){
-            newRestoData.restoName = $('.resto-register input[name="resto-name"]').val();
-            newRestoData.firstName = $('.resto-register input[name="first-name"]').val();
-            newRestoData.lastName = $('.resto-register input[name="last-name"]').val();
-            newRestoData.phone = $('.resto-register input[name="phone"]').val();
-            newRestoData.email = $('.resto-register input[name="email"]').val();
-            newRestoData.street = $('.resto-register input[name="street"]').val();
-            newRestoData.city = $('.resto-register input[name="city"]').val();
-            newRestoData.state = $('.resto-register input[name="state"]').val();
-            newRestoData.zip = $('.resto-register input[name="zip"]').val();
-            newRestoData.username = $('.resto-register input[name="username"]').val();
-            newRestoData.password = $('.resto-register input[name="password"]').val();
-            checkIfValueMissing(newRestoData);
-        },
-        getOrgSignupValues: function(){
-            newOrgData.orgName = $('.org-register input[name="org-name"]').val();
-            newOrgData.cause = $('.org-register textarea').val();
-            newOrgData.firstName = $('.org-register input[name="first-name"]').val();
-            newOrgData.lastName = $('.org-register input[name="last-name"]').val();
-            newOrgData.phone = $('.org-register input[name="phone"]').val();
-            newOrgData.email = $('.org-register input[name="email"]').val();
-            newOrgData.street = $('.org-register input[name="street"]').val();
-            newOrgData.city = $('.org-register input[name="city"]').val();
-            newOrgData.state = $('.org-register input[name="state"]').val();
-            newOrgData.zip = $('.org-register input[name="zip"]').val();
-            newOrgData.username = $('.org-register input[name="username"]').val();
-            newOrgData.password = $('.org-register input[name="password"]').val();
-            checkIfValueMissing(newOrgData);
         }
     };
 
-    $('.login-form button').on('click', function(event){
-        event.stopPropagation();
-        event.preventDefault();
-        clickEvents.loginClicked();
+
+    //-------AJAX STYLING CLICKS--------------//
+    //when resto user clicks on Complete Registration
+    $('.resto-register .reg-form-buttons .sign-up').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        restoDbCallMethods.restoRegisterClicked();
     });
 
-    $('.resto-register .reg-form-buttons .sign-up').on('click', function(event){
-        event.stopPropagation();
-        event.preventDefault();
-        clickEvents.restoRegisterClicked();
+    //when org user clicks on Complete Registration
+    $('.org-register .reg-form-buttons .sign-up').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        
     });
 
-    $('.org-register .reg-form-buttons .sign-up').on('click', function(event){
-        event.stopPropagation();
-        event.preventDefault();
-        clickEvents.orgRegisterClicked();
+    //to close the missing values message modal
+    $('.missing-values button').on('click', function(e){
+            console.log('button clicked');
+            e.stopPropagation();
+            e.preventDefault();
+            clickEvents.closeMissingValuesModal();
     });
 
-    $('.missing-values button').on('click', function(event){
-        event.stopPropagation();
-        event.preventDefault();
-        clickEvents.closeMissingValuesModal();
 
+
+
+    //-------DYNAMIC STYLING CLICKS-----------//
+    //when log in button has been clicked
+    $('.login-form button').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        clickEvents.closeHamburgerMenu();
+        clickEvents.showLoginModal();
     });
 
-    $('.nav-logo').on('click', function(event){
-        event.stopPropagation();
-        clickEvents.logoClick();
+    //when logo is clicked
+    $('.nav-logo').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation()
+        clickEvents.logoclick();
     });
 
-    $('.sidebar-icon').on('click', function(){
-    	clickEvents.showHamburgerMenu();
+    //show hamburger menu on small devices when sidebar icon is clicked
+    $('.sidebar-icon').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation()
+        clickEvents.showHamburgerMenu();
     });
 
-    $('.hamburger-close').on('click', function(){
-    	clickEvents.closeHamburgerMenu();
+    //close hamburger menu on small devices when X is clicked
+    $('.hamburger-close').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation()
+        clickEvents.closeHamburgerMenu();
     });
 
-    $('.login-close').on('click', function(){
-    	clickEvents.closeLoginModal();
+    //when X on login modal is clicked
+    $('.login-close').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation()
+        clickEvents.closeLoginModal();
+        clickEvents.resetLoginInputs();
+        clickEvents.showRegisterTypesModal();
+        clickEvents.closeRestoRegisterModal();
+        clickEvents.closeOrgRegisterModal();
     });
 
-    $('.login-cancel-forgot > button').on('click', function(){
-    	clickEvents.cancelLogin();
+    //when Cancel button on login modal is clicked
+    $('.login-cancel-forgot > button').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation()
+        clickEvents.closeLoginModal();
+        clickEvents.resetLoginInputs();
+        clickEvents.showRegisterTypesModal();
+        clickEvents.closeRestoRegisterModal();
+        clickEvents.closeOrgRegisterModal();
     });
 
-    $('.login-link').on('click', function(){
-    	clickEvents.showLoginModal();
+    //when login link is clicked, show log in modal
+    $('.login-link').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation()
+        clickEvents.closeHamburgerMenu();
+        clickEvents.showLoginModal();
+        clickEvents.closeRegisterModal();
     });
 
-    $('.register-link').on('click', function(){
-    	clickEvents.showRegisterModal();
+    //when register link is clicked, show register modal
+    $('.register-link').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation()
+        clickEvents.closeHamburgerMenu();
+        clickEvents.showRegisterModal();
     });
 
-    $('.register-types > button').on('click', function(){
-    	clickEvents.closeRegisterTypesModal();
+    //when cancel button is clicked on the register types modal
+    $('.register-types > button').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation()
+        clickEvents.closeRegisterModal();
     });
 
-    $('.resto-selected').on('click', function(){
-    	clickEvents.restoTypeSelected();
+    //when resto type sign up has been selected for registration
+    $('.resto-selected').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation()
+        clickEvents.closeRegisterTypesModal();
+        clickEvents.closeOrgRegisterModal();
+        clickEvents.showRestoRegisterModal();
     });
 
-    $('.org-selected').on('click', function(){
-    	clickEvents.orgTypeSelected();
+    //when org type sign up has been selected for registration
+    $('.org-selected').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation()
+        clickEvents.closeRegisterTypesModal();
+        clickEvents.closeRestoRegisterModal();
+        clickEvents.showOrgRegisterModal();
     });
 
-    $('.reg-form-buttons .cancel').on('click', function(event){
-        event.preventDefault();
-    	clickEvents.cancelRegistration();
+    //when cancel on the registration modal is clicked
+    $('.reg-form-buttons .cancel').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation()
+        clickEvents.closeRestoRegisterModal();
+        clickEvents.closeOrgRegisterModal();
+        clickEvents.showRegisterTypesModal();
     });
 
-    $('.howto-link').on('click', function(){
-    	clickEvents.closeHamburgerMenu();
-    });
-
-    $('.contact-link').on('click', function(){
-    	clickEvents.closeHamburgerMenu();
-    });
-
-    $('.learn-more-button').on('click', function(){
+    //when howto link is clicked
+    $('.howto-link').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation()
         clickEvents.goToHowTo();
     });
 
-    $('.howto-link').on('click', function(){
-        clickEvents.goToHowTo();
-    });
-
-    $('.contact-link').on('click', function(){
+    //when contact link is clicked
+    $('.contact-link').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation()
         clickEvents.goToContact();
     });
 
-    $('.incorrect-credentials-card button').on('click', function(){
-        clickEvents.closeCredentialsModal();
+    //when learn more button is clicked, scroll to how to section
+    $('.learn-more-button').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation()
+        clickEvents.goToHowTo();
     });
 
+    //when button in incorrect credentials modal is clicked, close the modal
+    $('.incorrect-credentials-card button').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation()
+        clickEvents.closeIncorrectCredentialsModal();
+    });
+
+    //when the instructions card in how to is entered and left with mouse
     $('.thumb-instructions').mouseenter(function(){
         $(this).addClass('animated pulse');
         $(this).mouseleave(function(){
@@ -362,10 +373,18 @@ $(document).ready(function() {
         });
     });
 
+    //when the learn more button is entered and left with mouse
     $('.learn-more-button').mouseenter(function(){
         $(this).addClass('animated pulse infinite');
         $(this).mouseleave(function(){
             $(this).removeClass('pulse');
         });
+    });
+
+    //when back to top is clicked
+    $('footer a').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        clickEvents.logoclick();
     });
 });
