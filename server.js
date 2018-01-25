@@ -27,6 +27,11 @@ app.use(function(req, res, next) {
   }
   next();
 });
+app.use(express.static('public'));
+
+app.get('/', (request, response) => {
+  response.sendFile(__dirname + '/public/index.html');
+});
 //route all /restaurants to restaurantsRouter.js
 app.use('/restaurants', restaurantsRouter);
 //route all /restaurants to organizationsRouter.js
@@ -38,9 +43,9 @@ app.use('/schedules', schedulesRouter);
 //route all /sessions to sessionsRouter.js
 app.use('/sessions', sessionsRouter);
 //root of the website
-app.get('/', (req, res)=>{
-	res.json({name: package.name, version: package.version});
-});
+// app.get('/', (req, res)=>{
+// 	res.json({name: package.name, version: package.version});
+// });
 app.use('*', (req,res)=>{
 	res.send('Address not found. Please check your URL.');
 });

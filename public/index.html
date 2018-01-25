@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HUNGRY | HELPERS</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+  </head>
+  <body>
+    <!--navigation-->
+    <nav class="fixed-nav">
+      <!--div for the logo-->
+      <div class="nav-logo">
+        <a href="#home">HUNGRY | HELPERS</a>
+      </div>
+      <!--div for the links-->
+      <div class="nav-links">
+        <ul>
+          <li class="register-link"><a href="#register"><i class="fa fa-book"></i> REGISTER</a></li>
+          <li class="login-link"><a href="#login"><i class="fa fa-user"></i> LOG IN</a></li>
+          <li class="howto-link"><a href="#howto"><i class="fa fa-cogs"></i> HOW TO</a></li>
+          <li class="contact-link"><a href="#contact"><i class="fa fa-id-card-o"></i> CONTACT</a></li>
+        </ul>
+      </div>
+
+      <!--hamburger icon-->
+      <div class="sidebar-icon">
+        <a href="javascript:void(0)"><i class="fa fa-bars"></i></a>
+      </div>
+
+      <div class="hamburger-menu">
+        <ul>
+          <li><a class="hamburger-close" href="javascript:void(0)">&times; Close</a></li>
+          <li class="register-link"><a href="#register"><i class="fa fa-book"></i> Register</a></li>
+          <li class="login-link"><a href="#login"><i class="fa fa-user"></i> Log In</a></li>
+          <li class="howto-link"><a href="#howto"><i class="fa fa-cogs"></i> How To</a></li>
+          <li class="contact-link"><a href="#contact"><i class="fa fa-id-card-o"></i> Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!--header with full image-->
+    <header id="home">
+      <div>
+        <h1>There's enough for everyone. <em>SHARE.</em></h1>
+        <p>Stop wasting food and donate to those who are in need instead.</p>
+        <button class="learn-more-button" type="button">Learn more and start today.</button>
+      </div>
+    </header>
+
+    <main>
+      <!--section for login modal-->
+      <section id="login" class="animated">
+        <div class="login-wrapper">
+          <div class="login-close">
+            <button>&times;</button>
+          </div>
+          <div class="login-form">
+            <form>
+              <label>Username</label>
+              <input type="text" name="username" placeholder="Enter Username" required>
+              <label>Password</label>
+              <input type="password" name="password" placeholder="Enter Password" required>
+              <button>Log In</button>
+            </form>
+          </div>
+          <div class="login-cancel-forgot">
+            <button>Cancel</button>
+            <p>Forgot <a href="#">password</a>?</p>
+          </div>
+        </div>
+        <div class="incorrect-credentials">
+          <div class="incorrect-credentials-card">
+            <p></p></br><span><i class="fa fa-smile-o fa-3x"></i></span>
+            <button><i class="fa fa-check fa-lg"></i></button>
+          </div>
+        </div>
+      </section>
+      <!--section for register modal-->
+      <section id="register" class="animated">
+        <div class="register-wrapper animated">
+          <div class="register-types">
+            <h5>What are you registering as?</h5>
+            <div class="register-types-buttons">
+              <button class="resto-selected">Restaurants/Establishments</button>
+              <button class="org-selected">Organizations/Charitable Groups</button>
+            </div>
+            <button>Cancel</button>
+          </div>
+
+          <div class="resto-register">
+            <h4>Restaurant/Establishment Registration Form</h4>
+            <form novalidate>
+              <label>Restaurant/Establishment Name</label>
+              <input type="text" name="resto-name" placeholder="Enter name" required>
+              <label>Person In Charge</label>
+              <div class="fullname-input">
+                <input type="text" name="first-name" placeholder="Enter first name" required>
+                <input type="text" name="last-name" placeholder="Enter last name" required>
+              </div>
+              <label>Contact Number</label>
+              <input type="tel" name="phone" placeholder="Enter phone number" required>
+              <label>Email Address</label>
+              <input type="email" name="email" placeholder="Enter email address" required>
+              <label>Address</label>
+              <div class="fulladdress-input">
+                <input type="text" name="street" placeholder="Street address" required>
+                <input type="text" name="city" placeholder="City" required>
+                <input type="text" name="state" placeholder="State" required>
+                <input type="text" name="zip" placeholder="Zipcode" required size="2">
+              </div>
+              <label>Username</label>
+              <input type="text" name="username" placeholder="Enter preferred username" required>
+              <label>Password</label>
+              <input type="password" name="password" placeholder="Enter preferred password" required>
+              <div class="reg-form-buttons">
+                <button class="cancel">Cancel</button>
+                <button class="sign-up" type="submit">Complete Registration</button>
+              </div>
+            </form>
+            <h5>Already have an account? Sign in <a class="login-link" href="#login">here</a>.</h5>
+          </div>
+
+          <div class="org-register">
+            <h4>Organizations/Charitable Groups Registration Form</h4>
+            <form novalidate>
+              <label>Organizations/Charitable Groups Name</label>
+              <input type="text" name="org-name" placeholder="Enter name" required>
+              <label>Person In Charge</label>
+              <div class="fullname-input">
+                <input type="text" name="first-name" placeholder="Enter first name" required>
+                <input type="text" name="last-name" placeholder="Enter last name" required>
+              </div>
+              <label>Cause Description</label>
+              <textarea placeholder="Tell us about your cause or what you're supporting"></textarea>
+              <label>Contact Number</label>
+              <input type="tel" name="phone" placeholder="Enter phone number" required>
+              <label>Email Address</label>
+              <input type="email" name="email" placeholder="Enter email address" required>
+              <label>Address</label>
+              <div class="fulladdress-input">
+                <input type="text" name="street" placeholder="Street address" required>
+                <input type="text" name="city" placeholder="City" required>
+                <input type="text" name="state" placeholder="State" required>
+                <input type="text" name="zip" placeholder="Zipcode" required>
+              </div>
+              <label>Username</label>
+              <input type="text" name="username" placeholder="Enter preferred username" required>
+              <label>Password</label>
+              <input type="password" name="password" placeholder="Enter preferred password" required>
+              <div class="reg-form-buttons">
+                <button class="cancel">Cancel</button>
+                <button class="sign-up" type="submit">Complete Registration</button>
+              </div>
+            </form>
+            <h5>Already have an account? Sign in <a class="login-link" href="#login">here</a>.</h5>
+          </div>
+        </div>
+        <div class="frequency-wrapper">
+          <div class="frequency-card">
+            <div class="frequency-text">
+              <h4>Please add your preferred donation schedule below.</h4>
+            </div>
+            <div class="js-sched-type">
+              <label for="sched-type">Donation Frequency</label></br>
+              <select name="sched-type">
+                <option value="One Time">One Time</option>
+                <option value="Recurring" selected>Recurring</option>
+                <option value="Recurring Until">Recurring Until</option>
+              </select>
+            </div>
+            <div class="js-start-date">
+              <label for="start-date">Starting date</label></br>
+              <input type="date" name="start-date" value="">
+            </div>
+            <div class="js-end-date">
+              <label for="end-date">End date</label></br>
+              <input type="date" name="end-date" value="">
+            </div>
+            <div class="js-day-of-week">
+              <label for="day-of-week">Days you want to donate</label></br>
+              <input type="checkbox" name="monday" value="1"><span>Monday</span>
+              <input type="checkbox" name="tuesday" value="2"><span>Tuesday</span>
+              <input type="checkbox" name="wednesday" value="3"><span>Wednesday</span>
+              <input type="checkbox" name="thursday" value="4"><span>Thursday</span>
+              <input type="checkbox" name="friday" value="5"><span>Friday</span>
+              <input type="checkbox" name="saturday" value="6"><span>Saturday</span>
+              <input type="checkbox" name="sunday" value="0"><span>Sunday</span>
+            </div>
+            <div class="js-time">
+              <label for="appt-time">Preffered donation time</label></br>
+              <input id="appt-time" type="time" name="appt-time" value="">
+            </div>
+            <div class="add-frequency">
+              <button>Add Schedule</button>
+            </div>
+          </div>
+        </div>
+        <div class="missing-values">
+          <div class="missing-values-card">
+            <p></p>
+            <button><i class="fa fa-check fa-lg"></i></button>
+          </div>
+        </div>
+        <div class="redirect-message">
+          <div class="redirect-message-card">
+            <p></p>
+            <button><i class="fa fa-smile-o fa-3x"></i></button>
+          </div>
+        </div>
+      </section>
+
+
+
+
+      <!--section for how to-->
+      <section id="howto">
+        <h2>HOW IT WORKS <i class="fa fa-cogs fa-2x" aria-hidden="true"></i></h2>
+        <!--for resto-->
+        <h3>For Restaurants / Establishments <i class="fa fa-cutlery fa-2x" aria-hidden="true"></i></h3>
+        <!--row that holds the text and the thumbnails-->
+        <div class="resto-thumb-row">
+          <!--have 4 thumbnails for instructions-->
+          <div class="thumb-instructions">
+            <h4>REGISTER</h4>
+            <div class="image register"></div>
+            <p>Sign up and create your account with a few easy steps.</p>
+          </div>
+          <div class="thumb-instructions">
+            <h4>SCHEDULE</h4>
+            <div class="image schedule"></div>
+            <p>Set up your preffered schedule and time for donation.</p>
+          </div>
+          <div class="thumb-instructions">
+            <h4>WAIT</h4>
+            <div class="image wait"></div>
+            <p>Wait for verified organizations/group to book your available appointments.</p>
+          </div>
+          <div class="thumb-instructions">
+            <h4>DONATE</h4>
+            <div class="image donate"></div>
+            <p>Organizations/groups will come to your location to pick up your donation.</p>
+          </div>
+        </div>        
+        <!--for orgs-->
+        <h3>For Organizations / Charitable Groups <i class="fa fa-users fa-2x" aria-hidden="true"></i></h3>
+        <div class="org-thumb-row">
+          <!--have 4 thumbnails for instructions-->
+          <div class="thumb-instructions">
+            <h4>REGISTER</h4>
+            <div class="image register"></div>
+            <p>Sign up and create your account with a few easy steps.</p>
+          </div>
+          <div class="thumb-instructions">
+            <h4>VIEW</h4>
+            <div class="image view"></div>
+            <p>View the restaurants/establishments with active schedules.</p>
+          </div>
+          <div class="thumb-instructions">
+            <h4>BOOK</h4>
+            <div class="image book"></div>
+            <p>Book the dates that you prefer from the available dates shown.</p>
+          </div>
+          <div class="thumb-instructions">
+            <h4>PICK UP</h4>
+            <div class="image pickup"></div>
+            <p>Pick-up the donation from the restaurant/establishment's address.</p>
+          </div>
+        </div>  
+      </section>
+      
+      <!--section for contact us-->
+      <section id="contact">
+        <h2>CONTACT US <i class="fa fa-id-card-o fa-2x" aria-hidden="true"></i></h2>
+        <p>Lets get in touch. Send us a message:</p>
+        <!--for our contact info-->
+        <div class="our-info">
+          <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i> California, USA</p>
+          <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> Phone: +3109625803</p>
+          <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> Email: mail@mail.com</p>
+        </div>
+        <!--form for sending message-->
+        <div class="contact-form">
+          <form action="#">
+            <input class="" type="text" placeholder="Name" required name="name">
+            <input class="" type="text" placeholder="Email" required name="email">
+            <input class="" type="text" placeholder="Subject" required name="subject">
+            <input class="" type="text" placeholder="Message" required name="message">
+            <button class="" type="submit"><i class="fa fa-paper-plane"></i> SEND MESSAGE</button>
+          </form>
+        </div>
+      </section>
+
+      <footer>
+      <a href="#home"><i class="fa fa-arrow-up"></i> BACK TO TOP</a>
+      <div class="icons">
+        <a href="#"><i class="fa fa-facebook-official"></i></a>
+        <a href="#"><i class="fa fa-instagram"></i></a>
+        <a href="#"><i class="fa fa-snapchat"></i></a>
+        <a href="#"><i class="fa fa-pinterest-p"></i></a>
+        <a href="#"><i class="fa fa-twitter"></i></a>
+        <a href="#"><i class="fa fa-linkedin"></i></a>
+      </div>
+    </footer>
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/index.js"></script>
+  </body>
+</html>
