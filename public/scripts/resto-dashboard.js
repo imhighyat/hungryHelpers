@@ -244,7 +244,10 @@ $(document).ready(function() {
             $('.js-account-settings').css('display', 'block');
         },
         closeHamburgerMenu: function(){
-            $('.hamburger-menu').css('display', 'none');
+            setTimeout(function(){
+                    $('.hamburger-menu').css('display', 'none');
+                }, 1000);
+            $('.hamburger-menu').removeClass('fadeInRight').addClass('fadeOutRight');
         },
         clickUpcomingDonations: function(){
             this.closeHamburgerMenu();
@@ -339,12 +342,12 @@ $(document).ready(function() {
   
     //show hamburger-menu when sidebar icon is clicked
     $('.sidebar-icon').on('click', function(){
-        $('.hamburger-menu').fadeIn().css('display', 'block');
+        $('.hamburger-menu').removeClass('fadeOutRight').css('display', 'block').addClass('fadeInRight');
     });
 
     //hide hamburger-menu when X is clicked
     $('.hamburger-close').on('click', function(){
-        $('.hamburger-menu').css('display', 'none');
+        clickEvents.closeHamburgerMenu();
     });
 
 });

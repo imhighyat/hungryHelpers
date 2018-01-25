@@ -266,13 +266,17 @@ $(document).ready(function() {
     //----------CLICK FUNCTIONS------------//
     const clickEvents = {
         closeHamburgerMenu: function(){
-            $('.hamburger-menu').css('display', 'none');
+            setTimeout(function(){
+                    $('.hamburger-menu').css('display', 'none');
+                }, 1000);
+            $('.hamburger-menu').removeClass('fadeInRight').addClass('fadeOutRight');
         },
         logoclick: function(){
             $('html, body').animate({scrollTop: 0}, 1000);
         },
         showHamburgerMenu: function(){
-            $('.hamburger-menu').css('display', 'block');
+            $('.hamburger-menu').removeClass('fadeOutRight').css('display', 'block').addClass('fadeInRight');
+            
         },
         resetLoginInputs: function(){
             $('#login input[name="username"]').val("");
@@ -535,9 +539,18 @@ $(document).ready(function() {
     });
 
     //when back to top is clicked
-    $('footer a').on('click', function(e){
+    $('footer .backtop').on('click', function(e){
         e.preventDefault();
         e.stopPropagation();
         clickEvents.logoclick();
+    });
+
+    //social media icons
+    $('.fa-facebook-official').on('click', function(e){
+        window.open(`https://facebook.com/sharer/sharer.php?u=${escape(`https://shielded-coast-22560.herokuapp.com`)}&quote=Stop wasting food and donate to those in need.`);
+    });
+
+    $('.fa-twitter').on('click', function(e){
+        window.open(`https://twitter.com/intent/tweet?text=Stop wasting food and donate to those in need. https://shielded-coast-22560.herokuapp.com`);
     });
 });

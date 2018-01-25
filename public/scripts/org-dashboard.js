@@ -264,7 +264,10 @@ $(document).ready(function() {
 //--------click events-------------//
     const clickEvents = {
         closeHamburgerMenu: function(){
-            $('.hamburger-menu').css('display', 'none');
+            setTimeout(function(){
+                    $('.hamburger-menu').css('display', 'none');
+                }, 1000);
+            $('.hamburger-menu').removeClass('fadeInRight').addClass('fadeOutRight');
         },
         clickBrowseSched: function(){
             loadRestaurants();
@@ -280,7 +283,7 @@ $(document).ready(function() {
             $('.browse-sched-link').css('display', 'none');
         },
         showHamburgerMenu: function(){
-            $('.hamburger-menu').fadeIn().css('display', 'block');
+            $('.hamburger-menu').removeClass('fadeOutRight').css('display', 'block').addClass('fadeInRight');
         },
         closeAvailableDates: function(){
             $('.schedule-info-modal').css('display', 'none');
