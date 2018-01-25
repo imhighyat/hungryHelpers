@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    let API_URL = 'https://shielded-coast-22560.herokuapp.com';
     const currentSettings = {};
     const updatedSettings = {};
     const query = window.location.search;
@@ -105,7 +106,7 @@ $(document).ready(function() {
     function updateScheduleData(){
         $.ajax({
             method: "PUT",
-            url: `http://localhost:8080/restaurants/${restoId}/schedules`,
+            url: `${API_URL}/restaurants/${restoId}/schedules`,
             data: JSON.stringify({
                 id: restoId,
                 schedType: updatedSettings.schedType,
@@ -126,7 +127,7 @@ $(document).ready(function() {
     function updateRestoData(){
         $.ajax({
             method: "PUT",
-            url: `http://localhost:8080/restaurants/${restoId}`,
+            url: `${API_URL}/restaurants/${restoId}`,
             data: JSON.stringify({
                 id: restoId,
                 phoneNumber: updatedSettings.phone,
@@ -155,7 +156,7 @@ $(document).ready(function() {
     function getUpcomingBookings(){
         $.ajax({
             method: "GET",
-            url: `http://localhost:8080/restaurants/${restoId}/schedules`
+            url: `${API_URL}/restaurants/${restoId}/schedules`
         })
         .done(function(data) {
             filterUpcomingSched(data[0]);
@@ -212,7 +213,7 @@ $(document).ready(function() {
     function fetchScheduleData(){
         $.ajax({
             method: "GET",
-            url: `http://localhost:8080/restaurants/${restoId}/schedules`
+            url: `${API_URL}/restaurants/${restoId}/schedules`
         })
         .done(function(data) {
             storeScheduleData(data[0]); //response is gonna be an array since using .find()
@@ -224,7 +225,7 @@ $(document).ready(function() {
     function fetchRestoData(id){
         $.ajax({
             method: "GET",
-            url: `http://localhost:8080/restaurants/${id}`
+            url: `${API_URL}/restaurants/${id}`
         })
         .done(function(data) {
             storeAccountData(data);

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+    let API_URL = 'https://shielded-coast-22560.herokuapp.com';
     //LOGIN SECTION
     const loginDbCallMethods = {
         loginCredentials: {},
@@ -23,7 +23,7 @@ $(document).ready(function() {
             myThis = this;
             $.ajax({
                 method: 'POST',
-                url: `http://localhost:8080/sessions`,
+                url: `${API_URL}/sessions`,
                 data: JSON.stringify(obj),
                 contentType: 'application/json; charset=utf-8'
             })
@@ -103,7 +103,7 @@ $(document).ready(function() {
             myThis = this;
             $.ajax({
                 method: 'POST',
-                url: `http://localhost:8080/restaurants`,
+                url: `${API_URL}/restaurants`,
                 data: JSON.stringify({
                     name: restoObj.restoName,
                     phoneNumber: restoObj.phone,
@@ -161,7 +161,7 @@ $(document).ready(function() {
             if($('input[name="start-date"]').val() && $('input[name="end-date"]').val() && $('input[name="appt-time"]').val() && ($('input[name="monday"]').is(':checked') || $('input[name="tuesday"]').is(':checked') || $('input[name="wednesday"]').is(':checked') || $('input[name="thursday"]').is(':checked') || $('input[name="friday"]').is(':checked') || $('input[name="saturday"]').is(':checked') || $('input[name="sunday"]').is(':checked'))){
                 $.ajax({
                     method: 'POST',
-                    url: `http://localhost:8080/restaurants/${restoObj._id}/schedules`,
+                    url: `${API_URL}/restaurants/${restoObj._id}/schedules`,
                     data: JSON.stringify({
                         schedType: schedObj.schedType,
                         startingDate: schedObj.startingDate,
@@ -231,7 +231,7 @@ $(document).ready(function() {
             myThis = this;
             $.ajax({
                 method: 'POST',
-                url: `http://localhost:8080/organizations`,
+                url: `${API_URL}/organizations`,
                 data: JSON.stringify({
                     name: orgObj.orgName,
                     causeDescription: orgObj.cause,

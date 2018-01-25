@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    let API_URL = 'https://shielded-coast-22560.herokuapp.com';
     const currentSettings = {};
     const updatedSettings = {};
     const query = window.location.search;
@@ -12,7 +13,7 @@ $(document).ready(function() {
     function fetchOrgData(id){
         $.ajax({
             method: "GET",
-            url: `http://localhost:8080/organizations/${orgId}`
+            url: `${API_URL}/organizations/${orgId}`
         })
         .done(function(data) {
             storeAccountData(data);
@@ -69,7 +70,7 @@ $(document).ready(function() {
     function updateOrgData(){
         $.ajax({
             method: "PUT",
-            url: `http://localhost:8080/organizations/${orgId}`,
+            url: `${API_URL}/organizations/${orgId}`,
             data: JSON.stringify({
                 id: orgId,
                 causeDescription: updatedSettings.cause,
@@ -98,7 +99,7 @@ $(document).ready(function() {
     function loadRestaurants(){
         $.ajax({
             method: "GET",
-            url: "http://localhost:8080/schedules?active=true"
+            url: `${API_URL}/schedules?active=true`
         })
         .done(function(data) {
             renderResto(data);
@@ -122,7 +123,7 @@ $(document).ready(function() {
     function loadUpcomingPickups(){
         $.ajax({
             method: "GET",
-            url: `http://localhost:8080/organizations/${orgId}/pickups`
+            url: `${API_URL}/organizations/${orgId}/pickups`
         })
         .done(function(data) {
             filterOrgPickups(data);
@@ -181,7 +182,7 @@ $(document).ready(function() {
     function loadRestaurantSchedule(restoId){
         $.ajax({
             method: "GET",
-            url: `http://localhost:8080/schedules/${restoId}`
+            url: `${API_URL}/schedules/${restoId}`
         })
         .done(function(data) {
             getAvailableDates(data);
@@ -224,7 +225,7 @@ $(document).ready(function() {
     function bookTheDate(schedId, date){
         $.ajax({
             method: "PUT",
-            url: `http://localhost:8080/schedules/${schedId}`,
+            url: `${API_URL}/schedules/${schedId}`,
             data: JSON.stringify({
                 date: date,
                 organization: orgId,
