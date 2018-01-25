@@ -47,7 +47,13 @@
 
 ### Application Website
 <a href="https://shielded-coast-22560.herokuapp.com">H U N G R Y | H E L P E R S</a>
-
+#### Demo Accounts (but of course, you can create your own accounts)
+##### Restaurant Login
++ username - kfcculvercity
++ password - culvercity99
+##### Charitable Organization Login
++ username - twoorg
++ password - updatedpassword
 ---
 
 ### Tech Stack
