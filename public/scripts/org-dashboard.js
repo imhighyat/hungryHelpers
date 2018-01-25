@@ -107,11 +107,12 @@ $(document).ready(function() {
     }
 
     function renderResto(data){
+        console.log(data);
         $('.schedules-wrapper').empty();
         if(data.length >= 1){
             for(let i = 0; i < data.length; i++){
                 let restoEntry = `<div class="js-schedule-entry">
-                        <a href="#" id="${data[i].restaurant._id}" class="resto-schedule"><p>${data[i].restaurant.name}</p></a>
+                        <a href="javascript:void(0)" id="${data[i].restaurant._id}" class="resto-schedule"><p>${data[i].restaurant.name}</p></a>
                     </div>`;
                 $('.schedules-wrapper').append(restoEntry);
             } 
@@ -126,6 +127,7 @@ $(document).ready(function() {
             url: `${API_URL}/organizations/${orgId}/pickups`
         })
         .done(function(data) {
+            console.log(data);
             filterOrgPickups(data);
         });
     }
@@ -150,7 +152,8 @@ $(document).ready(function() {
                             date: date,
                             time: time,
                             restaurant: data[i].restaurant.name,
-                            restPerson: data[i].restPerson
+                            restPerson: data[i].restPerson,
+                            id: data[i].restaurant._id
                             };
                             pickups.push(pickupEntry);
                         }
@@ -172,11 +175,31 @@ $(document).ready(function() {
             let pickupEntry = `<tr class="js-pickups-entry">
                                     <td>${array[i].date}</td>
                                     <td>${array[i].time}</td> 
-                                    <td>${array[i].restaurant}</td>
+                                    <td id="${array[i].id}" class="link-behavior">${array[i].restaurant}</a></td>
                                     <td>${array[i].restPerson}</td>
                                 </tr>`;
             $('.js-pickups-list table tbody').append(pickupEntry);
+            $('.link-behavior').css({'color':'#40386e', 'font-weight': 'bold', 'cursor': 'pointer'});
         }
+    }
+
+    function getRestoInfo(id){
+        $.ajax({
+            method: "GET",
+            url: `${API_URL}/restaurants/${id}`
+        })
+        .done(function(data) {
+            showRestoInfo(data);
+        });
+    }
+
+    function showRestoInfo(obj){
+        $('.show-resto').empty();
+        let restoInfo = `<h4>${obj.name}</h4>
+              <p><i class="fa fa-map-marker fa-lg"></i>${obj.address.street}, ${obj.address.city} ${obj.address.state} ${obj.address.zipcode}</p>
+              <p><i class="fa fa-phone fa-lg"></i>${obj.phoneNumber}</p>`;
+        $('.show-resto').append(restoInfo);
+        $('.show-resto-modal').css('display', 'block');
     }
 
     function loadRestaurantSchedule(restoId){
@@ -389,6 +412,21 @@ $(document).ready(function() {
 
     $('.browse-sched-link').on('click', function(){
         clickEvents.clickBrowseSched();
+        $('.show-resto-modal').css('display', 'none');
+    });
+
+    $('.js-pickups-list').on('click', 'td', function(e){
+        e.stopPropagation();
+        e.preventDefault();
+        let id = $(this).attr('id');
+        console.log(id);
+        if(typeof(id) === 'string'){
+            getRestoInfo(id);
+        }
+    });
+
+    $('.show-resto-modal span').on('click', function(){
+        $('.show-resto-modal').css('display', 'none');
     });
 
     $('.success-modal button').on('click', function(event){
@@ -420,6 +458,7 @@ $(document).ready(function() {
 
     $('.account-settings').on('click', function(){
         clickEvents.clickAccountSettings();
+        $('.show-resto-modal').css('display', 'none');
     });
 
     $('.date-booked-card button').on('click', function(event){

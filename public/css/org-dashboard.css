@@ -187,6 +187,47 @@ td > a{
     font-style: italic;
 }
 
+.show-resto-modal{
+	display: none;
+	background-color: #e2fae8;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    width: 75%;
+    max-width: 25rem;
+    padding: 2rem 1rem;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 5px 10px 18px #454141;
+}
+
+.show-resto-modal h4,
+.show-resto-modal p{
+	margin-bottom: 1.5rem;
+}
+
+.show-resto-modal span{
+	position: absolute;
+	top: 0%;
+	right: 0%;
+	font-size: 30px;
+	font-weight: bold;
+	padding: 0 .5rem;
+    cursor: pointer;
+}
+
+.show-resto-modal i{
+	padding-right: 1rem;
+}
+
+.show-resto-modal span:hover{
+	color: #ffffff;
+	background-color: #58635b;
+}
+
+
 .js-account-settings{
 	width: 90%;
 	height: auto;
@@ -554,6 +595,11 @@ input[name=street]{
 	.js-pickups-list .no-pickups p{
 		margin: 1.5rem auto;
 		font-weight: 14px;
+	}
+
+	.show-resto-modal h4,
+	.show-resto-modal p{
+		font-size: 14px;
 	}
 
 	.js-account-settings{
