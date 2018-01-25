@@ -1,16 +1,69 @@
 $(document).ready(function() {
-    let credentials = {};
-    //let newRestoData = {};
-    let newOrgData = {};
 
     //LOGIN SECTION
+    const loginDbCallMethods = {
+        loginCredentials: {},
+        getLoginValues: function(){
+            this.loginCredentials.username = $('input[name="username"]').val();
+            this.loginCredentials.password = $('input[name="password"]').val();
+            this.checkIfValueMissing(this.loginCredentials);
+        },
+        checkIfValueMissing: function(credentials){
+            myThis = this;
+            if(credentials.username === "" || credentials.password === ""){
+                $('.incorrect-credentials').css('display', 'block');
+                $('.incorrect-credentials-card p').text('Please fill out all the fields.');
+                $('.incorrect-credentials button').css('display', 'inline-block');
+            }
+            else{
+                myThis.checkUsernameInDb(credentials);
+            }
+        },
+        checkUsernameInDb: function(obj){
+            myThis = this;
+            $.ajax({
+                method: 'POST',
+                url: `http://localhost:8080/sessions`,
+                data: JSON.stringify(obj),
+                contentType: 'application/json; charset=utf-8'
+            })
+            .done(function(data){
+                if(typeof(data) === 'string'){
+                    $('.incorrect-credentials').css('display', 'block');
+                    $('.incorrect-credentials-card p').text('Invalid credentials. Please try again.');
+                    $('.incorrect-credentials button').css('display', 'inline-block');
+                }
+                else{
+                    if('restoToken' in data){
+                    myThis.launchRestoDashboard(data.restoToken);
+                    }
+                    else if('orgToken' in data){
+                    myThis.launchOrgDashboard(data.orgToken);
+                    }
+                }
+            });
+        },
+        launchRestoDashboard: function(id){
+            $('.incorrect-credentials').css('display', 'block');
+            $('.incorrect-credentials button').css('display', 'none');
+            $('.incorrect-credentials-card p').text('Found ya! One moment while I load your dashboard.');
+            $('.incorrect-credentials-card span').css('display', 'block');
+            $('input[name="username"]').val("");
+            $('input[name="password"]').val("");
+            setTimeout(`window.location.href = "private/restaurantdashboard.html?id=${id}"`, 3000);
+        },
+        launchOrgDashboard: function(id){
+            $('.incorrect-credentials').css('display', 'block');
+            $('.incorrect-credentials button').css('display', 'none');
+            $('.incorrect-credentials-card p').text('Found ya! One moment while I load your dashboard.');
+            $('.incorrect-credentials-card span').css('display', 'block');
+            $('input[name="username"]').val("");
+            $('input[name="password"]').val("");
+            setTimeout(`window.location.href = "private/organizationdashboard.html?id=${id}"`, 3000);
+        }
+    };
 
-
-
-
-
-
-    //REGISTER SECTION
+    //REGISTER RESTO SECTION
     const restoDbCallMethods = {
         newRestoData: {},
         restoRegisterClicked: function(){
@@ -25,7 +78,6 @@ $(document).ready(function() {
             this.newRestoData.zip = $('.resto-register input[name="zip"]').val();
             this.newRestoData.username = $('.resto-register input[name="username"]').val();
             this.newRestoData.password = $('.resto-register input[name="password"]').val();
-            console.log(this.newRestoData);
             this.checkIfRestoValueMissing(this.newRestoData);
         },
         checkIfRestoValueMissing: function(restoObj){
@@ -34,7 +86,6 @@ $(document).ready(function() {
                     return this.showMissingRestoValuesModal();
                 }   
             }
-            console.log(this);
             this.addNewRestoToDb(restoObj);
         },
         showMissingRestoValuesModal: function(){
@@ -73,7 +124,6 @@ $(document).ready(function() {
                 contentType: 'application/json; charset=utf-8'
             })
             .done(function(payload){
-                console.log(payload); //inspect what we received
                 let restoProfile = payload;
                 myThis.showFrequencyModal(restoProfile);
             });
@@ -126,8 +176,11 @@ $(document).ready(function() {
                 })
                 .done(function(){
                     myThis.showRedirectMessage(restoObj.name);
-                    setTimeout(`window.location.href = "private/restaurantdashboard.html?id=${restoObj._id}"`, 5000);
+                    setTimeout(`window.location.href = "private/restaurantdashboard.html?id=${restoObj._id}"`, 3000);
                 });
+            }
+            else{
+                myThis.showMissingRestoValuesModal();
             }
         },
         showRedirectMessage: function(restoName){
@@ -136,9 +189,79 @@ $(document).ready(function() {
         }
     }
 
-
-
-
+    //REGISTER ORG SECTION
+    const orgDbCallMethods = {
+        newOrgData: {},
+        orgRegisterClicked: function(){
+            this.newOrgData.orgName = $('.org-register input[name="org-name"]').val();
+            this.newOrgData.firstName = $('.org-register input[name="first-name"]').val();
+            this.newOrgData.lastName = $('.org-register input[name="last-name"]').val();
+            this.newOrgData.cause = $('.org-register textarea').val();
+            this.newOrgData.phone = $('.org-register input[name="phone"]').val();
+            this.newOrgData.email = $('.org-register input[name="email"]').val();
+            this.newOrgData.street = $('.org-register input[name="street"]').val();
+            this.newOrgData.city = $('.org-register input[name="city"]').val();
+            this.newOrgData.state = $('.org-register input[name="state"]').val();
+            this.newOrgData.zip = $('.org-register input[name="zip"]').val();
+            this.newOrgData.username = $('.org-register input[name="username"]').val();
+            this.newOrgData.password = $('.org-register input[name="password"]').val();
+            this.checkIfOrgValueMissing(this.newOrgData);
+        },
+        checkIfOrgValueMissing: function(orgObj){
+            for(let prop in orgObj){
+                if(orgObj[prop] === ""){
+                    console.log('true');
+                    return this.showMissingOrgValuesModal();
+                }   
+            }
+            this.addNewOrgToDb(orgObj);
+        },
+        showMissingOrgValuesModal: function(){
+            myThis = this;
+            $('.missing-values').css('display', 'block');
+            $('.missing-values p').text('Please fill out all the fields.');
+            $('.missing-values button').css('display', 'inline-block');
+            $('.missing-values button').on('click', function(event){
+                event.stopPropagation();
+                event.preventDefault();
+                $('.missing-values').css('display', 'none');
+            });
+        },
+        addNewOrgToDb: function(orgObj){
+            myThis = this;
+            $.ajax({
+                method: 'POST',
+                url: `http://localhost:8080/organizations`,
+                data: JSON.stringify({
+                    name: orgObj.orgName,
+                    causeDescription: orgObj.cause,
+                    phoneNumber: orgObj.phone,
+                    manager: {
+                        firstName: orgObj.firstName,
+                        lastName: orgObj.lastName
+                    },
+                    address: {
+                        street: orgObj.street,
+                        city: orgObj.city,
+                        state: orgObj.state,
+                        zipcode: orgObj.zip
+                    },
+                    email: orgObj.email,
+                    username: orgObj.username,
+                    password: orgObj.password
+                }),
+                contentType: 'application/json; charset=utf-8'
+            })
+            .done(function(payload){
+                myThis.showRedirectMessage(payload.name);
+                setTimeout(`window.location.href = "private/organizationdashboard.html?id=${payload._id}"`, 3000);
+            });
+        },
+        showRedirectMessage: function(orgName){
+                $('.redirect-message').css('display', 'block');
+                $('.redirect-message p').text(`Welcome, ${orgName}! One moment while I load your dashboard.`);
+            }
+    };
 
     //----------CLICK FUNCTIONS------------//
     const clickEvents = {
@@ -152,8 +275,8 @@ $(document).ready(function() {
             $('.hamburger-menu').css('display', 'block');
         },
         resetLoginInputs: function(){
-            credentials.username = "";
-            credentials.password = "";
+            $('#login input[name="username"]').val("");
+            $('#login input[name="password"]').val("");
         },
         showLoginModal: function(){
             $('#login').removeClass('fadeOutDown').css('display', 'block').addClass('fadeInDown');
@@ -162,7 +285,7 @@ $(document).ready(function() {
             this.resetLoginInputs();
             setTimeout(function(){
                     $('#login').css('display', 'none');
-                }, 1500);
+                }, 1000);
             $('#login').removeClass('fadeInDown').addClass('fadeOutDown');
         },
         showRegisterModal: function(){
@@ -171,7 +294,8 @@ $(document).ready(function() {
         closeRegisterModal: function(){
             setTimeout(function(){
                     $('#register').css('display', 'none');
-            }, 1500);
+            }, 1000);
+            $('#register').removeClass('fadeInDown').addClass('fadeOutDown');
         },
         showRegisterTypesModal: function(){
             $('.register-types').css('display', 'block');
@@ -201,9 +325,38 @@ $(document).ready(function() {
         },
         closeIncorrectCredentialsModal: function(){
             $('.incorrect-credentials').css('display', 'none');
+            $('input[name="username"]').val("");
+            $('input[name="password"]').val("");
         },
         closeMissingValuesModal: function(){
             $('.missing-values').css('display', 'none');
+        },
+        resetOrgForm: function(){
+            $('.org-register input[name="org-name"]').val("");
+            $('.org-register input[name="first-name"]').val("");
+            $('.org-register input[name="last-name"]').val("");
+            $('.org-register textarea').val("");
+            $('.org-register input[name="phone"]').val("");
+            $('.org-register input[name="email"]').val("");
+            $('.org-register input[name="street"]').val("");
+            $('.org-register input[name="city"]').val("");
+            $('.org-register input[name="state"]').val("");
+            $('.org-register input[name="zip"]').val("");
+            $('.org-register input[name="username"]').val("");
+            $('.org-register input[name="password"]').val("");
+        },
+        resetRestoForm: function(){
+            $('.resto-register input[name="resto-name"]').val("");
+            $('.resto-register input[name="first-name"]').val("");
+            $('.resto-register input[name="last-name"]').val("");
+            $('.resto-register input[name="phone"]').val("");
+            $('.resto-register input[name="email"]').val("");
+            $('.resto-register input[name="street"]').val("");
+            $('.resto-register input[name="city"]').val("");
+            $('.resto-register input[name="state"]').val("");
+            $('.resto-register input[name="zip"]').val("");
+            $('.resto-register input[name="username"]').val("");
+            $('.resto-register input[name="password"]').val("");
         }
     };
 
@@ -220,27 +373,15 @@ $(document).ready(function() {
     $('.org-register .reg-form-buttons .sign-up').on('click', function(e){
         e.preventDefault();
         e.stopPropagation();
-        
+        orgDbCallMethods.orgRegisterClicked();
     });
-
-    //to close the missing values message modal
-    $('.missing-values button').on('click', function(e){
-            console.log('button clicked');
-            e.stopPropagation();
-            e.preventDefault();
-            clickEvents.closeMissingValuesModal();
-    });
-
-
-
 
     //-------DYNAMIC STYLING CLICKS-----------//
-    //when log in button has been clicked
+    //when log in button has been clicked inside the login form
     $('.login-form button').on('click', function(e){
         e.preventDefault();
         e.stopPropagation();
-        clickEvents.closeHamburgerMenu();
-        clickEvents.showLoginModal();
+        loginDbCallMethods.getLoginValues();
     });
 
     //when logo is clicked
@@ -265,11 +406,10 @@ $(document).ready(function() {
     });
 
     //when X on login modal is clicked
-    $('.login-close').on('click', function(e){
+    $('.login-close button').on('click', function(e){
         e.preventDefault();
         e.stopPropagation()
         clickEvents.closeLoginModal();
-        clickEvents.resetLoginInputs();
         clickEvents.showRegisterTypesModal();
         clickEvents.closeRestoRegisterModal();
         clickEvents.closeOrgRegisterModal();
@@ -291,6 +431,8 @@ $(document).ready(function() {
         e.preventDefault();
         e.stopPropagation()
         clickEvents.closeHamburgerMenu();
+        clickEvents.resetOrgForm();
+        clickEvents.resetRestoForm();
         clickEvents.showLoginModal();
         clickEvents.closeRegisterModal();
     });
@@ -314,6 +456,7 @@ $(document).ready(function() {
     $('.resto-selected').on('click', function(e){
         e.preventDefault();
         e.stopPropagation()
+        clickEvents.resetRestoForm();
         clickEvents.closeRegisterTypesModal();
         clickEvents.closeOrgRegisterModal();
         clickEvents.showRestoRegisterModal();
@@ -323,15 +466,25 @@ $(document).ready(function() {
     $('.org-selected').on('click', function(e){
         e.preventDefault();
         e.stopPropagation()
+        clickEvents.resetOrgForm();
         clickEvents.closeRegisterTypesModal();
         clickEvents.closeRestoRegisterModal();
         clickEvents.showOrgRegisterModal();
     });
 
+    //to close the missing values message modal
+    $('.missing-values button').on('click', function(e){
+            e.stopPropagation();
+            e.preventDefault();
+            clickEvents.closeMissingValuesModal();
+    });
+
     //when cancel on the registration modal is clicked
     $('.reg-form-buttons .cancel').on('click', function(e){
         e.preventDefault();
-        e.stopPropagation()
+        e.stopPropagation();
+        clickEvents.resetOrgForm();
+        clickEvents.resetRestoForm();
         clickEvents.closeRestoRegisterModal();
         clickEvents.closeOrgRegisterModal();
         clickEvents.showRegisterTypesModal();
@@ -359,7 +512,7 @@ $(document).ready(function() {
     });
 
     //when button in incorrect credentials modal is clicked, close the modal
-    $('.incorrect-credentials-card button').on('click', function(e){
+    $('.incorrect-credentials button').on('click', function(e){
         e.preventDefault();
         e.stopPropagation()
         clickEvents.closeIncorrectCredentialsModal();

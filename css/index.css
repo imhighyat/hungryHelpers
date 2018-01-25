@@ -309,10 +309,9 @@ header p{
 
 .register-wrapper{
 	background-color: #ffffff;
-	width: 40%;
 	margin: auto;
 	border-radius: 5px;
-	max-width: 38rem;
+	max-width: 50rem;
 }
 
 .register-types{
@@ -428,6 +427,7 @@ header p{
 }
 
 .org-register textarea{
+	font-family: 'Raleway', sans-serif;
     width: 90%;
     outline: none;
     padding: .5rem;
@@ -868,7 +868,7 @@ footer > a:hover{
 
 	.fullname-input input,
 	.fulladdress-input input{
-		width: 47%;
+		width: 100%;
 	}
 
 	.reg-form-buttons{
@@ -1135,9 +1135,12 @@ footer > a:hover{
 	    font-size: 13px;
 	}
 
-	.fullname-input input,
-	.fulladdress-input input{
+	.fullname-input input{
 		width: 47%;
+	}
+
+	.fulladdress-input input{
+		width: 100%;
 	}
 
 	.reg-form-buttons{
@@ -1223,9 +1226,33 @@ footer > a:hover{
 	}
 
 	.incorrect-credentials-card,
-	.missing-values-card{
+	.missing-values-card,
+	.redirect-message-card{
 		width: 80%;
 		max-width: 20rem;
+	}
+
+	.frequency-card{
+		width: 90%;
+		max-width: 40rem;
+
+	}
+
+	.frequency-card label,
+	.frequency-card select,
+	.frequency-card input,
+	.frequency-card span{
+		font-size: 14px;
+	}
+
+	.js-day-of-week input {
+    	margin: 1rem .5rem;
+	}
+
+	.js-start-date input,
+	.js-end-date input,
+	.js-time input{
+		text-align: right;
 	}
 }
 

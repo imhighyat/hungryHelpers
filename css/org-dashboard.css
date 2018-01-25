@@ -176,6 +176,17 @@ td > a{
   text-decoration: none;
 }
 
+.js-pickups-list .no-pickups{
+	display: none;
+}
+
+.js-pickups-list .no-pickups p{
+	width: 80%;
+    margin: 3rem auto;
+    text-align: center;
+    font-style: italic;
+}
+
 .js-account-settings{
 	width: 90%;
 	height: auto;
@@ -540,6 +551,11 @@ input[name=street]{
 		font-weight: normal;
 	}
 
+	.js-pickups-list .no-pickups p{
+		margin: 1.5rem auto;
+		font-weight: 14px;
+	}
+
 	.js-account-settings{
 		width: 100%;
 		padding: 0;
@@ -726,6 +742,11 @@ input[name=street]{
 
 	th > .fa{
 		display: none;
+	}
+
+	.js-pickups-list .no-pickups p{
+		margin: 1.5rem auto;
+		font-weight: 14px;
 	}
 
 	.js-account-settings{

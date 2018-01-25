@@ -130,33 +130,39 @@ $(document).ready(function() {
     }
 
     function filterOrgPickups(data){
-        const pickups = [];
-        //loop through the elements
-        for(let i=0; i < data.length; i++){
-            for(let x=0; x < data[i].bookings.length; x++){
-                if(data[i].bookings[x].organization === orgId){
-                    let today = moment().format("LL");
-                    let date = moment(data[i].bookings[x].date).format("LL");
-                    let time = moment(`${data[i].time.hour}:${data[i].time.minutes}`, 'HH:mm').format('LT');
-                    //get only those dates for today or in the future
-                    if(date >= today){
-                        const pickupEntry = {
-                        date: date,
-                        time: time,
-                        restaurant: data[i].restaurant.name,
-                        restPerson: data[i].restPerson
-                        };
-                        pickups.push(pickupEntry);
+        if(data.length < 1){
+            $('.js-pickups-list .no-pickups').css('display', 'block');
+        }
+        else{
+            $('.js-pickups-list .no-pickups').css('display', 'none');
+            const pickups = [];
+            //loop through the elements
+            for(let i=0; i < data.length; i++){
+                for(let x=0; x < data[i].bookings.length; x++){
+                    if(data[i].bookings[x].organization === orgId){
+                        let today = moment().format("LL");
+                        let date = moment(data[i].bookings[x].date).format("LL");
+                        let time = moment(`${data[i].time.hour}:${data[i].time.minutes}`, 'HH:mm').format('LT');
+                        //get only those dates for today or in the future
+                        if(date >= today){
+                            const pickupEntry = {
+                            date: date,
+                            time: time,
+                            restaurant: data[i].restaurant.name,
+                            restPerson: data[i].restPerson
+                            };
+                            pickups.push(pickupEntry);
+                        }
                     }
                 }
             }
+            let sortedPickups = pickups.sort(function(a, b){
+                a = moment(a.date);
+                b = moment(b.date);
+                return a - b;
+            });
+            renderUpcomingPickups(sortedPickups);
         }
-        let sortedPickups = pickups.sort(function(a, b){
-            a = moment(a.date);
-            b = moment(b.date);
-            return a - b;
-        });
-        renderUpcomingPickups(sortedPickups);
     }
 
     function renderUpcomingPickups(array){

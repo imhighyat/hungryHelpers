@@ -190,15 +190,21 @@ $(document).ready(function() {
 
     //show the upcoming sched on the page
     function renderUpcomingSched(array){
-        $('.js-donation-list tbody').empty();
-        for(let i = 0; i < array.length; i++){
-            let upcomingEntry = `<tr class="js-donation-entry">
-                                    <td>${array[i].date}</td>
-                                    <td>${array[i].time}</td> 
-                                    <td>${array[i].orgName}</td>
-                                    <td>${array[i].orgPerson}</td>
-                                </tr>`;
-                $('.js-donation-list tbody').append(upcomingEntry);
+        if(array.length < 1){
+            $('.js-donation-list .no-donations').css('display', 'block');
+        }
+        else{
+            $('.js-donation-list .no-donations').css('display', 'none');
+            $('.js-donation-list tbody').empty();
+            for(let i = 0; i < array.length; i++){
+                let upcomingEntry = `<tr class="js-donation-entry">
+                                        <td>${array[i].date}</td>
+                                        <td>${array[i].time}</td> 
+                                        <td>${array[i].orgName}</td>
+                                        <td>${array[i].orgPerson}</td>
+                                    </tr>`;
+                    $('.js-donation-list tbody').append(upcomingEntry);
+            }
         }
     }
 
@@ -221,7 +227,6 @@ $(document).ready(function() {
             url: `http://localhost:8080/restaurants/${id}`
         })
         .done(function(data) {
-            console.log(data);
             storeAccountData(data);
             fetchScheduleData();
             getUpcomingBookings();
