@@ -65,7 +65,6 @@ $(document).ready(function() {
         $("input[name=start-date]").val(currentSettings.start);
         $("input[name=end-date]").val(currentSettings.end);
         $("input[name=appt-time]").val(currentSettings.time);
-        console.log($("input[name=appt-time]").val());
         $("select").val(currentSettings.frequency);
         $("input[type=checkbox]").attr("hidden", "true");   //hide all the checkbox first
         $("span").attr("hidden", "true");   //hide all the span first

@@ -210,7 +210,6 @@ $(document).ready(function() {
         checkIfOrgValueMissing: function(orgObj){
             for(let prop in orgObj){
                 if(orgObj[prop] === ""){
-                    console.log('true');
                     return this.showMissingOrgValuesModal();
                 }   
             }

@@ -35,6 +35,7 @@ body{
 .nav-logo a{
 	text-decoration: none;
 	color: #000000;
+	cursor: auto;
 }
 
 .nav-links{

@@ -107,7 +107,6 @@ $(document).ready(function() {
     }
 
     function renderResto(data){
-        console.log(data);
         $('.schedules-wrapper').empty();
         if(data.length >= 1){
             for(let i = 0; i < data.length; i++){
@@ -127,7 +126,6 @@ $(document).ready(function() {
             url: `${API_URL}/organizations/${orgId}/pickups`
         })
         .done(function(data) {
-            console.log(data);
             filterOrgPickups(data);
         });
     }
@@ -157,9 +155,9 @@ $(document).ready(function() {
                             };
                             pickups.push(pickupEntry);
                         }
-                        else{
-                            console.log(date, time);
-                        }
+                        // else{
+                        //     console.log(date, time);
+                        // }
                     }
                 }
             }
@@ -173,7 +171,6 @@ $(document).ready(function() {
     }
 
     function renderUpcomingPickups(array){
-        console.log(array);
         $('.js-pickups-list table tbody').empty();
         for(let i=0; i < array.length; i++){
             let pickupEntry = `<tr class="js-pickups-entry">
@@ -426,7 +423,6 @@ $(document).ready(function() {
         e.stopPropagation();
         e.preventDefault();
         let id = $(this).attr('id');
-        console.log(id);
         if(typeof(id) === 'string'){
             getRestoInfo(id);
         }
