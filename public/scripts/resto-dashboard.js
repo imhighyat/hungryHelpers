@@ -267,6 +267,7 @@ $(document).ready(function() {
             $('.cancel-changes').removeAttr('hidden');
             $('.edit-details').attr('hidden', 'true');
             $('input[type="checkbox"]').prop('checked' , false);
+            $('.success-modal').css('display', 'none');
             $('.js-account-settings input').removeAttr('readonly').css({'border-bottom': '1px solid black', 'font-style': 'italic'});
             $('.js-org-cause p').attr('contenteditable', 'true').css({'border-bottom': '1px solid black', 'font-style': 'italic'});
             $('.js-account-settings input').removeAttr('readonly checked').css({'border-bottom': '1px solid black', 'font-style': 'italic'});
@@ -279,6 +280,7 @@ $(document).ready(function() {
             $('.cancel-changes').attr('hidden', 'true');
             $('.edit-details').removeAttr('hidden');
             $('input[type="checkbox"]').prop('checked' , false);
+            $('.success-modal').css('display', 'none');
             $('.js-account-settings input').attr('readonly', 'true').css({'border-bottom': 'none', 'font-style': 'normal', 'outline': 'none'});
             $('.js-org-cause p').attr('readonly', 'true').css({'border-bottom': 'none', 'font-style': 'normal', 'outline': 'none'});
             $('.js-sched-type select').css({'border': 'none', 'font-style': 'normal'}).removeClass('select-appearance').addClass('no-appearance').prop('disabled', 'true');

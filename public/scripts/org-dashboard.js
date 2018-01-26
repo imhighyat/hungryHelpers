@@ -287,7 +287,10 @@ $(document).ready(function() {
             $('.hamburger-menu').removeClass('fadeOutRight').css('display', 'block').addClass('fadeInRight');
         },
         closeAvailableDates: function(){
-            $('.schedule-info-modal').css('display', 'none');
+            setTimeout(function(){
+                    $('.schedule-info-modal').css('display', 'none');
+                }, 1000);
+            $('.schedule-info-modal').removeClass('fadeInDown').addClass('fadeOutDown');
         },
         openRestoAvailDates: function(){
             $('.schedule-info-modal').css('display', 'block');
@@ -338,6 +341,7 @@ $(document).ready(function() {
         cancelEditInfo: function(){
             this.closeHamburgerMenu();
             renderAccountInfo();
+            $(".success-modal").css("display", "none");
             $('.cancel-changes').attr('hidden', 'true');
             $('.edit-details').removeAttr('hidden');
             $('.js-account-settings input').attr('readonly', 'true').css({'border-bottom': 'none', 'font-style': 'normal', 'outline': 'none'});
@@ -347,6 +351,7 @@ $(document).ready(function() {
             this.closeHamburgerMenu();
             $('.cancel-changes').removeAttr('hidden');
             $('.edit-details').attr('hidden', 'true');
+            $(".success-modal").css("display", "none");
             $('.js-account-settings input').removeAttr('readonly').css({'border-bottom': '1px solid black', 'font-style': 'italic'});
             $('.js-org-cause p').attr('contenteditable', 'true').css({'border-bottom': '1px solid black', 'font-style': 'italic'});
         },
@@ -390,7 +395,7 @@ $(document).ready(function() {
         openRestoSched: function(event){
             let restoId = $(this).attr('id');
             loadRestaurantSchedule(restoId);
-            $('.schedule-info-modal').css('display', 'block');
+            $('.schedule-info-modal').removeClass('fadeOutDown').css('display', 'block').addClass('fadeInDown');
         }
     }
 

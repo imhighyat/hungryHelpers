@@ -356,7 +356,7 @@ input[name=street],
 .js-account-settings .success-modal{
 	display: none;
 	position: fixed;
-	top: 50%;
+	top: 75%;
 	left: 50%;
 	transform: translate(-50%, -100%);
 	z-index: 2;
