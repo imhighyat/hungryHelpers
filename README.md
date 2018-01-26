@@ -36,7 +36,7 @@
 +	Update your information and frequency when you need.
 
 #### For Charitable Groups
-+	Managers or representative can create an account online. (screenshot)
++	Managers or representative can create an account online.
 +	Browse from restaurants/establishments with active donation schedule.
 +	Click on a restaurant to view their preferred donation time and available appointments for the week and click on a date to book it.
 +	You will see your upcoming booked appointments in your dashboard.
