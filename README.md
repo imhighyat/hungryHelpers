@@ -77,6 +77,9 @@
 +	Heroku
 +	mLab
 
+#### Others
++ Animate.css
++ FontAwesome
 ---
 
 ### RESTful API
