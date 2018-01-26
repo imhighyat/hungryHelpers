@@ -361,11 +361,40 @@ $(document).ready(function() {
             $('.resto-register input[name="zip"]').val("");
             $('.resto-register input[name="username"]').val("");
             $('.resto-register input[name="password"]').val("");
+        },
+        showDemoTypes: function(){
+            $('.demo-types-wrapper').removeClass('fadeOutDown').css('display', 'block').addClass('fadeInDown');
+        },
+        closeDemoTypes: function(){
+            setTimeout(function(){
+                    $('.demo-types-wrapper').css('display', 'none');
+            }, 1000);
+            $('.demo-types-wrapper').removeClass('fadeInDown').addClass('fadeOutDown');
         }
     };
 
 
     //-------AJAX STYLING CLICKS--------------//
+    //demo restaurant
+    $('.resto-demo').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        clickEvents.closeDemoTypes();
+        $('.login-wrapper').css('display', 'none');
+        clickEvents.showLoginModal();
+        loginDbCallMethods.launchRestoDashboard("5a60734f3160e79360110d6b");
+    });
+
+    //demo organization
+    $('.org-demo').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        clickEvents.closeDemoTypes();
+        $('.login-wrapper').css('display', 'none');
+        clickEvents.showLoginModal();
+        loginDbCallMethods.launchOrgDashboard("5a29248d5653e9f0188a9391");
+    });
+
     //when resto user clicks on Complete Registration
     $('.resto-register .reg-form-buttons .sign-up').on('click', function(e){
         e.preventDefault();
@@ -381,13 +410,6 @@ $(document).ready(function() {
     });
 
     //-------DYNAMIC STYLING CLICKS-----------//
-    //when log in button has been clicked inside the login form
-    $('.login-form button').on('click', function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        loginDbCallMethods.getLoginValues();
-    });
-
     //when logo is clicked
     $('.nav-logo').on('click', function(e){
         e.preventDefault();
@@ -407,6 +429,26 @@ $(document).ready(function() {
         e.preventDefault();
         e.stopPropagation()
         clickEvents.closeHamburgerMenu();
+    });
+
+    //when demo link is clicked
+    $('.demo-link').on('click', function(e){
+        clickEvents.showDemoTypes();
+        clickEvents.closeHamburgerMenu();
+    });
+
+    //when demo-link X is clicked
+    $('.demo-types span').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation()
+        clickEvents.closeDemoTypes();
+    });
+
+    //when log in button has been clicked inside the login form
+    $('.login-form button').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        loginDbCallMethods.getLoginValues();
     });
 
     //when X on login modal is clicked
