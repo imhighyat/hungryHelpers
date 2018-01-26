@@ -835,7 +835,37 @@ footer > a:hover{
 	opacity: .5;
 }
 
+.about-me p{
+	text-align: center;
+	color: #baf1ee;
+	font-size: 14px;
+	margin-top: 1rem;
+}
 
+.fa-heart{
+	color: #f17784;
+	padding: 0 .5rem;
+}
+
+.fa-coffee{
+	color: #e0a45c;
+	padding: 0 .5rem;
+}
+
+.fa-spotify{
+	color: #47d86a;
+	padding: 0 .5rem;
+}
+
+.fa-github{
+	color: #e0e890;
+	padding: 0 .5rem;
+}
+
+.fa-eye{
+	color: #ffffff;
+	padding: 0 .5rem;
+}
 
 /* media queries*/
 @media only screen and (max-width: 420px){
