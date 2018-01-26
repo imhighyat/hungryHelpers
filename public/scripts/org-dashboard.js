@@ -143,8 +143,8 @@ $(document).ready(function() {
             for(let i=0; i < data.length; i++){
                 for(let x=0; x < data[i].bookings.length; x++){
                     if(data[i].bookings[x].organization === orgId){
-                        let today = moment().format("LL");
-                        let date = moment(data[i].bookings[x].date).format("LL");
+                        let today = moment.utc().format("LL");
+                        let date = moment.utc(data[i].bookings[x].date).format("LL");
                         let time = moment(`${data[i].time.hour}:${data[i].time.minutes}`, 'HH:mm').format('LT');
                         //get only those dates for today or in the future
                         if(date >= today){
@@ -156,6 +156,9 @@ $(document).ready(function() {
                             id: data[i].restaurant._id
                             };
                             pickups.push(pickupEntry);
+                        }
+                        else{
+                            console.log(date, time);
                         }
                     }
                 }
@@ -170,6 +173,7 @@ $(document).ready(function() {
     }
 
     function renderUpcomingPickups(array){
+        console.log(array);
         $('.js-pickups-list table tbody').empty();
         for(let i=0; i < array.length; i++){
             let pickupEntry = `<tr class="js-pickups-entry">

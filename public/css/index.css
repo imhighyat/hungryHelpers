@@ -89,6 +89,7 @@ header p{
 	font-size: 16px;
 	font-weight: bold;
 	opacity: .8;
+	box-shadow: 5px 10px 18px #181627;
 }
 
 .learn-more-button:hover {
@@ -124,6 +125,7 @@ header p{
 	min-height: 25rem;
 	max-width: 38rem;
 	border-radius: 5px;
+	box-shadow: 5px 10px 18px #181627;
 }
 
 .login-close{
@@ -256,6 +258,11 @@ header p{
 	padding: 2rem 1rem;
 }
 
+.incorrect-credentials-card,
+.missing-values-card{
+	box-shadow: 5px 10px 18px #181627;
+}
+
 .incorrect-credentials-card p,
 .missing-values p,
 .redirect-message-card p{
@@ -315,7 +322,8 @@ header p{
     max-width: 40rem;
     text-align: center;
     z-index: 3;
-    box-shadow: 5px 10px 18px #282626;
+    /*box-shadow: 5px 10px 18px #282626;*/
+    box-shadow: 5px 10px 18px #181627;
 }
 
 .demo-types span{
@@ -382,6 +390,7 @@ header p{
 	text-align: center;
 	padding: 2rem;
 	margin-top: 8rem;
+	box-shadow: 5px 10px 18px #181627;
 }
 
 .register-types > h5{

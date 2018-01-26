@@ -96,6 +96,7 @@ main{
 	padding: 2rem;
 	min-height: 38rem;
 	max-width: 70rem;
+	box-shadow: 5px 10px 18px #181627;
 }
 
 .profile-card > h3{
@@ -353,6 +354,7 @@ input[name=street]{
 	border-radius: 5px;
 	text-align: center;
 	padding: 2rem;
+	box-shadow: 5px 10px 18px #181627;
 }
 
 .success-modal p{
@@ -433,6 +435,7 @@ input[name=street]{
 	border-radius: 5px;
 	text-align: center;
 	padding: 2rem 1rem;
+	box-shadow: 5px 10px 18px #181627;
 }
 
 .schedule-info-card h4{
@@ -485,6 +488,7 @@ input[name=street]{
 	border-radius: 5px;
 	text-align: center;
 	padding: 2rem 1rem;
+	box-shadow: 5px 10px 18px #181627;
 }
 
 .booking-confirmation-card p{
@@ -534,6 +538,7 @@ input[name=street]{
 	border-radius: 5px;
 	text-align: center;
 	padding: 2rem 1rem;
+	box-shadow: 5px 10px 18px #181627;
 }
 
 .date-booked-card p{
