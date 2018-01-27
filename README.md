@@ -80,6 +80,7 @@
 #### Others
 + Animate.css
 + FontAwesome
++ moment.js
 ---
 
 ### RESTful API
