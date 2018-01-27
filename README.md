@@ -49,7 +49,7 @@
 <a href="https://shielded-coast-22560.herokuapp.com">H U N G R Y | H E L P E R S</a>
 #### Demo Accounts (but of course, you can create your own accounts)
 
-<p>There is a <b><em>quick Demo Login link on the homepage</em></b>, but if you wanna try the login link here are the credentials that you can try. </p>
+<p>There is a <b><em>quick Demo Login link on the homepage</em></b>, but if you want to try the login link here are the credentials that you can try. </p>
 
 ##### Restaurant Login
 + <b>username</b> - kfcculvercity
