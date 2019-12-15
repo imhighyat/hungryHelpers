@@ -1,3 +1,5 @@
+[![Run on Repl.it](https://repl.it/badge/github/imhighyat/hungryHelpers)](https://repl.it/github/imhighyat/hungryHelpers)
+
 <h1 align="center">
   <br>
   H U N G R Y  |  H E L P E R S
